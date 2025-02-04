@@ -70,10 +70,10 @@
     <ApplicationIcon>sims pro logo - Copy.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>3EA1F7F5F47522E904B1C9FDC00C1A82ECDFF97B</ManifestCertificateThumbprint>
+    <!-- <ManifestCertificateThumbprint>3EA1F7F5F47522E904B1C9FDC00C1A82ECDFF97B</ManifestCertificateThumbprint> -->
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SIMS_Core_TemporaryKey.pfx</ManifestKeyFile>
+    <!-- <ManifestKeyFile>SIMS_Core_TemporaryKey.pfx</ManifestKeyFile> -->
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>

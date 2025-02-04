@@ -3,6 +3,8 @@ Imports SIMS_Core.globalVariables
 Imports System.Configuration
 Public Class Tuition_Management
 
+    Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+    Dim conn As New SqlConnection(connStr)
     Dim Dtreader As SqlDataReader
     Dim rbvar As String = Nothing
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -16,12 +18,12 @@ Public Class Tuition_Management
 
         Else
             Try
-                connection.Open()
-                Dim command As New SqlCommand("INSERT INTO dbo.Faculty (faculty_id, FacultyName) VALUES ('" & txtFID.Text & "','" & txtFacultyname.Text & "')", connection)
+                conn.Open()
+                Dim command As New SqlCommand("INSERT INTO dbo.Faculty (faculty_id, FacultyName) VALUES ('" & txtFID.Text & "','" & txtFacultyname.Text & "')",  conn)
                 command.ExecuteNonQuery()
 
                 MsgBox("Faculty Added Successfully")
-                connection.Close()
+                conn.Close()
                 txtFacultyname.Clear()
                 txtFID.Clear()
                 txtFacultyname.Focus()
@@ -30,7 +32,7 @@ Public Class Tuition_Management
 
             Catch ex As Exception
                 MsgBox("Error in population the Database. Error is :" & ex.Message)
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
@@ -68,46 +70,46 @@ Public Class Tuition_Management
         End If
     End Sub
     Private Sub loadcmbfaculty()
-        connection.Open()
-        Dim da As New SqlDataAdapter("SELECT faculty_id, FacultyName FROM dbo.Faculty", connection)
+        conn.Open()
+        Dim da As New SqlDataAdapter("SELECT faculty_id, FacultyName FROM dbo.Faculty",  conn)
         Dim ds As New DataSet
         da.Fill(ds, "faculty")
         cmbfaculty.DataSource = ds.Tables(0)
         cmbfaculty.DisplayMember = "FacultyName"
         cmbfaculty.ValueMember = "faculty_id"
-        connection.Close()
+        conn.Close()
     End Sub
     Private Sub loadcmbxFaculty()
-        connection.Open()
-        Dim da1 As New SqlDataAdapter("SELECT faculty_id, FacultyName FROM dbo.Faculty", connection)
+        conn.Open()
+        Dim da1 As New SqlDataAdapter("SELECT faculty_id, FacultyName FROM dbo.Faculty",  conn)
         Dim ds1 As New DataSet
         da1.Fill(ds1, "faculty")
         cmbxFaculty.DataSource = ds1.Tables(0)
         cmbxFaculty.ValueMember = "faculty_id"
         cmbxFaculty.DisplayMember = "FacultyName"
 
-        connection.Close()
+        conn.Close()
     End Sub
     Private Sub loadcmbDept()
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("SELECT Dept_id, DeptName FROM dbo.Department", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("SELECT Dept_id, DeptName FROM dbo.Department",  conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "dept")
         cmbDept.DataSource = ds2.Tables(0)
         cmbDept.ValueMember = "Dept_id"
         cmbDept.DisplayMember = "DeptName"
-        connection.Close()
+        conn.Close()
     End Sub
 
     Public Sub loadcmbSMProgOfStudy()
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT Prog_id, ProgName FROM dbo.Programme", connection)
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT Prog_id, ProgName FROM dbo.Programme",  conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "prog")
         StudentManager.cmbSMProgOfStudy.DataSource = ds3.Tables(0)
         StudentManager.cmbSMProgOfStudy.ValueMember = "Prog_id"
         StudentManager.cmbSMProgOfStudy.DisplayMember = "ProgName"
-        connection.Close()
+        conn.Close()
 
     End Sub
 
@@ -126,13 +128,13 @@ Public Class Tuition_Management
 
         Else
             Try
-                connection.Open()
+                conn.Open()
 
-                Dim command As New SqlCommand("INSERT INTO dbo.Department(Dept_id,DeptName,faculty_id) VALUES('" & txtDeptId.Text & "','" & txtdeptName.Text & "','" & cmbfaculty.SelectedValue & "')", connection)
+                Dim command As New SqlCommand("INSERT INTO dbo.Department(Dept_id,DeptName,faculty_id) VALUES('" & txtDeptId.Text & "','" & txtdeptName.Text & "','" & cmbfaculty.SelectedValue & "')",  conn)
                 command.ExecuteNonQuery()
 
                 MsgBox("Faculty Added Successfully")
-                connection.Close()
+                conn.Close()
                 txtdeptName.Clear()
                 txtDeptId.Clear()
                 txtdeptName.Focus()
@@ -140,7 +142,7 @@ Public Class Tuition_Management
 
             Catch ex As Exception
                 MsgBox("Error in population the Database. Error is :" & ex.Message)
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
@@ -177,13 +179,13 @@ Public Class Tuition_Management
 
     Private Sub AddProg()
         Try
-            connection.Open()
+            conn.Open()
 
-            Dim command As New SqlCommand("INSERT INTO dbo.Programme(Prog_id, ProgName, Faculty_id, Dept_id, Duration)VALUES('" & txtProgCode.Text & "','" & txtProgName.Text & "','" & cmbxFaculty.SelectedValue & "','" & cmbDept.SelectedValue & "','" & rbvar & "')", connection)
+            Dim command As New SqlCommand("INSERT INTO dbo.Programme(Prog_id, ProgName, Faculty_id, Dept_id, Duration)VALUES('" & txtProgCode.Text & "','" & txtProgName.Text & "','" & cmbxFaculty.SelectedValue & "','" & cmbDept.SelectedValue & "','" & rbvar & "')",  conn)
             command.ExecuteNonQuery()
 
             MsgBox("Programme Added Successfully")
-            connection.Close()
+            conn.Close()
             txtProgName.Clear()
             txtProgCode.Clear()
             txtProgName.Focus()
@@ -191,7 +193,7 @@ Public Class Tuition_Management
 
         Catch ex As Exception
             MsgBox("Error in population the Database. Error is :" & ex.Message)
-            connection.Close()
+            conn.Close()
         End Try
     End Sub
 
@@ -244,17 +246,17 @@ Public Class Tuition_Management
 
         If Add = 1 And Add2 = 1 And Add3 = 1 Then
             'ADD to DB
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "SELECT [YrEnd] FROM [dbo].[AcademicYear] ORDER BY [YrEnd] ASC"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim dt As New DataTable
             da.Fill(dt)
             If dt.Rows.Count <= 0 Then
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
 
-                Dim cmd As New SqlCommand("INSERT INTO [dbo].[AcademicYear] ([YrBegin],[YrBreak],[YrResume],[YrEnd]) VALUES ('" & dtpYrStart.Text & "','" & dtpBreak.Text & "','" & dtpResume.Text & "','" & dtpYrEnd.Text & "')", connection)
+                Dim cmd As New SqlCommand("INSERT INTO [dbo].[AcademicYear] ([YrBegin],[YrBreak],[YrResume],[YrEnd]) VALUES ('" & dtpYrStart.Text & "','" & dtpBreak.Text & "','" & dtpResume.Text & "','" & dtpYrEnd.Text & "')",  conn)
                 cmd.CommandType = CommandType.Text
 
                 If (cmd.ExecuteNonQuery().Equals(1)) Then
@@ -264,14 +266,14 @@ Public Class Tuition_Management
                 For Each dr1 As DataRow In dt.Rows
                     If (dr1("YrEnd")).Substring((dr1("YrEnd")).Length - 4) = (dtpYrStart.Text.ToString).Substring((dtpYrStart.Text.ToString).Length - 4) Then
                         MessageBox.Show("Academic Year already in the system! ", "Student Infolmation Management System", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                        connection.Close()
+                        conn.Close()
                         Exit For
                         Exit Sub
                     Else
-                        connection.Close()
-                        connection.Open()
+                        conn.Close()
+                        conn.Open()
 
-                        Dim cmd As New SqlCommand("INSERT INTO [dbo].[AcademicYear] ([YrBegin],[YrBreak],[YrResume],[YrEnd]) VALUES ('" & dtpYrStart.Text & "','" & dtpBreak.Text & "','" & dtpResume.Text & "','" & dtpYrEnd.Text & "')", connection)
+                        Dim cmd As New SqlCommand("INSERT INTO [dbo].[AcademicYear] ([YrBegin],[YrBreak],[YrResume],[YrEnd]) VALUES ('" & dtpYrStart.Text & "','" & dtpBreak.Text & "','" & dtpResume.Text & "','" & dtpYrEnd.Text & "')",  conn)
                         cmd.CommandType = CommandType.Text
 
                         If (cmd.ExecuteNonQuery().Equals(1)) Then
@@ -283,9 +285,9 @@ Public Class Tuition_Management
                     End If
 
                 Next
-                connection.Close()
+                conn.Close()
             End If
-            connection.Close()
+            conn.Close()
         Else
             MessageBox.Show("Adding Academic Year Failed! ", "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 

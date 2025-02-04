@@ -6,8 +6,11 @@ Imports System.Runtime.Versioning
 Imports System.Security.Cryptography
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Configuration
 
 Public Class frmHome
+    Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+    Dim conn As New SqlConnection(connStr)
     Dim selector As String = String.Empty
     Dim Bal As Double = 0
     Dim NewBal As String = String.Empty
@@ -69,14 +72,14 @@ Public Class frmHome
     End Sub
     Private Sub loadSID()
 
-        connection.Open()
-        Dim da As New SqlDataAdapter("SELECT [Student_Id] FROM dbo.Student ORDER BY Student_Id ASC", connection)
+        conn.Open()
+        Dim da As New SqlDataAdapter("SELECT [Student_Id] FROM dbo.Student ORDER BY Student_Id ASC", conn)
         Dim ds As New DataSet
         da.Fill(ds, "SID")
         cmbxstudentselect.DataSource = ds.Tables(0)
         cmbxstudentselect.DisplayMember = "Student_Id"
         cmbxstudentselect.ValueMember = "Student_Id"
-        connection.Close()
+        conn.Close()
 
     End Sub
     Private Sub studentprof()
@@ -109,7 +112,7 @@ Public Class frmHome
             btnSPview.Enabled = False
             selector = Login.txtUname.Text
             Call getstudentinfo()
-            connection.Close()
+            conn.Close()
             txtSPMobile.Enabled = True
             txtSPEmail.Enabled = True
             btnSPsave.Enabled = False
@@ -301,9 +304,9 @@ Public Class frmHome
     Dim ival As Integer = 0
     Dim chngpwd As String = Nothing
     Private Sub studenttest()
-        connection.Close()
-        connection.Open()
-        Dim command As New SqlCommand("SELECT Student_Id, Fname, Surname, RegStatus,ProgramOfStudy,YOA FROM dbo.Student WHERE  Student_Id = '" & lb_loggedas.Text & "'", connection)
+        conn.Close()
+        conn.Open()
+        Dim command As New SqlCommand("SELECT Student_Id, Fname, Surname, RegStatus,ProgramOfStudy,YOA FROM dbo.Student WHERE  Student_Id = '" & lb_loggedas.Text & "'", conn)
         Try
             Dim reader As SqlDataReader = command.ExecuteReader()
             While reader.Read
@@ -323,7 +326,7 @@ Public Class frmHome
                     End If
                     'check exam numbers''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
                     Acyear = Date.Now.Year
-                    Dim command2 As New SqlCommand("SELECT * FROM [dbo].[Exam] WHERE [AcademicYear] ='" & Acyear & "' And [Student_id]='" & lbkeepSID.Text & "'and [Semester] ='" & tssSem.Text.Substring(tssSem.Text.Length - 1).ToString & "'", connection)
+                    Dim command2 As New SqlCommand("SELECT * FROM [dbo].[Exam] WHERE [AcademicYear] ='" & Acyear & "' And [Student_id]='" & lbkeepSID.Text & "'and [Semester] ='" & tssSem.Text.Substring(tssSem.Text.Length - 1).ToString & "'", conn)
                     'Try
                     Dim reader2 As SqlDataReader = command2.ExecuteReader()
                     If reader2.HasRows Then
@@ -370,7 +373,7 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub Timer1_Tick(Sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
@@ -391,8 +394,8 @@ Public Class frmHome
 
     Private Sub getstudentinfo()
         Try
-            connection.Open()
-            Dim command As New SqlCommand("SELECT * FROM dbo.Student WHERE  Student_Id like '" & selector & "%'", connection)
+            conn.Open()
+            Dim command As New SqlCommand("SELECT * FROM dbo.Student WHERE  Student_Id like '" & selector & "%'", conn)
             Dim dr As SqlDataReader = command.ExecuteReader()
             If dr.HasRows Then
                 dr.Read()
@@ -424,13 +427,13 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         Finally
-            connection.Close()
+            conn.Close()
         End Try
-        connection.Close()
+        conn.Close()
 
         Try
-            connection.Open()
-            Dim command As New SqlCommand("SELECT * FROM [dbo].[NOK] WHERE  [student_Id] like '" & selector & "%'", connection)
+            conn.Open()
+            Dim command As New SqlCommand("SELECT * FROM [dbo].[NOK] WHERE  [student_Id] like '" & selector & "%'", conn)
             Dim dr As SqlDataReader = command.ExecuteReader()
             If dr.HasRows Then
                 dr.Read()
@@ -456,9 +459,9 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         Finally
-            connection.Close()
+            conn.Close()
         End Try
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub lbTuition_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lbTuition.LinkClicked
@@ -564,24 +567,24 @@ Public Class frmHome
         Else
 
             Try
-                connection.Open()
-                Dim cmd As New SqlCommand("UPDATE dbo.Student SET OtherName = '" & txtSPOnames.Text & "', DOB = '" & dtpSPDOB.Value & "', Gender = '" & cmbGender.Text & "', HomeVillage = '" & txtSPVillage.Text & "', TradAuth = '" & txtSPTA.Text & "', District = '" & txtSPDistrict.Text & "', Nationality = '" & txtSPNationality.Text & "', PostalAddress = '" & txtSPPOBox.Text & "', EmailAddress = '" & txtSPEmail.Text & "', MobileNo = '" & txtSPMobile.Text & "', CurResi = '" & txtSPCResidence.Text & "', YOA = '" & dtpYOA.Text & "', TOA = '" & txtTOA.Text & "', Accommodation = '" & txtAccomodation.Text & "' WHERE Student_Id = '" & txtSPSID.Text & "'", connection)
+                conn.Open()
+                Dim cmd As New SqlCommand("UPDATE dbo.Student SET OtherName = '" & txtSPOnames.Text & "', DOB = '" & dtpSPDOB.Value & "', Gender = '" & cmbGender.Text & "', HomeVillage = '" & txtSPVillage.Text & "', TradAuth = '" & txtSPTA.Text & "', District = '" & txtSPDistrict.Text & "', Nationality = '" & txtSPNationality.Text & "', PostalAddress = '" & txtSPPOBox.Text & "', EmailAddress = '" & txtSPEmail.Text & "', MobileNo = '" & txtSPMobile.Text & "', CurResi = '" & txtSPCResidence.Text & "', YOA = '" & dtpYOA.Text & "', TOA = '" & txtTOA.Text & "', Accommodation = '" & txtAccomodation.Text & "' WHERE Student_Id = '" & txtSPSID.Text & "'", conn)
                 cmd.CommandType = CommandType.Text
 
-                Dim cmd1 As New SqlCommand("INSERT INTO [dbo].[NOK] ([Student_Id], [FirstName], [Surname], [Title], [NOKResi], [Mobile_Number], [Email], [Postal], [Relationship]) VALUES ('" & cmbxstudentselect.SelectedValue & "','" & txtNOKFname.Text & "','" & txtNOKSurname.Text & "','" & txtNOKtittle.Text & "','" & txtNOKCResidence.Text & "','" & txtNOKMobile.Text & "','" & txtNOKEmail.Text & "','" & txtNOKPOBox.Text & "','" & txtNOKRelationship.Text & "')", connection)
+                Dim cmd1 As New SqlCommand("INSERT INTO [dbo].[NOK] ([Student_Id], [FirstName], [Surname], [Title], [NOKResi], [Mobile_Number], [Email], [Postal], [Relationship]) VALUES ('" & cmbxstudentselect.SelectedValue & "','" & txtNOKFname.Text & "','" & txtNOKSurname.Text & "','" & txtNOKtittle.Text & "','" & txtNOKCResidence.Text & "','" & txtNOKMobile.Text & "','" & txtNOKEmail.Text & "','" & txtNOKPOBox.Text & "','" & txtNOKRelationship.Text & "')", conn)
                 cmd1.CommandType = CommandType.Text
 
 
                 If (cmd.ExecuteNonQuery().Equals(1)) And (cmd1.ExecuteNonQuery().Equals(1)) Then
                     MsgBox("SAVE SUCCESSIFUL!", MessageBoxIcon.Information)
-                    connection.Close()
+                    conn.Close()
                 Else
                     MsgBox("SAVE FAILED!", MsgBoxStyle.Critical, MsgBoxStyle.DefaultButton1)
-                    connection.Close()
+                    conn.Close()
                 End If
             Catch ex As Exception
                 MsgBox("Error in Saving. Error is :" & ex.Message, MessageBoxIcon.Warning)
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
@@ -608,8 +611,8 @@ Public Class frmHome
     End Sub
 
     Private Sub loadAccNoAccBal()
-        connection.Open()
-        Dim command As New SqlCommand("SELECT AccNo ,AccBal FROM dbo.Accounts WHERE Student_Id = '" & lbkeepSID.Text & "'", connection)
+        conn.Open()
+        Dim command As New SqlCommand("SELECT AccNo ,AccBal FROM dbo.Accounts WHERE Student_Id = '" & lbkeepSID.Text & "'", conn)
         Try
             Dim reader As SqlDataReader = command.ExecuteReader()
             While reader.Read
@@ -621,14 +624,14 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
     End Sub
     Public Sub loadgdvAccState()
 
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT TransactionDate AS [Transaction Date], Transaction_id  AS [Reference], TransactionDescrp AS [Description], TransactionType AS [Transaction Type], TransactionAmount AS [Transaction Amount], TransactionBal AS [Balance] FROM dbo.Transactions WHERE AccNo = '" & acc & "' ORDER BY [TransactionDate] ASC"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "AccState")
             gdvAccState.DataSource = ds.Tables("AccState")
@@ -638,7 +641,7 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
     End Sub
     Public Shared Property auditval As String = Nothing
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
@@ -650,17 +653,17 @@ Public Class frmHome
             ipadd()
 
             Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-            Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+            Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
             cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
             cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
             cmd.Parameters.AddWithValue("@Utyp", lbusertype.Text)
             cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
             cmd.Parameters.AddWithValue("@TransTyp", btnLogout.Text)
             cmd.Parameters.AddWithValue("@TransVal", auditval)
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             cmd.ExecuteNonQuery().Equals(1)
-            connection.Close()
+            conn.Close()
 
         Catch ex As Exception
             MsgBox("An error has occured ", ex.Message)
@@ -695,9 +698,9 @@ Public Class frmHome
         Dim outputarr As New List(Of Double)
         Dim creditsum As Double
 
-        Dim comd As New SqlCommand("SELECT [dbo].[Transactions].[TransactionAmount] AS [TransAmount] FROM [dbo].[Transactions] where [AccNo] =(select AccNo from dbo.Accounts where Student_Id = '" & lbkeepSID.Text & "') and TransactionType = 'Credit'", connection)
+        Dim comd As New SqlCommand("SELECT [dbo].[Transactions].[TransactionAmount] AS [TransAmount] FROM [dbo].[Transactions] where [AccNo] =(select AccNo from dbo.Accounts where Student_Id = '" & lbkeepSID.Text & "') and TransactionType = 'Credit'", conn)
         Try
-            connection.Open()
+            conn.Open()
             Dim dr = comd.ExecuteReader()
             While dr.Read()
                 If IsDBNull(dr("TransAmount")) Then
@@ -710,12 +713,12 @@ Public Class frmHome
         Catch e As SqlException
             MessageBox.Show("There was an error accessing your data. DETAIL: " & e.ToString())
         Finally
-            connection.Close()
+            conn.Close()
         End Try
 
-        Dim command As New SqlCommand("SELECT AccNo ,AccBal FROM dbo.Accounts WHERE Student_Id = '" & lbkeepSID.Text & "'", connection)
+        Dim command As New SqlCommand("SELECT AccNo ,AccBal FROM dbo.Accounts WHERE Student_Id = '" & lbkeepSID.Text & "'", conn)
         Try
-            connection.Open()
+            conn.Open()
             Dim reader As SqlDataReader = command.ExecuteReader()
             While reader.Read
                 If IsDBNull(reader("AccBal")) Then
@@ -731,7 +734,7 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         Finally
-            connection.Close()
+            conn.Close()
         End Try
 
         If creditsum < (1 / 4 * accbal) Then
@@ -740,8 +743,8 @@ Public Class frmHome
             MessageBox.Show("Your Tuition Fee Balance is Less Than Minimum!", "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Hand)
         Else
             Try
-                connection.Open()
-                Dim cmd As New SqlCommand("Update[dbo].[Student] SET [RegStatus] = '1' WHERE [Student_Id] = '" & lbkeepSID.Text & "'", connection)
+                conn.Open()
+                Dim cmd As New SqlCommand("Update[dbo].[Student] SET [RegStatus] = '1' WHERE [Student_Id] = '" & lbkeepSID.Text & "'", conn)
                 cmd.CommandType = CommandType.Text
 
                 If (cmd.ExecuteNonQuery().Equals(1)) Then
@@ -753,7 +756,7 @@ Public Class frmHome
             Catch ex As Exception
                 MsgBox("Error in population the Database. Error is :" & ex.Message)
             Finally
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
@@ -772,9 +775,9 @@ Public Class frmHome
     End Sub
     Private Sub loadtransLedger()
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = " SELECT [TransactionDate] AS [Date],Transaction_id  AS [Reference], [AccNo] AS [Acc Number] ,(SELECT [Fname] +' '+ [Surname] FROM [dbo].[Student] WHERE [Student_Id] IN (SELECT [dbo].[Accounts].[Student_Id] FROM [dbo].[Accounts] WHERE [dbo].[accounts].[AccNo] = [dbo].[Transactions].[AccNo])) AS [Student],[TransactionType] AS [Type],[TransactionDescrp] AS [Description],[TransactionAmount] AS [Amount],[TransactionBal] AS [Balance] FROM [dbo].[Transactions] ORDER BY TransactionDate ASC"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "ledger")
             dgvLedger.DataSource = ds.Tables("ledger")
@@ -784,14 +787,14 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub txtsearchledger_TextChanged(sender As Object, e As EventArgs) Handles txtsearchledger.TextChanged
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = " SELECT Transaction_id  AS [Reference], [AccNo] AS [Acc Number] ,(SELECT [Fname] +' '+ [Surname] FROM [dbo].[Student] WHERE [Student_Id] IN (SELECT [dbo].[Accounts].[Student_Id] FROM [dbo].[Accounts] WHERE [dbo].[accounts].[AccNo] = [dbo].[Transactions].[AccNo])) AS [Student],[TransactionDate] AS [Date],[TransactionType] AS [Type],[TransactionDescrp] AS [Description],[TransactionAmount] AS [Amount],[TransactionBal] AS [Balance] FROM [dbo].[Transactions] WHERE [dbo].[Transactions].[AccNo] LIKE '" & txtsearchledger.Text & "%'  ORDER BY TransactionDate ASC"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "ledger")
             dgvLedger.DataSource = ds.Tables("ledger")
@@ -801,18 +804,18 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub LoadAccNo()
-        connection.Open()
-        Dim da1 As New SqlDataAdapter("SELECT AccNo FROM dbo.Accounts ORDER BY AccNo ASC", connection)
+        conn.Open()
+        Dim da1 As New SqlDataAdapter("SELECT AccNo FROM dbo.Accounts ORDER BY AccNo ASC", conn)
         Dim ds1 As New DataSet
         da1.Fill(ds1, "ACC")
         cmbxAccNo.DataSource = ds1.Tables(0)
         cmbxAccNo.DisplayMember = "AccNo"
         cmbxAccNo.ValueMember = "AccNo"
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub btnPost_Click(sender As Object, e As EventArgs) Handles btnPost.Click
@@ -832,8 +835,8 @@ Public Class frmHome
             If cmbxTranstype.Text = "Debit" Then 'increase Account Balacce by the transaction amount
 
                 Try
-                    connection.Open()
-                    Dim command As New SqlCommand("SELECT * FROM dbo.Accounts WHERE AccNo = '" & cmbxAccNo.SelectedValue & "'", connection)
+                    conn.Open()
+                    Dim command As New SqlCommand("SELECT * FROM dbo.Accounts WHERE AccNo = '" & cmbxAccNo.SelectedValue & "'", conn)
                     Dim dr As SqlDataReader = command.ExecuteReader()
                     If dr.HasRows Then
                         dr.Read()
@@ -841,7 +844,7 @@ Public Class frmHome
                         NewBal = (Bal + Convert.ToDouble(txtTransAmount.Text)).ToString
                         NewBal = Format(CInt(NewBal), "#,#")
                         'TextBox1.SelectionStart = TextBox1.Text.Length
-                        connection.Close()
+                        conn.Close()
                         Call PostNewBal()
                         Call PostTransaction()
                     End If
@@ -849,20 +852,20 @@ Public Class frmHome
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
-                    connection.Close()
+                    conn.Close()
                 End Try
             ElseIf cmbxTranstype.Text = "Credit" Then 'reduce Account Balance by the transaction amount
 
                 Try
-                    connection.Open()
-                    Dim command As New SqlCommand("SELECT * FROM dbo.Accounts WHERE AccNo = '" & cmbxAccNo.SelectedValue & "'", connection)
+                    conn.Open()
+                    Dim command As New SqlCommand("SELECT * FROM dbo.Accounts WHERE AccNo = '" & cmbxAccNo.SelectedValue & "'", conn)
                     Dim dr As SqlDataReader = command.ExecuteReader()
                     If dr.HasRows Then
                         dr.Read()
                         Bal = Convert.ToDouble(dr.Item("AccBal"))
                         NewBal = (Bal - Convert.ToDouble(txtTransAmount.Text)).ToString
                         NewBal = Format(CInt(NewBal), "#,#")
-                        connection.Close()
+                        conn.Close()
                         Call PostNewBal()
                         Call PostTransaction()
                     End If
@@ -870,7 +873,7 @@ Public Class frmHome
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
-                    connection.Close()
+                    conn.Close()
                 End Try
             End If
         End If
@@ -880,16 +883,16 @@ Public Class frmHome
         Dim Transaction_id As String = String.Empty
         Dim number As String = Nothing
         Try
-            Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM dbo.Transactions ORDER BY Transaction_id ASC", connection)
+            Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM dbo.Transactions ORDER BY Transaction_id ASC", conn)
             Dim adp As New SqlDataAdapter(cmd)
-            cmd.Connection.Open()
+            cmd.connection.Open()
             Dim ds As New Data.DataSet
             Dim dt As New Data.DataTable
             adp.Fill(ds)
             dt = ds.Tables(0)
             Dim count As Integer = dt.Rows.Count
             number = (count + 1).ToString()
-            cmd.Connection.Close()
+            cmd.connection.Close()
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception
@@ -901,53 +904,53 @@ Public Class frmHome
         Transaction_id = (yr + number).ToString
 
         Try
-            connection.Open()
-            Dim command As New SqlCommand("INSERT INTO dbo.Transactions (Transaction_id, AccNo, TransactionDate, TransactionType, TransactionDescrp, TransactionAmount,TransactionBal) VALUES ('" & Transaction_id & "','" & cmbxAccNo.SelectedValue & "','" & dtpTransactdate.Value.ToString & "','" & cmbxTranstype.Text & "','" & txtTransDescrp.Text & "','" & txtTransAmount.Text & "','" & NewBal & "')", connection)
+            conn.Open()
+            Dim command As New SqlCommand("INSERT INTO dbo.Transactions (Transaction_id, AccNo, TransactionDate, TransactionType, TransactionDescrp, TransactionAmount,TransactionBal) VALUES ('" & Transaction_id & "','" & cmbxAccNo.SelectedValue & "','" & dtpTransactdate.Value.ToString & "','" & cmbxTranstype.Text & "','" & txtTransDescrp.Text & "','" & txtTransAmount.Text & "','" & NewBal & "')", conn)
             command.ExecuteNonQuery()
-            connection.Close()
+            conn.Close()
             MsgBox("Trasaction Successful!", MsgBoxStyle.Information)
             ' Audit Trail
             Try
                 ipadd()
                 Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+                Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
                 cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                 cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                 cmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
                 cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                 cmd.Parameters.AddWithValue("@TransTyp", "Post Transaction")
                 cmd.Parameters.AddWithValue("@TransVal", Transaction_id + ", " + cmbxAccNo.SelectedValue + ", " + dtpTransactdate.Value.ToString + ", " + cmbxTranstype.Text + ", " + txtTransDescrp.Text + ", " + txtTransAmount.Text + ", " + NewBal)
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
                 cmd.ExecuteNonQuery().Equals(1)
-                connection.Close()
+                conn.Close()
 
             Catch ex As SqlException
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
             End Try
-            connection.Close()
+            conn.Close()
 
             txtTransAmount.Clear()
             txtTransDescrp.Clear()
             Call LoadAccNo()
         Catch ex As Exception
             MsgBox("Error in population the Database. Error is :" & ex.Message)
-            connection.Close()
+            conn.Close()
         End Try
 
     End Sub
 
     Private Sub PostNewBal()
         Try
-            connection.Open()
-            Dim command As New SqlCommand("UPDATE dbo.Accounts SET AccBal = '" & NewBal & "' WHERE AccNo = '" & cmbxAccNo.SelectedValue & "'", connection)
+            conn.Open()
+            Dim command As New SqlCommand("UPDATE dbo.Accounts SET AccBal = '" & NewBal & "' WHERE AccNo = '" & cmbxAccNo.SelectedValue & "'", conn)
             command.ExecuteNonQuery()
-            connection.Close()
+            conn.Close()
         Catch ex As Exception
             MsgBox("Error in population the Database. Error is :" & ex.Message)
-            connection.Close()
+            conn.Close()
         End Try
     End Sub
 
@@ -999,8 +1002,8 @@ Public Class frmHome
             Dim yrnow As Integer = Date.Now.Year
             Dim yos As String = Nothing
             Dim sqlstr As String = "SELECT [YOA] FROM [dbo].[Student] WHERE Student_id = '" & lbkeepSID.Text & "' "
-            Dim cmd As SqlCommand = New SqlCommand(sqlstr, connection)
-            connection.Open()
+            Dim cmd As SqlCommand = New SqlCommand(sqlstr, conn)
+            conn.Open()
             Dim reader1 As SqlDataReader = cmd.ExecuteReader()
             While reader1.Read
                 Dim yr As Integer = Convert.ToInt64(reader1("YOA"))
@@ -1009,7 +1012,7 @@ Public Class frmHome
 
                 lbmyClass.Text = lbkeepSID.Text.Substring(0, 3).ToString + yos
             End While
-            connection.Close()
+            conn.Close()
 
             cmbxSemCourses.Items.Clear()
             cmbxSemCourses.Items.Add("Semester 1")
@@ -1020,27 +1023,27 @@ Public Class frmHome
             Call loadcourses()
             Call loadstudentMajor()
             Dim theQuery As String = "SELECT * FROM [dbo].[Course_Student] WHERE Student_id = '" & lbkeepSID.Text & "' "
-            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, connection)
-            connection.Open()
+            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, conn)
+            conn.Open()
             Using reader As SqlDataReader = cmd1.ExecuteReader()
                 If reader.HasRows Then
-                    connection.Close()
+                    conn.Close()
                     Call loadselectedcorses()
                 End If
             End Using
-            connection.Close()
+            conn.Close()
         End If
     End Sub
 
     Public Sub loadcmbxProgMajor()
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT Prog_id, ProgName FROM dbo.Programme", connection)
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT Prog_id, ProgName FROM dbo.Programme", conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "prog")
         Me.cmbxProgMajor.DataSource = ds3.Tables(0)
         Me.cmbxProgMajor.ValueMember = "Prog_id"
         Me.cmbxProgMajor.DisplayMember = "ProgName"
-        connection.Close()
+        conn.Close()
 
     End Sub
 
@@ -1049,10 +1052,10 @@ Public Class frmHome
     Dim dgv As DataGridView = New DataGridView
     Private Sub loadcourses()
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Course_id] AS [Course Code], [CourseName] AS [Course Name], [CreditHours] AS [Credit Hours], [AssesmentType] AS [Assesment Type], [GradingSys] AS [Grading System] FROM [dbo].[Course] ORDER BY [CourseName] ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "Courses")
             dgv.DataSource = ds.Tables(0)
@@ -1091,34 +1094,34 @@ Public Class frmHome
 
     Public Sub regCourse()
         Try
-            connection.Open()
-            Dim command As New SqlCommand("INSERT INTO [dbo].[Course] ([Course_id], [CourseName], [CreditHours], [AssesmentType], [GradingSys]) VALUES ('" & txtCourseID.Text & "','" & txtCourseName.Text & "','" & txtCreditHours.Text & "','" & txtAssessmenttyp.Text & "','" & txtGradingSys.Text & "')", connection)
+            conn.Open()
+            Dim command As New SqlCommand("INSERT INTO [dbo].[Course] ([Course_id], [CourseName], [CreditHours], [AssesmentType], [GradingSys]) VALUES ('" & txtCourseID.Text & "','" & txtCourseName.Text & "','" & txtCreditHours.Text & "','" & txtAssessmenttyp.Text & "','" & txtGradingSys.Text & "')", conn)
             command.ExecuteNonQuery()
 
             MsgBox("Course Added successfully", MessageBoxIcon.Information)
-            connection.Close()
+            conn.Close()
             ' Audit Trail
             Try
                 ipadd()
                 Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+                Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
                 cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                 cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                 cmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
                 cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                 cmd.Parameters.AddWithValue("@TransTyp", "Add Course")
                 cmd.Parameters.AddWithValue("@TransVal", txtCourseID.Text + ", " + txtCourseName.Text + ", " + txtCreditHours.Text + ", " + txtAssessmenttyp.Text + ", " & txtGradingSys.Text)
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
                 cmd.ExecuteNonQuery().Equals(1)
-                connection.Close()
+                conn.Close()
 
             Catch ex As SqlException
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
             End Try
-            connection.Close()
+            conn.Close()
 
             txtCourseID.Clear()
             txtCourseName.Clear()
@@ -1128,7 +1131,7 @@ Public Class frmHome
 
         Catch ex As Exception
             MsgBox("Error in population the Database. Error is :" & ex.Message, MessageBoxIcon.Error)
-            connection.Close()
+            conn.Close()
         End Try
     End Sub
 
@@ -1180,34 +1183,34 @@ Public Class frmHome
 
             If MsgResult = Windows.Forms.DialogResult.Yes Then
                 Try
-                    connection.Open()
-                    Dim command As New SqlCommand("DELETE FROM [dbo].[Course] WHERE [Course_id] = '" & CID & "'", connection)
+                    conn.Open()
+                    Dim command As New SqlCommand("DELETE FROM [dbo].[Course] WHERE [Course_id] = '" & CID & "'", conn)
                     command.ExecuteNonQuery()
 
                     MsgBox("Course Edited successfully", MessageBoxIcon.Information)
-                    connection.Close()
+                    conn.Close()
                     ' Audit Trail
                     Try
                         ipadd()
                         Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                        Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+                        Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
                         cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                         cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                         cmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
                         cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                         cmd.Parameters.AddWithValue("@TransTyp", "Delete Course")
                         cmd.Parameters.AddWithValue("@TransVal", CID + ", " + CName + ", " + CrHrs)
-                        connection.Close()
-                        connection.Open()
+                        conn.Close()
+                        conn.Open()
                         cmd.ExecuteNonQuery().Equals(1)
-                        connection.Close()
+                        conn.Close()
 
                     Catch ex As SqlException
                         MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                     End Try
-                    connection.Close()
+                    conn.Close()
                     txtCourseID.Clear()
                     txtCourseName.Clear()
                     txtCreditHours.Clear()
@@ -1221,7 +1224,7 @@ Public Class frmHome
                     Call loadcourses()
                 Catch ex As Exception
                     MsgBox("Error in the Database Transaction. Error is :" & ex.Message, MessageBoxIcon.Error)
-                    connection.Close()
+                    conn.Close()
                 End Try
             End If
         End If
@@ -1244,34 +1247,34 @@ Public Class frmHome
             txtGradingSys.Focus()
         Else
             Try
-                connection.Open()
-                Dim command As New SqlCommand("UPDATE [dbo].[Course] SET [Course_id] = '" & txtCourseID.Text & "',[CourseName] = '" & txtCourseName.Text & "',[CreditHours] = '" & txtCreditHours.Text & "',[AssesmentType] = '" & txtAssessmenttyp.Text & "',[GradingSys] = '" & txtGradingSys.Text & "' WHERE [Course_id] = '" & Me.dgvManageCourses.SelectedRows(0).Cells(0).Value.ToString & "'", connection)
+                conn.Open()
+                Dim command As New SqlCommand("UPDATE [dbo].[Course] SET [Course_id] = '" & txtCourseID.Text & "',[CourseName] = '" & txtCourseName.Text & "',[CreditHours] = '" & txtCreditHours.Text & "',[AssesmentType] = '" & txtAssessmenttyp.Text & "',[GradingSys] = '" & txtGradingSys.Text & "' WHERE [Course_id] = '" & Me.dgvManageCourses.SelectedRows(0).Cells(0).Value.ToString & "'", conn)
                 command.ExecuteNonQuery()
 
                 MsgBox("Course Edited successfully", MessageBoxIcon.Information)
-                connection.Close()
+                conn.Close()
                 ' Audit Trail
                 Try
                     ipadd()
                     Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                    Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+                    Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
                     cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                     cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                     cmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
                     cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                     cmd.Parameters.AddWithValue("@TransTyp", "Add Course")
                     cmd.Parameters.AddWithValue("@TransVal", txtCourseID.Text + ", " + txtCourseName.Text + ", " + txtCreditHours.Text + ", " + txtAssessmenttyp.Text + ", " & txtGradingSys.Text)
-                    connection.Close()
-                    connection.Open()
+                    conn.Close()
+                    conn.Open()
                     cmd.ExecuteNonQuery().Equals(1)
-                    connection.Close()
+                    conn.Close()
 
                 Catch ex As SqlException
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                 End Try
-                connection.Close()
+                conn.Close()
                 txtCourseID.Clear()
                 txtCourseName.Clear()
                 txtCreditHours.Clear()
@@ -1290,7 +1293,7 @@ Public Class frmHome
                 Call loadcourses()
             Catch ex As Exception
                 MsgBox("Error in population the Database. Error is :" & ex.Message, MessageBoxIcon.Error)
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
@@ -1299,15 +1302,15 @@ Public Class frmHome
         Dim yrnow As Integer = Date.Now.Year
         Dim yos As String = Nothing
         Dim sqlstring As String = "SELECT [YOA] FROM [dbo].[Student] WHERE Student_id = '" & lbkeepSID.Text & "' "
-        Dim cmd As SqlCommand = New SqlCommand(sqlstring, connection)
-        connection.Open()
+        Dim cmd As SqlCommand = New SqlCommand(sqlstring, conn)
+        conn.Open()
         Dim reader1 As SqlDataReader = cmd.ExecuteReader()
         While reader1.Read
             Dim yr As String = reader1("YOA")
 
             yos = ((yrnow - yr) + 1).ToString
         End While
-        connection.Close()
+        conn.Close()
         If cmbxSemCourses.SelectedItem = Nothing Then
             MsgBox("Please select a Semester", MessageBoxIcon.Warning)
 
@@ -1321,20 +1324,20 @@ Public Class frmHome
             dgvSelectedCourses.ClearSelection()
             dgvdefaltmajors.Hide()
             Dim theQuery As String = "SELECT * FROM [dbo].[Course_Student] WHERE  [Course_id]= @CourseID and [Student_Id] = @SID "
-            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, connection)
+            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, conn)
             cmd1.Parameters.AddWithValue("@CourseID", Me.dgvCorses.SelectedRows(0).Cells(0).Value.ToString)
             cmd1.Parameters.AddWithValue("@SID", Me.lbkeepSID.Text)
-            connection.Open()
+            conn.Open()
             Using reader As SqlDataReader = cmd1.ExecuteReader()
                 If reader.HasRows Then
                     ' Course already exists, close connection
-                    connection.Close()
+                    conn.Close()
                 Else
 
                     Dim sqlstr As String = "INSERT INTO [dbo].[Course_Student]([Course_id], [Student_Id], [Semester], [YrOStudy]) VALUES (@CourseID, @SID, @Sem, @yr)"
                     Dim sqlstr1 As String = "UPDATE [dbo].[Course_Student] SET [Semester] = '" & cmbxSemCourses.SelectedItem & "',[YrOStudy] = '" & yos & "'WHERE [Semester] IS NULL and [YrOStudy] IS NULL"
-                    Dim command As New SqlCommand(sqlstr, connection)
-                    Dim command1 As New SqlCommand(sqlstr1, connection)
+                    Dim command As New SqlCommand(sqlstr, conn)
+                    Dim command1 As New SqlCommand(sqlstr1, conn)
                     command1.CommandType = CommandType.Text
                     command.CommandType = CommandType.Text
                     command.Parameters.AddWithValue("@CourseID", Me.dgvCorses.SelectedRows(0).Cells(0).Value.ToString)
@@ -1343,15 +1346,15 @@ Public Class frmHome
                     command.Parameters.AddWithValue("@yr", yos)
 
                     Try
-                        connection.Close()
-                        connection.Open()
+                        conn.Close()
+                        conn.Open()
                         command.ExecuteNonQuery()
                         command1.ExecuteNonQuery()
-                        connection.Close()
+                        conn.Close()
                         Call loadselectedcorses()
                     Catch ex As Exception
                         MsgBox("Error in population the Database. Error is :" & ex.Message, MessageBoxIcon.Error)
-                        connection.Close()
+                        conn.Close()
                     End Try
                 End If
             End Using
@@ -1361,14 +1364,14 @@ Public Class frmHome
         dgv = dgvdefaltmajors
 
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Course_id] AS [Course Code],(select [CourseName] from dbo.Course where Course_id = dbo.Major.Course_id) AS [Course Name],(SELECT [CreditHours] FROM [dbo].[Course] where [dbo].[Course].[Course_id] =[dbo].[Major].[Course_id]) AS [Credit Hours],(SELECT [AssesmentType] FROM [dbo].[Course] where [dbo].[Course].[Course_id] =[dbo].[Major].[Course_id]) AS [Assessment Type],(SELECT [GradingSys] FROM [dbo].[Course] where [dbo].[Course].[Course_id] =[dbo].[Major].[Course_id]) AS [Grading System] FROM [dbo].[Major] WHERE dbo.Major.Prog_id= '" & lbkeepSID.Text.Substring(0, 3).ToString & "' ORDER BY [Course_id] ASC"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "Courses")
             dgv.DataSource = ds.Tables(0)
             dgv.ClearSelection()
-            connection.Close()
+            conn.Close()
 
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
@@ -1384,39 +1387,39 @@ Public Class frmHome
 
                 Dim cellVal As String = dgv(0, i).Value
                 Dim theQuery As String = "SELECT * FROM [dbo].[Course_Student] WHERE  [Course_id]= @CourseID and [Student_Id] = @SID "
-                Dim cmd1 As SqlCommand = New SqlCommand(theQuery, connection)
+                Dim cmd1 As SqlCommand = New SqlCommand(theQuery, conn)
                 cmd1.Parameters.AddWithValue("@CourseID", cellVal)
                 cmd1.Parameters.AddWithValue("@SID", Me.lbkeepSID.Text)
-                connection.Open()
+                conn.Open()
                 Using reader As SqlDataReader = cmd1.ExecuteReader()
                     If Not reader.HasRows Then
                         Dim sqlstr As String = "INSERT INTO [dbo].[Course_Student]([Course_id], [Student_Id]) VALUES (@CourseID, @SID)"
-                        Dim command As New SqlCommand(sqlstr, connection)
+                        Dim command As New SqlCommand(sqlstr, conn)
                         command.CommandType = CommandType.Text
                         command.Parameters.AddWithValue("@CourseID", cellVal)
                         command.Parameters.AddWithValue("@SID", Me.lbkeepSID.Text)
                         Try
-                            connection.Close()
-                            connection.Open()
+                            conn.Close()
+                            conn.Open()
                             command.ExecuteNonQuery()
-                            connection.Close()
+                            conn.Close()
                             dgvSelectedCourses.Hide()
                             dgvdefaltmajors.ClearSelection()
                             dgvdefaltmajors.Show()
                         Catch ex As Exception
                             MsgBox("Error in population the Database. Error is :" & ex.Message, MessageBoxIcon.Error)
-                            connection.Close()
+                            conn.Close()
                         End Try
                     Else
                         dgvSelectedCourses.Show()
                         dgvSelectedCourses.ClearSelection()
                         dgvdefaltmajors.Hide()
-                        connection.Close()
+                        conn.Close()
                         Call loadselectedcorses()
                     End If
 
                 End Using
-                connection.Close()
+                conn.Close()
             Next
         End If
     End Sub
@@ -1449,39 +1452,39 @@ Public Class frmHome
         If dgvViwerMajors.Visible = True Then
 
             Dim sqlstr As String = "UPDATE [dbo].[Major] SET [Course_id] = @CourseID ,[Prog_id] = @ProgID, [YrOStudy] = @yr WHERE [Course_id] = '" & Me.dgvViwerMajors.SelectedRows(0).Cells(0).Value.ToString & "'"
-            Dim command As New SqlCommand(sqlstr, connection)
+            Dim command As New SqlCommand(sqlstr, conn)
             command.CommandType = CommandType.Text
             command.Parameters.AddWithValue("@CourseID", txtCourseIDMajor.Text)
             command.Parameters.AddWithValue("@ProgID", cmbxProgMajor.SelectedValue)
             command.Parameters.AddWithValue("@yr", NumericUpDown1.Value)
 
             Try
-                connection.Open()
+                conn.Open()
                 command.ExecuteNonQuery()
-                connection.Close()
+                conn.Close()
                 MsgBox("Major Edited successfully", MessageBoxIcon.Information)
                 ' Audit Trail
                 Try
                     ipadd()
                     Dim theQuery2 As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                    Dim cmd As SqlCommand = New SqlCommand(theQuery2, connection)
+                    Dim cmd As SqlCommand = New SqlCommand(theQuery2, conn)
                     cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                     cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                     cmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
                     cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                     cmd.Parameters.AddWithValue("@TransTyp", "Edit Major")
                     cmd.Parameters.AddWithValue("@TransVal", txtCourseIDMajor.Text + ", " + cmbxProgMajor.SelectedValue + ", " + NumericUpDown1.Value.ToString)
-                    connection.Close()
-                    connection.Open()
+                    conn.Close()
+                    conn.Open()
                     cmd.ExecuteNonQuery().Equals(1)
-                    connection.Close()
+                    conn.Close()
 
                 Catch ex As SqlException
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                 End Try
-                connection.Close()
+                conn.Close()
                 loadMajors()
                 btnSaveMajor.Hide()
                 btnEditMajor.Show()
@@ -1492,16 +1495,16 @@ Public Class frmHome
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
             Finally
-                connection.Close()
+                conn.Close()
             End Try
 
         Else
             Dim theQuery As String = "SELECT * FROM [dbo].[Major] WHERE  [Course_id]= @CourseID and [Prog_id]= @ProgID and [YrOStudy]=@yr"
-            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, connection)
+            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, conn)
             cmd1.Parameters.AddWithValue("@CourseID", txtCourseIDMajor.Text)
             cmd1.Parameters.AddWithValue("@ProgID", cmbxProgMajor.SelectedValue)
             cmd1.Parameters.AddWithValue("@yr", NumericUpDown1.Value)
-            connection.Open()
+            conn.Open()
             Using reader As SqlDataReader = cmd1.ExecuteReader()
                 If reader.HasRows Then
                     ' Course already exists
@@ -1511,15 +1514,15 @@ Public Class frmHome
                     btnSaveMajor.Hide()
                     txtCourseIDMajor.Clear()
                 Else
-                    connection.Close()
+                    conn.Close()
                     Dim sqlstr As String = "INSERT INTO [dbo].[Major] ([Course_id],[Prog_id],[YrOStudy]) VALUES (@CourseID, @ProgID, @yr)"
-                    Dim command As New SqlCommand(sqlstr, connection)
+                    Dim command As New SqlCommand(sqlstr, conn)
                     command.CommandType = CommandType.Text
                     command.Parameters.AddWithValue("@CourseID", txtCourseIDMajor.Text)
                     command.Parameters.AddWithValue("@ProgID", cmbxProgMajor.SelectedValue)
                     command.Parameters.AddWithValue("@yr", NumericUpDown1.Value)
                     Try
-                        connection.Open()
+                        conn.Open()
                         Dim count As Integer = command.ExecuteNonQuery()
                         If count > 0 Then
                             MsgBox("Major Added successfully", MessageBoxIcon.Information)
@@ -1527,7 +1530,7 @@ Public Class frmHome
                             Try
                                 ipadd()
                                 Dim theQuery2 As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                                Dim cmd As SqlCommand = New SqlCommand(theQuery2, connection)
+                                Dim cmd As SqlCommand = New SqlCommand(theQuery2, conn)
                                 cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                                 cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                                 cmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
@@ -1535,22 +1538,22 @@ Public Class frmHome
                                 cmd.Parameters.AddWithValue("@TransTyp", "Add Major")
                                 cmd.Parameters.AddWithValue("@TransVal", txtCourseIDMajor.Text + ", " + cmbxProgMajor.SelectedValue + ", " + NumericUpDown1.Value.ToString
                                                             )
-                                connection.Close()
-                                connection.Open()
+                                conn.Close()
+                                conn.Open()
                                 cmd.ExecuteNonQuery().Equals(1)
-                                connection.Close()
+                                conn.Close()
 
                             Catch ex As SqlException
                                 MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                             Catch ex As Exception
                                 MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                             End Try
-                            connection.Close()
+                            conn.Close()
 
                             btnAddMajor.Show()
                             gpbMagageCourseControls.Show()
                             btnSaveMajor.Hide()
-                            connection.Close()
+                            conn.Close()
                             btnViewMajors.PerformClick()
                         Else
                             MsgBox("FAILED!", MessageBoxIcon.Stop)
@@ -1561,11 +1564,11 @@ Public Class frmHome
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                     Finally
-                        connection.Close()
+                        conn.Close()
                     End Try
                 End If
             End Using
-            connection.Close()
+            conn.Close()
         End If
     End Sub
     Private Sub btnViewMagors_Click(sender As Object, e As EventArgs) Handles btnViewMajors.Click
@@ -1587,10 +1590,10 @@ Public Class frmHome
     Private Sub loadMajors()
         dgv = dgvViwerMajors
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Course_id] AS [Course Code],(select [CourseName] from dbo.Course where Course_id = dbo.Major.Course_id) AS [Course Name] ,[Prog_id] AS [Programme Code],(select ProgName From dbo.Programme where Prog_id = dbo.Major.Prog_id)AS [Programme Name], [YrOStudy]AS [Year Of Study] FROM [dbo].[Major] ORDER BY [Course_id] ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "Courses")
             dgv.DataSource = ds.Tables(0)
@@ -1659,10 +1662,10 @@ Public Class frmHome
         dgvdefaltmajors.Hide()
         dgv = dgvSelectedCourses
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Course_id] AS [Course Code],(select [CourseName] from dbo.Course where Course_id = [dbo].[Course_Student].[Course_id]) AS [Course Name],(SELECT [CreditHours] FROM [dbo].[Course] where [dbo].[Course].[Course_id] =[dbo].[Course_Student].[Course_id]) AS [Credit Hours],(SELECT [AssesmentType] FROM [dbo].[Course] where [dbo].[Course].[Course_id] =[dbo].[Course_Student].[Course_id]) AS [Assessment Type],(SELECT [GradingSys] FROM [dbo].[Course] where [dbo].[Course].[Course_id] =[dbo].[Course_Student].[Course_id]) AS [Grading System] FROM [dbo].[Course_Student] WHERE [dbo].[Course_Student].[Student_Id]= '" & lbkeepSID.Text & "' ORDER BY [Course_id] ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "Courses")
             dgv.DataSource = ds.Tables(0)
@@ -1685,41 +1688,41 @@ Public Class frmHome
 
             Dim cellval As String = Me.dgv.SelectedRows(0).Cells(0).Value.ToString
             Dim theQuery As String = "SELECT * FROM [dbo].[Major] WHERE  [Course_id]= @CourseID and [Prog_id] = @SID "
-            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, connection)
+            Dim cmd1 As SqlCommand = New SqlCommand(theQuery, conn)
             cmd1.Parameters.AddWithValue("@CourseID", cellval)
             cmd1.Parameters.AddWithValue("@SID", Me.lbkeepSID.Text.Substring(0, 3).ToString)
-            connection.Open()
+            conn.Open()
             Using reader As SqlDataReader = cmd1.ExecuteReader()
                 If Not reader.HasRows Then
                     Dim sqlstr As String = "DELETE FROM [dbo].[Course_Student] WHERE [Course_id] = @CourseID AND [Student_Id] = @SID"
-                    Dim command As New SqlCommand(sqlstr, connection)
+                    Dim command As New SqlCommand(sqlstr, conn)
                     command.CommandType = CommandType.Text
                     command.Parameters.AddWithValue("@CourseID", cellval)
                     command.Parameters.AddWithValue("@SID", Me.lbkeepSID.Text)
                     Try
-                        connection.Close()
-                        connection.Open()
+                        conn.Close()
+                        conn.Open()
                         command.ExecuteNonQuery()
-                        connection.Close()
+                        conn.Close()
                         dgvSelectedCourses.Show()
                         dgvdefaltmajors.ClearSelection()
                         dgvdefaltmajors.Hide()
                         Call loadselectedcorses()
                     Catch ex As Exception
                         MsgBox("Error in population the Database. Error is :" & ex.Message, MessageBoxIcon.Error)
-                        connection.Close()
+                        conn.Close()
                     End Try
                 Else
                     MsgBox("YOU CAN NOT REMOVE A MAJOR!", MessageBoxIcon.Warning)
                     dgvSelectedCourses.Show()
                     dgvSelectedCourses.ClearSelection()
                     dgvdefaltmajors.Hide()
-                    connection.Close()
+                    conn.Close()
                     Call loadselectedcorses()
                 End If
 
             End Using
-            connection.Close()
+            conn.Close()
             'Next
         End If
     End Sub
@@ -1730,7 +1733,7 @@ Public Class frmHome
         dgvSelectedCourses.Hide()
         dgvdefaltmajors.ClearSelection()
         dgvdefaltmajors.Show()
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub btnbacktoselected_Click(sender As Object, e As EventArgs) Handles btnbacktoselected.Click
@@ -1739,7 +1742,7 @@ Public Class frmHome
         dgvSelectedCourses.Hide()
         dgvdefaltmajors.ClearSelection()
         dgvdefaltmajors.Show()
-        connection.Close()
+        conn.Close()
         Call loadselectedcorses()
     End Sub
 
@@ -1772,8 +1775,8 @@ Public Class frmHome
         'grpbxFinance.BringToFront()
         AccNum.ShowDialog()
 
-        connection.Open()
-        Dim command1 As New SqlCommand("SELECT [AccNo],[Student_Id],[AccBal]FROM [dbo].[Accounts] WHERE [AccNo] ='" & acc & "'", connection)
+        conn.Open()
+        Dim command1 As New SqlCommand("SELECT [AccNo],[Student_Id],[AccBal]FROM [dbo].[Accounts] WHERE [AccNo] ='" & acc & "'", conn)
         Try
             Dim reader1 As SqlDataReader = command1.ExecuteReader()
             While reader1.Read
@@ -1786,11 +1789,11 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         Finally
-            connection.Close()
+            conn.Close()
         End Try
 
-        connection.Open()
-        Dim command As New SqlCommand("SELECT Student_Id, Fname, Surname, RegStatus FROM dbo.Student WHERE  Student_Id = '" & lbSID.Text & "'", connection)
+        conn.Open()
+        Dim command As New SqlCommand("SELECT Student_Id, Fname, Surname, RegStatus FROM dbo.Student WHERE  Student_Id = '" & lbSID.Text & "'", conn)
         Try
             Dim reader As SqlDataReader = command.ExecuteReader()
             While reader.Read
@@ -1802,7 +1805,7 @@ Public Class frmHome
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         Finally
-            connection.Close()
+            conn.Close()
         End Try
     End Sub
     Dim MsgResult As Integer
@@ -1815,17 +1818,17 @@ Public Class frmHome
                 ipadd()
 
                 Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+                Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
                 cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                 cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                 cmd.Parameters.AddWithValue("@Utyp", lbusertype.Text)
                 cmd.Parameters.AddWithValue("@ipAdd", Ipaddress) 'System.Net.Dns.GetHostAddresses(System.Net.Dns.GetHostName()).GetValue(0).ToString())
                 cmd.Parameters.AddWithValue("@TransTyp", ExitToolStripMenuItem.Text)
                 cmd.Parameters.AddWithValue("@TransVal", Login.txtUname.Text + ", " + Login.txtPword.Text) '"Username: " + txtUname.Text + ", Password: " + txtPword.Text
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
                 cmd.ExecuteNonQuery().Equals(1)
-                connection.Close()
+                conn.Close()
 
             Catch ex As Exception
                 MsgBox("An error has occured")
@@ -1891,7 +1894,7 @@ Public Class frmHome
         Else
             selector = cmbxstudentselect.SelectedValue
             Call getstudentinfo()
-            connection.Close()
+            conn.Close()
         End If
     End Sub
 
@@ -1989,41 +1992,41 @@ Public Class frmHome
 
         Else
             Try
-                connection.Open()
-                Dim cmd As New SqlCommand("UPDATE dbo.Student SET OtherName = '" & txtSPOnames.Text & "', DOB = '" & dtpSPDOB.Value & "', Gender = '" & cmbGender.Text & "', HomeVillage = '" & txtSPVillage.Text & "', TradAuth = '" & txtSPTA.Text & "', District = '" & txtSPDistrict.Text & "', Nationality = '" & txtSPNationality.Text & "', PostalAddress = '" & txtSPPOBox.Text & "', EmailAddress = '" & txtSPEmail.Text & "', MobileNo = '" & txtSPMobile.Text & "', CurResi = '" & txtSPCResidence.Text & "', YOA = '" & dtpYOA.Text & "', TOA = '" & txtTOA.Text & "', Accommodation = '" & txtAccomodation.Text & "' WHERE Student_Id = '" & txtSPSID.Text & "'", connection)
+                conn.Open()
+                Dim cmd As New SqlCommand("UPDATE dbo.Student SET OtherName = '" & txtSPOnames.Text & "', DOB = '" & dtpSPDOB.Value & "', Gender = '" & cmbGender.Text & "', HomeVillage = '" & txtSPVillage.Text & "', TradAuth = '" & txtSPTA.Text & "', District = '" & txtSPDistrict.Text & "', Nationality = '" & txtSPNationality.Text & "', PostalAddress = '" & txtSPPOBox.Text & "', EmailAddress = '" & txtSPEmail.Text & "', MobileNo = '" & txtSPMobile.Text & "', CurResi = '" & txtSPCResidence.Text & "', YOA = '" & dtpYOA.Text & "', TOA = '" & txtTOA.Text & "', Accommodation = '" & txtAccomodation.Text & "' WHERE Student_Id = '" & txtSPSID.Text & "'", conn)
                 cmd.CommandType = CommandType.Text
 
-                Dim cmd1 As New SqlCommand("UPDATE [dbo].[NOK] SET [Student_Id] = '" & cmbxstudentselect.SelectedValue & "', [FirstName] = '" & txtNOKFname.Text & "', [Surname] = '" & txtNOKSurname.Text & "', [Title] = '" & txtNOKtittle.Text & "', [NOKResi] = '" & txtNOKCResidence.Text & "', [Mobile_Number] = '" & txtNOKMobile.Text & "', [Email] = '" & txtNOKEmail.Text & "', [Postal] = '" & txtNOKPOBox.Text & "', [Relationship] = '" & txtNOKRelationship.Text & "' WHERE [Student_Id] = '" & cmbxstudentselect.SelectedValue & "'", connection)
+                Dim cmd1 As New SqlCommand("UPDATE [dbo].[NOK] SET [Student_Id] = '" & cmbxstudentselect.SelectedValue & "', [FirstName] = '" & txtNOKFname.Text & "', [Surname] = '" & txtNOKSurname.Text & "', [Title] = '" & txtNOKtittle.Text & "', [NOKResi] = '" & txtNOKCResidence.Text & "', [Mobile_Number] = '" & txtNOKMobile.Text & "', [Email] = '" & txtNOKEmail.Text & "', [Postal] = '" & txtNOKPOBox.Text & "', [Relationship] = '" & txtNOKRelationship.Text & "' WHERE [Student_Id] = '" & cmbxstudentselect.SelectedValue & "'", conn)
                 cmd1.CommandType = CommandType.Text
 
-                Dim cmd2 As New SqlCommand("UPDATE dbo.Student SET EmailAddress = '" & txtSPEmail.Text & "', MobileNo = '" & txtSPMobile.Text & "' WHERE Student_Id = '" & txtSPSID.Text & "'", connection)
+                Dim cmd2 As New SqlCommand("UPDATE dbo.Student SET EmailAddress = '" & txtSPEmail.Text & "', MobileNo = '" & txtSPMobile.Text & "' WHERE Student_Id = '" & txtSPSID.Text & "'", conn)
                 cmd2.CommandType = CommandType.Text
                 If lbusertype.Text = "Student" Then
                     If (cmd2.ExecuteNonQuery().Equals(1)) Then
                         MsgBox("SAVE SUCCESSFUL!", MessageBoxIcon.Information)
-                        connection.Close()
+                        conn.Close()
                     Else
                         MsgBox("SAVE FAILED!", MsgBoxStyle.Critical, MsgBoxStyle.DefaultButton1)
-                        connection.Close()
+                        conn.Close()
                     End If
                 Else
                     If (cmd.ExecuteNonQuery().Equals(1)) And (cmd1.ExecuteNonQuery().Equals(1)) Then
                         MsgBox("SAVE SUCCESSFUL!", MessageBoxIcon.Information)
-                        connection.Close()
+                        conn.Close()
                     Else
                         MsgBox("SAVE FAILED!", MsgBoxStyle.Critical, MsgBoxStyle.DefaultButton1)
-                        connection.Close()
+                        conn.Close()
                     End If
                 End If
             Catch ex As Exception
                 MsgBox("Error in Saving. Error is :" & ex.Message, MessageBoxIcon.Warning)
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
 
     Private Sub SystemBackupToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SystemBackupToolStripMenuItem.Click
-        connection.Close()
+        conn.Close()
         SystemBackup.ShowDialog()
     End Sub
 
@@ -2044,39 +2047,39 @@ Public Class frmHome
 
                 If MsgResult = Windows.Forms.DialogResult.Yes Then
                     Dim sqlstr As String = "DELETE FROM [dbo].[Major] WHERE [Course_id] = @CourseID And [Prog_id] = @ProgID And [YrOStudy] = @yr"
-                    Dim command As New SqlCommand(sqlstr, connection)
+                    Dim command As New SqlCommand(sqlstr, conn)
                     command.CommandType = CommandType.Text
                     command.Parameters.AddWithValue("@CourseID", Me.dgvViwerMajors.SelectedRows(0).Cells(0).Value.ToString)
                     command.Parameters.AddWithValue("@ProgID", Me.dgvViwerMajors.SelectedRows(0).Cells(2).Value.ToString)
                     command.Parameters.AddWithValue("@yr", Me.dgvViwerMajors.SelectedRows(0).Cells(4).Value.ToString)
 
                     Try
-                        connection.Open()
+                        conn.Open()
                         command.ExecuteNonQuery()
-                        connection.Close()
+                        conn.Close()
                         MsgBox("Major Deleted successfully", MessageBoxIcon.Information)
                         ' Audit Trail
                         Try
                             ipadd()
                             Dim theQuery2 As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                            Dim cmd As SqlCommand = New SqlCommand(theQuery2, connection)
+                            Dim cmd As SqlCommand = New SqlCommand(theQuery2, conn)
                             cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                             cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                             cmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
                             cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                             cmd.Parameters.AddWithValue("@TransTyp", "Delete Major")
                             cmd.Parameters.AddWithValue("@TransVal", Me.dgvViwerMajors.SelectedRows(0).Cells(0).Value.ToString + ", " + Me.dgvViwerMajors.SelectedRows(0).Cells(2).Value.ToString + ", " + Me.dgvViwerMajors.SelectedRows(0).Cells(4).Value.ToString)
-                            connection.Close()
-                            connection.Open()
+                            conn.Close()
+                            conn.Open()
                             cmd.ExecuteNonQuery().Equals(1)
-                            connection.Close()
+                            conn.Close()
 
                         Catch ex As SqlException
                             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                         Catch ex As Exception
                             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                         End Try
-                        connection.Close()
+                        conn.Close()
                         loadMajors()
                         btnSaveMajor.Hide()
                         btnEditMajor.Show()
@@ -2087,7 +2090,7 @@ Public Class frmHome
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                     Finally
-                        connection.Close()
+                        conn.Close()
                     End Try
                 End If
             End If
@@ -2175,10 +2178,10 @@ Public Class frmHome
         Try
             Dim ds As New DataSet
             Dim ds1 As New DataSet
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "SELECT [Lecturer_id] AS [LECTURER ID], [FirstName] AS [FIRST NAME], [MiddleName] AS [MIDDLE NAME], [Surname] AS [SURNAME],(SELECT [DeptName] FROM [dbo].[Department] WHERE [Dept_id]=[dbo].[Lecturers].[Dept_id]) AS [DEPARTMENT],[Tittle] AS [TITTLE], [Phone] AS [PHONE], [Email] AS [EMAIL] FROM [dbo].[Lecturers]"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             da.Fill(ds, "Lect")
             dgvlecturers.DataSource = ds.Tables("Lect")
             dgvlecturers.ClearSelection()
@@ -2188,7 +2191,7 @@ Public Class frmHome
 
             End If
 
-            connection.Close()
+            conn.Close()
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception
@@ -2197,14 +2200,14 @@ Public Class frmHome
     End Sub
 
     Sub cmbDeptload()
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("Select Dept_id, DeptName FROM dbo.Department", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("Select Dept_id, DeptName FROM dbo.Department", conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "dept")
         cmbxALDept.DataSource = ds2.Tables(0)
         cmbxALDept.ValueMember = "Dept_id"
         cmbxALDept.DisplayMember = "DeptName"
-        connection.Close()
+        conn.Close()
         cmbxALDept.Text = Nothing
     End Sub
 
@@ -2253,10 +2256,10 @@ Public Class frmHome
             Else
                 OtR = cmbxOR.SelectedItem
             End If
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "Select [Lecturer_id] FROM [dbo].[Lecturers]"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim dt As New DataTable
             da.Fill(dt)
             If dt.Rows.Count <= 0 Then
@@ -2270,22 +2273,22 @@ Public Class frmHome
                     lectid = "" & cmbxALDept.SelectedValue & "-LEC" & countid + 1 & ""
 
                 Next
-                connection.Close()
+                conn.Close()
             End If
             Try
-                connection.Close()
-                connection.Open()
-                Dim command1 As New SqlCommand("Select [Lecturer_id],[FirstName],[MiddleName],[Surname] FROM [dbo].[Lecturers] WHERE [FirstName] = '" & txtLectFname.Text & "' AND [MiddleName] = '" & txtLectMname.Text & "'AND [Surname] = '" & txtLectSname.Text & "'", connection)
+                conn.Close()
+                conn.Open()
+                Dim command1 As New SqlCommand("Select [Lecturer_id],[FirstName],[MiddleName],[Surname] FROM [dbo].[Lecturers] WHERE [FirstName] = '" & txtLectFname.Text & "' AND [MiddleName] = '" & txtLectMname.Text & "'AND [Surname] = '" & txtLectSname.Text & "'", conn)
 
                 Dim reader1 As SqlDataReader = command1.ExecuteReader()
                 Try
                     If reader1.Read = True Then
                         MessageBox.Show("Lecturer Already exists in the System!", "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Else
-                        connection.Close()
-                        connection.Open()
+                        conn.Close()
+                        conn.Open()
                         Dim strSQL1 As String = "SELECT [Tittle] FROM [dbo].[Lecturers] WHERE [Dept_id] = '" & cmbxALDept.SelectedValue & "' AND [Tittle] ='" & OtR & "'"
-                        Dim da1 As New SqlDataAdapter(strSQL1, connection)
+                        Dim da1 As New SqlDataAdapter(strSQL1, conn)
                         Dim dt1 As New DataTable
                         Try
                             da1.Fill(dt1)
@@ -2307,27 +2310,27 @@ Public Class frmHome
                             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                         End Try
                         If insert = "Yes" Then
-                            connection.Close()
-                            connection.Open()
-                            Dim command2 As New SqlCommand("INSERT INTO [dbo].[Lecturers]([Lecturer_id], [FirstName], [MiddleName], [Surname], [Dept_id], [Tittle], [Phone], [Email]) VALUES('" & lectid & "','" & txtLectFname.Text & "','" & txtLectMname.Text & "','" & txtLectSname.Text & "','" & cmbxALDept.SelectedValue & "','" & OtR & "','" & txtLectMNum.Text & "','" & txtLectEmail.Text & "')", connection)
+                            conn.Close()
+                            conn.Open()
+                            Dim command2 As New SqlCommand("INSERT INTO [dbo].[Lecturers]([Lecturer_id], [FirstName], [MiddleName], [Surname], [Dept_id], [Tittle], [Phone], [Email]) VALUES('" & lectid & "','" & txtLectFname.Text & "','" & txtLectMname.Text & "','" & txtLectSname.Text & "','" & cmbxALDept.SelectedValue & "','" & OtR & "','" & txtLectMNum.Text & "','" & txtLectEmail.Text & "')", conn)
                             command2.ExecuteNonQuery()
-                            connection.Close()
+                            conn.Close()
                             dgvlectload()
                             ' Audit Trail
                             Try
                                 ipadd()
                                 Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                                Dim cmmd As SqlCommand = New SqlCommand(theQuery, connection)
+                                Dim cmmd As SqlCommand = New SqlCommand(theQuery, conn)
                                 cmmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                                 cmmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                                 cmmd.Parameters.AddWithValue("@Utyp", Me.lbusertype.Text)
                                 cmmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                                 cmmd.Parameters.AddWithValue("@TransTyp", "Add Lecturer")
                                 cmmd.Parameters.AddWithValue("@TransVal", lectid + ", " + txtLectFname.Text + " " + txtLectSname.Text + ", " + cmbxALDept.SelectedValue + ", " + txtLectMNum.Text)
-                                connection.Close()
-                                connection.Open()
+                                conn.Close()
+                                conn.Open()
                                 cmmd.ExecuteNonQuery().Equals(1)
-                                connection.Close()
+                                conn.Close()
 
                             Catch ex As Exception
                                 MsgBox("Audit Trail Error! ", ex.Message, MessageBoxIcon.Warning)
@@ -2423,30 +2426,30 @@ Public Class frmHome
     End Sub
 
     Private Sub llExamNum_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles llExamNum.LinkClicked
-        connection.Close()
-        connection.Open()
-        Dim command As New SqlCommand("SELECT * FROM [dbo].[Exam] WHERE [Student_id] = '" & lbkeepSID.Text & "' And [AcademicYear] = '" & Acyear & "'", connection)
+        conn.Close()
+        conn.Open()
+        Dim command As New SqlCommand("SELECT * FROM [dbo].[Exam] WHERE [Student_id] = '" & lbkeepSID.Text & "' And [AcademicYear] = '" & Acyear & "'", conn)
         Dim dr As SqlDataReader = command.ExecuteReader()
         dr.Read()
         Tuition_Management.txtViewExamNum.Text = dr("ExamNum").ToString
         dr.Close()
-        connection.Close()
+        conn.Close()
         Tuition_Management.ShowDialog()
 
     End Sub
     Private Sub acYrSem()
         Dim strSQL As String = "SELECT * FROM [dbo].[AcademicYear] ORDER BY [YrEnd] DESC"
-        Dim da As New SqlDataAdapter(strSQL, connection)
+        Dim da As New SqlDataAdapter(strSQL, conn)
         Dim dt As New DataTable
-        connection.Close()
-        connection.Open()
+        conn.Close()
+        conn.Open()
         da.Fill(dt)
 
         If dt.Rows.Count <= 0 Then
-            connection.Close()
+            conn.Close()
             tssAcYr.Text = "" & Date.Now.Year.ToString & " Academic Year"
             tssSem.Text = "NULL"
-            connection.Close()
+            conn.Close()
 
         Else
             For Each dr As DataRow In dt.Rows
@@ -2454,42 +2457,42 @@ Public Class frmHome
                 If Date.Now > Convert.ToDateTime(dr("YrBegin")) And Date.Now < Convert.ToDateTime(dr("YrBreak")) Then
                     tssAcYr.Text = " Academic Year " & Date.Now.Year.ToString & ""
                     tssSem.Text = ",  Semester 1"
-                    connection.Close()
+                    conn.Close()
                     Exit For
                 ElseIf Date.Now > Convert.ToDateTime(dr("YrResume")) And Date.Now < Convert.ToDateTime(dr("YrEnd")) Then
                     tssAcYr.Text = " Academic Year " & Date.Now.Year.ToString & ""
                     tssSem.Text = ",  Semester 2"
-                    connection.Close()
+                    conn.Close()
                     Exit For
                 End If
 
             Next
-            connection.Close()
+            conn.Close()
         End If
-        connection.Close()
+        conn.Close()
     End Sub
 
     Sub cmbxTTClassload()
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("SELECT [Class_Id] FROM [dbo].[Class] ORDER BY [Class_Id] ASC", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("SELECT [Class_Id] FROM [dbo].[Class] ORDER BY [Class_Id] ASC", conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "Class")
         CmbxttClass.DataSource = ds2.Tables(0)
         CmbxttClass.ValueMember = "Class_Id"
         CmbxttClass.DisplayMember = "Class_Id"
-        connection.Close()
+        conn.Close()
         CmbxttClass.Text = Nothing
     End Sub
 
     Sub cmbxlectload()
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("SELECT [Lecturer_id], ([FirstName] +' '+[Surname]) AS [Name] FROM [dbo].[Lecturers] ORDER BY [Lecturer_id] ASC", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("SELECT [Lecturer_id], ([FirstName] +' '+[Surname]) AS [Name] FROM [dbo].[Lecturers] ORDER BY [Lecturer_id] ASC", conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "Lect")
         cmbxlect.DataSource = ds2.Tables(0)
         cmbxlect.ValueMember = "Lecturer_id"
         cmbxlect.DisplayMember = "Name"
-        connection.Close()
+        conn.Close()
         cmbxlect.Text = Nothing
     End Sub
 
@@ -2519,19 +2522,19 @@ Public Class frmHome
             dtpttEnd.Focus()
         Else
 
-            connection.Close()
-            connection.Open()
-            Dim command As New SqlCommand("SELECT * FROM [dbo].[TimeTable] ORDER BY [Lecturer_id]", connection)
+            conn.Close()
+            conn.Open()
+            Dim command As New SqlCommand("SELECT * FROM [dbo].[TimeTable] ORDER BY [Lecturer_id]", conn)
             Dim reader As SqlDataReader = command.ExecuteReader()
             Try
                 reader.Read()
 
                 If Not reader.HasRows Then
-                    connection.Close()
-                    connection.Open()
-                    Dim command2 As New SqlCommand("INSERT INTO [dbo].[TimeTable] ([Class_Id],[Course_id],[Lecturer_id],[Room],[DayOfLecture],[StartTime],[EndTime]) VALUES ('" & CmbxttClass.SelectedValue & "','" & cmbxCourseIDTT.SelectedValue & "','" & cmbxlect.SelectedValue & "','" & txtRoom.Text & "','" & cmbxDays.SelectedItem & "','" & dtpttAStart.Text & "','" & dtpttEnd.Text & "')", connection)
+                    conn.Close()
+                    conn.Open()
+                    Dim command2 As New SqlCommand("INSERT INTO [dbo].[TimeTable] ([Class_Id],[Course_id],[Lecturer_id],[Room],[DayOfLecture],[StartTime],[EndTime]) VALUES ('" & CmbxttClass.SelectedValue & "','" & cmbxCourseIDTT.SelectedValue & "','" & cmbxlect.SelectedValue & "','" & txtRoom.Text & "','" & cmbxDays.SelectedItem & "','" & dtpttAStart.Text & "','" & dtpttEnd.Text & "')", conn)
                     command2.ExecuteNonQuery()
-                    connection.Close()
+                    conn.Close()
                     MessageBox.Show("Timetable Entry Successful!", "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     CmbxttClass.Text = Nothing
                     cmbxCourseIDTT.Text = Nothing
@@ -2552,11 +2555,11 @@ Public Class frmHome
                         MessageBox.Show("Lecturer Specified is engaged, Please select another Lecturer!")
 
                     Else
-                        connection.Close()
-                        connection.Open()
-                        Dim command2 As New SqlCommand("INSERT INTO [dbo].[TimeTable] ([Class_Id],[Course_id],[Lecturer_id],[Room],[DayOfLecture],[StartTime],[EndTime]) VALUES ('" & CmbxttClass.SelectedValue & "','" & cmbxCourseIDTT.SelectedValue & "','" & cmbxlect.SelectedValue & "','" & txtRoom.Text & "','" & cmbxDays.SelectedItem & "','" & dtpttAStart.Text & "','" & dtpttEnd.Text & "')", connection)
+                        conn.Close()
+                        conn.Open()
+                        Dim command2 As New SqlCommand("INSERT INTO [dbo].[TimeTable] ([Class_Id],[Course_id],[Lecturer_id],[Room],[DayOfLecture],[StartTime],[EndTime]) VALUES ('" & CmbxttClass.SelectedValue & "','" & cmbxCourseIDTT.SelectedValue & "','" & cmbxlect.SelectedValue & "','" & txtRoom.Text & "','" & cmbxDays.SelectedItem & "','" & dtpttAStart.Text & "','" & dtpttEnd.Text & "')", conn)
                         command2.ExecuteNonQuery()
-                        connection.Close()
+                        conn.Close()
                         MessageBox.Show("Timetable Entry Successful!", "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         CmbxttClass.Text = Nothing
                         cmbxCourseIDTT.Text = Nothing
@@ -2570,21 +2573,21 @@ Public Class frmHome
             Catch ex As Exception
                 MessageBox.Show("Error :" + ex.Message, "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Finally
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
 
     Sub cmbxTTSClassload()
 
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("Select [Class_Id] FROM [dbo].[Class] ORDER BY [Class_Id] ASC", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("Select [Class_Id] FROM [dbo].[Class] ORDER BY [Class_Id] ASC", conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "Class")
         cmbxTTSclass.DataSource = ds2.Tables(0)
         cmbxTTSclass.ValueMember = "Class_Id"
         cmbxTTSclass.DisplayMember = "Class_Id"
-        connection.Close()
+        conn.Close()
         cmbxTTSclass.Text = Nothing
     End Sub
 
@@ -2593,10 +2596,10 @@ Public Class frmHome
         Try
             Dim ds As New DataSet
             Dim ds1 As New DataSet
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "Select [Course_id] As [Course], (SELECT [FirstName]+' '+[MiddleName]+' '+[Surname] FROM [dbo].[Lecturers] WHERE [Lecturer_id] = [dbo].[TimeTable].[Lecturer_id]) As [Lecturer] , [Room], [DayOfLecture] As [Day], [StartTime] AS [Start Time], [EndTime] AS [End Time] FROM [dbo].[TimeTable] WHERE Class_Id = '" + cmbxTTSclass.Text + "'"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             da.Fill(ds, "TT")
             dgvtimetable.DataSource = ds.Tables("TT")
             dgvtimetable.ClearSelection()
@@ -2606,11 +2609,11 @@ Public Class frmHome
 
             End If
 
-            connection.Close()
+            conn.Close()
         Catch ex As SqlException
-        MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception
-        MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
 
     End Sub
@@ -2641,11 +2644,11 @@ Public Class frmHome
             Try
                 Dim ds As New DataSet
                 Dim ds1 As New DataSet
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
                 '[Class_Id] As [Class]
                 Dim strSQL As String = "SELECT [Course_id] As [Course], (SELECT [FirstName]+' '+[MiddleName]+' '+[Surname] FROM [dbo].[Lecturers] WHERE [Lecturer_id] = [dbo].[TimeTable].[Lecturer_id]) As [Lecturer] , [Room], [DayOfLecture] As [Day], [StartTime] AS [Start Time], [EndTime] AS [End Time] FROM [dbo].[TimeTable] WHERE Class_Id = '" + cmbxTTSclass.Text + "' And [DayOfLecture] ='" + cmbxdayFilter.Text + "' ORDER BY [StartTime]"
-                Dim da As New SqlDataAdapter(strSQL, connection)
+                Dim da As New SqlDataAdapter(strSQL, conn)
                 da.Fill(ds, "TT")
                 dgvtimetable.DataSource = ds.Tables("TT")
                 dgvtimetable.ClearSelection()
@@ -2654,7 +2657,7 @@ Public Class frmHome
                     tt.Rows.Clear()
 
                 End If
-                connection.Close()
+                conn.Close()
             Catch ex As SqlException
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
             Catch ex As Exception
@@ -2663,14 +2666,14 @@ Public Class frmHome
         End If
     End Sub
     Sub cmbxttslectload()
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("SELECT [Lecturer_id], ([FirstName] +' '+[MiddleName]+' '+[Surname]) AS [Name] FROM [dbo].[Lecturers] ORDER BY [Lecturer_id] ASC", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("SELECT [Lecturer_id], ([FirstName] +' '+[MiddleName]+' '+[Surname]) AS [Name] FROM [dbo].[Lecturers] ORDER BY [Lecturer_id] ASC", conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "Lect")
         cmbxttSLect.DataSource = ds2.Tables(0)
         cmbxttSLect.ValueMember = "Lecturer_id"
         cmbxttSLect.DisplayMember = "Name"
-        connection.Close()
+        conn.Close()
         cmbxttSLect.Text = Nothing
     End Sub
 
@@ -2711,32 +2714,32 @@ Public Class frmHome
             Try
                 Dim ds As New DataSet
                 'Dim ds1 As New DataSet
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
 
                 If Not cmbxdayFilter.Text = Nothing And CheckLecDy.Checked = True Then
                     If tt.Rows.Count > 0 Then
                         tt.Rows.Clear()
                     End If
                     Dim strSQL1 As String = "SELECT [Course_id] As [Course], (SELECT [FirstName] +' '+ [MiddleName] +' '+ [Surname] FROM [dbo].[Lecturers] WHERE [Lecturer_id] = [dbo].[TimeTable].[Lecturer_id]) As [Lecturer] , [Room], [DayOfLecture] As [Day], [StartTime] AS [Start Time], [EndTime] AS [End Time] FROM [dbo].[TimeTable] WHERE [Class_Id] = '" + cmbxTTSclass.Text + "' And [DayOfLecture] ='" + cmbxdayFilter.Text + "' And [Lecturer_id] ='" + cmbxttSLect.SelectedValue.ToString + "' ORDER BY [StartTime]"
-                    Dim da As New SqlDataAdapter(strSQL1, connection)
+                    Dim da As New SqlDataAdapter(strSQL1, conn)
                     da.Fill(ds, "TT")
                     dgvtimetable.DataSource = ds.Tables("TT")
                     dgvtimetable.ClearSelection()
-                    connection.Close()
+                    conn.Close()
                 Else
                     If tt.Rows.Count > 0 Then
                         tt.Rows.Clear()
                     End If
                     Dim strSQL As String = "SELECT [Course_id] As [Course], (SELECT [FirstName] +' '+ [MiddleName] +' '+ [Surname] FROM [dbo].[Lecturers] WHERE [Lecturer_id] = [dbo].[TimeTable].[Lecturer_id]) As [Lecturer] , [Room], [DayOfLecture] As [Day], [StartTime] AS [Start Time], [EndTime] AS [End Time] FROM [dbo].[TimeTable] WHERE Class_Id = '" + cmbxTTSclass.Text + "' And Lecturer_id ='" + cmbxttSLect.SelectedValue.ToString + "' ORDER BY [StartTime]"
-                    Dim da As New SqlDataAdapter(strSQL, connection)
+                    Dim da As New SqlDataAdapter(strSQL, conn)
                     da.Fill(ds, "TT")
                     dgvtimetable.DataSource = ds.Tables("TT")
                     dgvtimetable.ClearSelection()
-                    connection.Close()
+                    conn.Close()
 
                 End If
-                connection.Close()
+                conn.Close()
             Catch ex As SqlException
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
             Catch ex As Exception
@@ -2802,9 +2805,9 @@ Public Class frmHome
             dtpttEnd.Focus()
         Else
 
-            connection.Close()
-            connection.Open()
-            Dim command As New SqlCommand("SELECT * FROM [dbo].[TimeTable] ORDER BY [Lecturer_id]", connection)
+            conn.Close()
+            conn.Open()
+            Dim command As New SqlCommand("SELECT * FROM [dbo].[TimeTable] ORDER BY [Lecturer_id]", conn)
             Dim reader As SqlDataReader = command.ExecuteReader()
             Try
                 reader.Read()
@@ -2819,11 +2822,11 @@ Public Class frmHome
                     MessageBox.Show("Lecturer Specified is engaged, Please select another Lecturer!")
 
                 Else
-                    connection.Close()
-                    connection.Open()
-                    Dim command1 As New SqlCommand("UPDATE [dbo].[TimeTable] SET [Class_Id] = '" & CmbxttClass.SelectedValue & "', [Course_id] = '" & cmbxCourseIDTT.SelectedValue & "', [Lecturer_id] = '" & cmbxlect.SelectedValue & "', [Room] = '" & txtRoom.Text & "', [DayOfLecture] = '" & cmbxDays.SelectedItem & "', [StartTime] = '" & dtpttAStart.Text & "', [EndTime] = '" & dtpttEnd.Text & "' WHERE  [Class_Id] = '" & Me.cmbxTTSclass.Text & "' AND [Course_id] = '" & Me.dgvtimetable.CurrentRow.Cells(0).Value.ToString & "' AND [Room] = '" & Me.dgvtimetable.CurrentRow.Cells(2).Value.ToString & "' AND [DayOfLecture] = '" & Me.dgvtimetable.CurrentRow.Cells(3).Value.ToString & "'AND [StartTime] = '" & Me.dgvtimetable.CurrentRow.Cells(4).Value.ToString & "' AND [EndTime] = '" & Me.dgvtimetable.CurrentRow.Cells(5).Value.ToString & "'", connection)
+                    conn.Close()
+                    conn.Open()
+                    Dim command1 As New SqlCommand("UPDATE [dbo].[TimeTable] SET [Class_Id] = '" & CmbxttClass.SelectedValue & "', [Course_id] = '" & cmbxCourseIDTT.SelectedValue & "', [Lecturer_id] = '" & cmbxlect.SelectedValue & "', [Room] = '" & txtRoom.Text & "', [DayOfLecture] = '" & cmbxDays.SelectedItem & "', [StartTime] = '" & dtpttAStart.Text & "', [EndTime] = '" & dtpttEnd.Text & "' WHERE  [Class_Id] = '" & Me.cmbxTTSclass.Text & "' AND [Course_id] = '" & Me.dgvtimetable.CurrentRow.Cells(0).Value.ToString & "' AND [Room] = '" & Me.dgvtimetable.CurrentRow.Cells(2).Value.ToString & "' AND [DayOfLecture] = '" & Me.dgvtimetable.CurrentRow.Cells(3).Value.ToString & "'AND [StartTime] = '" & Me.dgvtimetable.CurrentRow.Cells(4).Value.ToString & "' AND [EndTime] = '" & Me.dgvtimetable.CurrentRow.Cells(5).Value.ToString & "'", conn)
                     command1.ExecuteNonQuery()
-                    connection.Close()
+                    conn.Close()
                     MessageBox.Show("Timetable Edited Successfully!", "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     btnSaveEdit.Hide()
                     btnSaveTimeTableSlot.Show()
@@ -2846,7 +2849,7 @@ Public Class frmHome
                 MessageBox.Show("Error :" + ex.Message, "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Finally
                 reader.Close()
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub
@@ -2856,11 +2859,11 @@ Public Class frmHome
 
         If MsgResult = Windows.Forms.DialogResult.Yes Then
             Try
-                connection.Close()
-                connection.Open()
-                Dim command1 As New SqlCommand("DELETE FROM [dbo].[TimeTable] WHERE  [Class_Id] = '" & Me.cmbxTTSclass.Text & "' AND [Course_id] = '" & Me.dgvtimetable.CurrentRow.Cells(0).Value.ToString & "' AND [Room] = '" & Me.dgvtimetable.CurrentRow.Cells(2).Value.ToString & "' AND [DayOfLecture] = '" & Me.dgvtimetable.CurrentRow.Cells(3).Value.ToString & "'AND [StartTime] = '" & Me.dgvtimetable.CurrentRow.Cells(4).Value.ToString & "' AND [EndTime] = '" & Me.dgvtimetable.CurrentRow.Cells(5).Value.ToString & "'", connection)
+                conn.Close()
+                conn.Open()
+                Dim command1 As New SqlCommand("DELETE FROM [dbo].[TimeTable] WHERE  [Class_Id] = '" & Me.cmbxTTSclass.Text & "' AND [Course_id] = '" & Me.dgvtimetable.CurrentRow.Cells(0).Value.ToString & "' AND [Room] = '" & Me.dgvtimetable.CurrentRow.Cells(2).Value.ToString & "' AND [DayOfLecture] = '" & Me.dgvtimetable.CurrentRow.Cells(3).Value.ToString & "'AND [StartTime] = '" & Me.dgvtimetable.CurrentRow.Cells(4).Value.ToString & "' AND [EndTime] = '" & Me.dgvtimetable.CurrentRow.Cells(5).Value.ToString & "'", conn)
                 command1.ExecuteNonQuery()
-                connection.Close()
+                conn.Close()
                 MessageBox.Show("Timetable Entry Deleted Successfully!", "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 btnSaveEdit.Hide()
                 btnSaveTimeTableSlot.Show()
@@ -2882,7 +2885,7 @@ Public Class frmHome
             Catch ex As Exception
                 MessageBox.Show("Error :" + ex.Message, "Student Information Management System", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Finally
-                connection.Close()
+                conn.Close()
             End Try
 
         End If
