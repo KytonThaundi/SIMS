@@ -8012,7 +8012,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -8282,7 +8282,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -8643,7 +8643,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -9020,7 +9020,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -9402,7 +9402,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -9675,7 +9675,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -10036,7 +10036,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -10392,7 +10392,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -10711,7 +10711,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -10979,7 +10979,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -11382,7 +11382,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -11896,7 +11896,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -12457,7 +12457,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -13314,7 +13314,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -13692,7 +13692,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -14135,7 +14135,7 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SIMS.The_MileLtd.My.MySettings.Default.dbSIMSConnectionStringReports
+            Me._connection.ConnectionString = Global.SIMS_Core.My.MySettings.Default.dbSIMSConnectionStringReports
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

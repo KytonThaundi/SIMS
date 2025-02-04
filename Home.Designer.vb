@@ -636,7 +636,7 @@ Partial Class frmHome
         Me.linkDeveloper.Size = New System.Drawing.Size(81, 12)
         Me.linkDeveloper.TabIndex = 10
         Me.linkDeveloper.TabStop = True
-        Me.linkDeveloper.Text = "© The Mile Limited"
+        Me.linkDeveloper.Text = "© SIMS Core"
         '
         'LinkFin
         '

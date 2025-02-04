@@ -1,4 +1,4 @@
-﻿Imports SIMS.The_MileLtd.globalVariables
+﻿Imports SIMS_Core.globalVariables
 Imports MySql.Data.MySqlClient
 Public Class AccNum
     Dim connection = New MySqlConnection(My.Settings.ConString)

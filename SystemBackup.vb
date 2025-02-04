@@ -5,7 +5,7 @@ Imports System.Data
 Imports System.Data.OleDb
 Imports System.Security.Cryptography
 Imports System.Text
-Imports SIMS.The_MileLtd.globalVariables
+Imports SIMS_Core.globalVariables
 Imports System.IO
 
 

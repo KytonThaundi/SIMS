@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Globalization
-Imports SIMS.The_MileLtd.globalVariables
+Imports SIMS_Core.globalVariables
 Imports System.Collections.Generic
 Imports System.Runtime.Versioning
 Imports System.Security.Cryptography
@@ -268,9 +268,7 @@ Public Class frmHome
         llExamNum.Visible = False
         rtxtExam.Visible = False
         tssTime.Text = DateAndTime.Now
-        linkDeveloper.Links.Add(0, 0, "www.the-mile.mw")
-        LinkLib.Links.Add(0, 0, "www.shareworld.edu.mw/lilongwe/")
-        Login.loginaudit()
+        linkDeveloper.Links.Add(0, 0, "https://github.com/KytonThaundi")
         Call studenttest()
         Call loadAccNoAccBal()
     End Sub

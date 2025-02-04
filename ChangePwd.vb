@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports SIMS.The_MileLtd.globalVariables
+Imports SIMS_Core.globalVariables
 Imports System.Configuration
 Imports System.Security.Cryptography
 Imports System.Text

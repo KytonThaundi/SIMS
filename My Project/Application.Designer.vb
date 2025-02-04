@@ -32,12 +32,12 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.SIMS.The_MileLtd.Login
+            Me.MainForm = Global.SIMS_Core.Login
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateSplashScreen()
-            Me.SplashScreen = Global.SIMS.The_MileLtd.SplashScreen1
+            Me.SplashScreen = Global.SIMS_Core.SplashScreen1
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _

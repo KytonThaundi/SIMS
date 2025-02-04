@@ -2,7 +2,7 @@
 Imports System.Data.SqlClient
 Imports System.IO
 Imports System.IO.Ports
-Imports SIMS.The_MileLtd.globalVariables
+Imports SIMS_Core.globalVariables
 Imports System.Configuration
 
 Public Class Lecturers
@@ -145,7 +145,7 @@ Public Class Lecturers
         If frmHome.lbusertype.Text = "Admin" Then
             gpbPostAnnounce.Visible = True
             If gpbPostAnnounce.Visible = True Then
-                directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\Announcements"
+                directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements"
                 If Directory.Exists(directorystr) Then
                     ' This path is a directory.
                     dgv = dgvcompAnnounce
@@ -160,7 +160,7 @@ Public Class Lecturers
             btnCancelAnnounce.PerformClick()
         ElseIf frmHome.lbusertype.Text = "Student" Then
             gpbPostAnnounce.Visible = False
-            directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\Announcements"
+            directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements"
             If Directory.Exists(directorystr) Then
                 ' This path is a directory.
                 dgv = dgvAnnouncements
@@ -178,7 +178,7 @@ Public Class Lecturers
             If Postannounce = "Yes" Then
                 gpbPostAnnounce.Visible = True
                 If gpbPostAnnounce.Visible = True Then
-                    directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\Announcements"
+                    directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements"
                     If Directory.Exists(directorystr) Then
                         ' This path is a directory.
                         dgv = dgvcompAnnounce
@@ -193,7 +193,7 @@ Public Class Lecturers
                 btnCancelAnnounce.PerformClick()
             Else
                 gpbPostAnnounce.Visible = False
-                directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\Announcements"
+                directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements"
                 If Directory.Exists(directorystr) Then
                     ' This path is a directory.
                     dgv = dgvAnnouncements
@@ -450,7 +450,7 @@ Public Class Lecturers
             If (FolderBrowserDialog1.ShowDialog() = DialogResult.OK) Then
                 destnPath = FolderBrowserDialog1.SelectedPath
                 content = dgvviewAssign.CurrentRow.Cells(0).Value.ToString + ".pdf"
-                path = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
+                path = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
                 Dim File_To_Copy As String = ("" & path & "\" & content & "")
                 Dim NewCopy As String = ("" & destnPath & "\" & content & "")
 
@@ -816,8 +816,8 @@ Public Class Lecturers
             MsgBox("Please select a course!", MessageBoxIcon.Warning)
         Else
 
-            Dim di As DirectoryInfo = New DirectoryInfo("\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "")
-            Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + txtAssgnTittle.Text + ".txt"
+            Dim di As DirectoryInfo = New DirectoryInfo("\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "")
+            Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + txtAssgnTittle.Text + ".txt"
             Try
                 ' Determine whether the directory exists.
                 If di.Exists Then
@@ -861,7 +861,7 @@ Public Class Lecturers
                 If cmbxClassAssign.SelectedValue = Nothing Then
                     MsgBox("Please select class First!", MessageBoxIcon.Warning)
                 Else
-                    directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
+                    directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
                     If Directory.Exists(directorystr) Then
                         ' This path is a directory.
                         Call loadarchivedgv(directorystr)
@@ -896,7 +896,7 @@ Public Class Lecturers
             OpenFileDialog1.Filter = "PDF(*.pdf)|*.pdf"
             ' "Document(*.doc,*.docx)|*.doc;*.docx|Excel(*.xls,*.xlsx)|*.xls;*.xlsx|PDF(*.pdf)|*.pdf|Text(*.txt)|*.txt|Image(*.tif,*.tiff,*.jpg,*.gif)|*.tif;*.tiff;*.jpg;*.gif"
 
-            Dim path As String = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
+            Dim path As String = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
 
             Dim SourceFileOpen As New System.Windows.Forms.OpenFileDialog
             If (OpenFileDialog1.ShowDialog() = DialogResult.OK) Then
@@ -910,8 +910,8 @@ Public Class Lecturers
 
                     ElseIf System.IO.File.Exists(ftc) = True Then
 
-                        Dim di As DirectoryInfo = New DirectoryInfo("\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "")
-                        Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + txtAssgnTittle.Text + ".txt"
+                        Dim di As DirectoryInfo = New DirectoryInfo("\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "")
+                        Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + txtAssgnTittle.Text + ".txt"
                         Try
                             ' Determine whether the directory exists.
                             If di.Exists Then
@@ -986,7 +986,7 @@ Public Class Lecturers
         If cmbxClassAssign.SelectedValue = Nothing Then
             MsgBox("Please select class First!", MessageBoxIcon.Warning)
         Else
-            directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
+            directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
             If Directory.Exists(directorystr) Then
                 ' This path is a directory.
                 Call loadarchivedgv(directorystr)
@@ -1010,7 +1010,7 @@ Public Class Lecturers
         Dim content As String
 
         content = dgvviewAssign.CurrentRow.Cells(0).Value.ToString + ".pdf"
-        Dim Path As String = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
+        Dim Path As String = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + ""
         Dim File_To_Copy As String = ("" & Path & "\" & content & "")
         If System.IO.File.Exists(File_To_Copy) = True Then
             btnDownload.Visible = True
@@ -1038,8 +1038,8 @@ Public Class Lecturers
 
     Private Sub btnSaveAssign_Click(sender As Object, e As EventArgs) Handles btnSaveAssign.Click
         formaFile = Me.dgvpostAssign.CurrentRow.Cells(0).Value.ToString
-        My.Computer.FileSystem.DeleteFile("\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + formaFile + ".txt")
-        Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS.Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + txtAssgnTittle.Text + ".txt"
+        My.Computer.FileSystem.DeleteFile("\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + formaFile + ".txt")
+        Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS_Core\" + cmbxClassAssign.SelectedValue + "\" + cmbxCourseAssign.SelectedValue + "\" + txtAssgnTittle.Text + ".txt"
         FileOpen(1, FILE_NAME, OpenMode.Output)
         For Each line In txtMessage.Lines
             PrintLine(1, line)
@@ -1075,7 +1075,7 @@ Public Class Lecturers
             txtMessage.Focus()
         Else
 
-            Dim di As DirectoryInfo = New DirectoryInfo("\\SDE-KYTON\Users\Public\SIMS.Core\Announcements")
+            Dim di As DirectoryInfo = New DirectoryInfo("\\SDE-KYTON\Users\Public\SIMS_Core\Announcements")
             Dim FILE_NAME As String = Convert.ToString(di) + "\" + txtCompAnnaunceTittle.Text + ".txt"
             Try
                 ' Determine whether the directory exists.
@@ -1115,7 +1115,7 @@ Public Class Lecturers
                 MsgBox(ex.Message, MessageBoxIcon.Warning)
             End Try
             If gpbPostAnnounce.Visible = True Then
-                directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\Announcements"
+                directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements"
                 If Directory.Exists(directorystr) Then
                         ' This path is a directory.
                     Call loadarchivedgv(directorystr)
@@ -1128,7 +1128,7 @@ Public Class Lecturers
     End Sub
 
     Private Sub dgvcompAnnounce_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvcompAnnounce.CellContentDoubleClick
-        Me.txtCompose.LoadFile("\\SDE-KYTON\Users\Public\SIMS.Core\Announcements\" + Me.dgvcompAnnounce.CurrentRow.Cells(0).Value.ToString + ".txt", RichTextBoxStreamType.PlainText)
+        Me.txtCompose.LoadFile("\\SDE-KYTON\Users\Public\SIMS_Core\Announcements\" + Me.dgvcompAnnounce.CurrentRow.Cells(0).Value.ToString + ".txt", RichTextBoxStreamType.PlainText)
         Me.txtCompAnnaunceTittle.Text = Me.dgvcompAnnounce.CurrentRow.Cells(0).Value.ToString
         FileClose()
         Me.txtCompose.ReadOnly = True
@@ -1148,8 +1148,8 @@ Public Class Lecturers
     End Sub
     Private Sub btnSaveAnnounce_Click(sender As Object, e As EventArgs) Handles btnSaveAnnounce.Click
         formaFile = Me.dgvcompAnnounce.CurrentRow.Cells(0).Value.ToString
-        My.Computer.FileSystem.DeleteFile("\\SDE-KYTON\Users\Public\SIMS.Core\Announcements\" + formaFile + ".txt")
-        Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS.Core\Announcements\" + txtCompAnnaunceTittle.Text + ".txt"
+        My.Computer.FileSystem.DeleteFile("\\SDE-KYTON\Users\Public\SIMS_Core\Announcements\" + formaFile + ".txt")
+        Dim FILE_NAME As String = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements\" + txtCompAnnaunceTittle.Text + ".txt"
         FileOpen(1, FILE_NAME, OpenMode.Output)
         For Each line In txtCompose.Lines
             PrintLine(1, line)
@@ -1157,7 +1157,7 @@ Public Class Lecturers
         FileClose(1)
         If gpbPostAnnounce.Visible = True Then
             dgv = dgvcompAnnounce
-            directorystr = "\\SDE-KYTON\Users\Public\SIMS.Core\Announcements"
+            directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements"
             If Directory.Exists(directorystr) Then
                 ' This path is a directory.
                 Call loadarchivedgv(directorystr)
@@ -1170,7 +1170,7 @@ Public Class Lecturers
     End Sub
 
     Private Sub dgvAnnouncements_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvAnnouncements.CellDoubleClick
-        Me.txtAnnouncement.LoadFile("\\SDE-KYTON\Users\Public\SIMS.Core\Announcements\" + Me.dgvAnnouncements.CurrentRow.Cells(0).Value.ToString + ".txt", RichTextBoxStreamType.PlainText)
+        Me.txtAnnouncement.LoadFile("\\SDE-KYTON\Users\Public\SIMS_Core\Announcements\" + Me.dgvAnnouncements.CurrentRow.Cells(0).Value.ToString + ".txt", RichTextBoxStreamType.PlainText)
         Me.txtAnnounceTittle.Text = Me.dgvAnnouncements.CurrentRow.Cells(0).Value.ToString
         FileClose()
         Me.txtAnnouncement.ReadOnly = True

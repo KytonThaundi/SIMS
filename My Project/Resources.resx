@@ -151,8 +151,8 @@
   <data name="Setting-tuition2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Setting-tuition2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="The Mile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\The Mile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SIMS Core" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sims-logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Aha-Soft-Large-Calendar-Calendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Aha-Soft-Large-Calendar-Calendar.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
