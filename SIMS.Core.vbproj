@@ -8,14 +8,14 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>SIMS.The_MileLtd.My.MyApplication</StartupObject>
     <RootNamespace>SIMS.The_MileLtd</RootNamespace>
-    <AssemblyName>SIMS.The-MileLtd</AssemblyName>
+    <AssemblyName>SIMS.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\Kyton\Desktop\Setup_SIMS.The-MileLtd\Setup_SIMS.The-MileLtd2\</PublishUrl>
+    <PublishUrl>C:\Users\Kyton\Desktop\Setup_SIMS.Core\Setup_SIMS.Core2\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -38,7 +38,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SIMS.The-MileLtd.xml</DocumentationFile>
+    <DocumentationFile>SIMS.Core.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -48,7 +48,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SIMS.The-MileLtd.xml</DocumentationFile>
+    <DocumentationFile>SIMS.Core.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -73,7 +73,7 @@
     <ManifestCertificateThumbprint>3EA1F7F5F47522E904B1C9FDC00C1A82ECDFF97B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SIMS.The-MileLtd_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SIMS.Core_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -308,7 +308,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="SIMS.The-MileLtd_TemporaryKey.pfx" />
+    <None Include="SIMS.Core_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
