@@ -40,7 +40,7 @@ Partial Class SplashScreen1
         'MainLayoutPanel
         '
         Me.MainLayoutPanel.BackColor = System.Drawing.Color.Transparent
-        Me.MainLayoutPanel.BackgroundImage = Global.SIMS.The_MileLtd.My.Resources.Resources.splash_screen1
+        Me.MainLayoutPanel.BackgroundImage = Global.SIMS_Core.My.Resources.Resources.splash_screen1
         Me.MainLayoutPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.MainLayoutPanel.ColumnCount = 2
         Me.MainLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 169.0!))
@@ -81,7 +81,7 @@ Partial Class SplashScreen1
         Me.Copyright.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.Copyright.Size = New System.Drawing.Size(241, 17)
         Me.Copyright.TabIndex = 2
-        Me.Copyright.Text = "The Mile Ltd (www.the-mile.mw) ©"
+        Me.Copyright.Text = "SIMS_Core ©"
         '
         'Version
         '
@@ -111,7 +111,7 @@ Partial Class SplashScreen1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Global.SIMS.The_MileLtd.My.Resources.Resources.sims_pro_logo
+        Me.BackgroundImage = Global.SIMS_Core.My.Resources.Resources.sims_pro_logo
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.ClientSize = New System.Drawing.Size(415, 242)
         Me.ControlBox = False

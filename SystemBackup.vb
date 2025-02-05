@@ -5,13 +5,16 @@ Imports System.Data
 Imports System.Data.OleDb
 Imports System.Security.Cryptography
 Imports System.Text
-Imports SIMS.The_MileLtd.globalVariables
+Imports SIMS_Core.globalVariables
 Imports System.IO
+Imports System.Configuration
 
 
 
 
 Public Class SystemBackup
+    Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+    Dim conn As New SqlConnection(connStr)
     Dim check As String = Nothing
     Private Sub llbBrowse_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles llbBrowse.LinkClicked
         'SaveFileDialog1.FileName = "dbSIMS"
@@ -39,8 +42,8 @@ Public Class SystemBackup
         Try
 
             If check = "custom" Then
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
                 SaveFileDialog1.FileName = "dbSIMS_Backup_" + dateandtime + "_SIMS.BAK'"
                 SaveFileDialog1.ShowDialog()
                 Timer1.Enabled = True
@@ -49,27 +52,27 @@ Public Class SystemBackup
                 s = SaveFileDialog1.FileName
                 Dim cmd As New SqlCommand("BACKUP DATABASE dbSIMS TO DISK='" + s)
                 cmd.CommandType = CommandType.Text
-                cmd.Connection = connection
+                cmd.connection = conn
                 cmd.ExecuteNonQuery()
 
-                connection.Close()
+                conn.Close()
             Else
                 lblDestination.ReadOnly = True
-                connection.Close()
-                connection.Open()
+                conn.Close()
+                conn.Open()
                 Timer1.Enabled = True
                 backupProgressBar.Visible = True
                 Dim cmd As New SqlCommand("BACKUP DATABASE dbSIMS TO DISK='" + lblDestination.Text + "\dbSIMS_Backup_" + dateandtime + "_SIMS.BAK'")
                 cmd.CommandType = CommandType.Text
-                cmd.Connection = connection
+                cmd.connection = conn
                 cmd.ExecuteNonQuery()
-                connection.Close()
+                conn.Close()
             End If
 
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message & "", "SIMS Management Information System", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         Finally
-            connection.Close()
+            conn.Close()
         End Try
     End Sub
 

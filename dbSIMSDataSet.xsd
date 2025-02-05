@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="dbSIMSConnectionStringReports" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="dbSIMSConnectionStringReports (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.SIMS.The_MileLtd.My.MySettings.GlobalReference.Default.dbSIMSConnectionStringReports" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="dbSIMSConnectionStringReports" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="dbSIMSConnectionStringReports (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.SIMS_Core.My.MySettings.GlobalReference.Default.dbSIMSConnectionStringReports" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AccountsTableAdapter" GeneratorDataComponentClassName="AccountsTableAdapter" Name="Accounts" UserDataComponentName="AccountsTableAdapter">

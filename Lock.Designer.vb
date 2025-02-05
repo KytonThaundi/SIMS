@@ -85,7 +85,7 @@ Partial Class Lock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Global.SIMS.The_MileLtd.My.Resources.Resources.login1
+        Me.BackgroundImage = Global.SIMS_Core.My.Resources.Resources.login1
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.ClientSize = New System.Drawing.Size(268, 174)
         Me.ControlBox = False

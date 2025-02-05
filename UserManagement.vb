@@ -1,12 +1,14 @@
 ﻿
 Imports System.Security.Cryptography
 Imports System.Data.SqlClient
-Imports SIMS.The_MileLtd.globalVariables
+Imports SIMS_Core.globalVariables
 Imports System.Configuration
 Imports System.Text
 Public Class UserManagement
     Dim ds As DataSet
     Dim da As SqlDataAdapter
+    Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+    Dim conn As New SqlConnection(connStr)
 
 
     Dim access1 As Integer
@@ -53,7 +55,7 @@ Public Class UserManagement
         btnNewUser.BringToFront()
         btnBack.Visible = False
         btnEditUser.Enabled = True
-        connection.Close()
+        conn.Close()
         If Application.OpenForms().OfType(Of StudentManager).Any Then
             Call dgvuserLoad()
             GroupBoxUM.Enabled = True
@@ -120,8 +122,8 @@ Public Class UserManagement
 
                 Try
                     Dim reader As SqlDataReader = Nothing
-                    connection.Open()
-                    Dim command As New SqlCommand("SELECT username FROM dbSIMS.dbo.users WHERE username='" & txtUMusername.Text & "'", connection) ' and password='" & txtUMPword.Text & "'"
+                    conn.Open()
+                    Dim command As New SqlCommand("SELECT username FROM dbSIMS.dbo.users WHERE username='" & txtUMusername.Text & "'",  conn) ' and password='" & txtUMPword.Text & "'"
                     reader = command.ExecuteReader()
                     If (reader.Read() = True) Then
                         'reader.Read()
@@ -130,13 +132,13 @@ Public Class UserManagement
                         txtUMusername.Clear()
                         txtUMusername.Focus()
                     Else
-                        connection.Close()
-                        connection.Open()
-                        Dim cmd As New SqlCommand("insert into dbo.users values('" & txtUMusername.Text & "','" & txtUMPword.Text & "','" & cmbxtyp.SelectedItem & "','" & dtp & "')", connection)
+                        conn.Close()
+                        conn.Open()
+                        Dim cmd As New SqlCommand("insert into dbo.users values('" & txtUMusername.Text & "','" & txtUMPword.Text & "','" & cmbxtyp.SelectedItem & "','" & dtp & "')",  conn)
                         cmd.CommandType = CommandType.Text
 
                         If (cmd.ExecuteNonQuery().Equals(1)) Then
-                            connection.Close()
+                            conn.Close()
                             ' Audit Trail
                             Try
                                 If Application.OpenForms().OfType(Of StudentManager).Any Then
@@ -144,17 +146,17 @@ Public Class UserManagement
                                 End If
                                 ipadd()
                                 Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                                Dim cmmd As SqlCommand = New SqlCommand(theQuery, connection)
+                                Dim cmmd As SqlCommand = New SqlCommand(theQuery,  conn)
                                 cmmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                                 cmmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                                 cmmd.Parameters.AddWithValue("@Utyp", frmHome.lbusertype.Text)
                                 cmmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                                 cmmd.Parameters.AddWithValue("@TransTyp", "Add User")
                                 cmmd.Parameters.AddWithValue("@TransVal", txtUMusername.Text + ", " + txtUMPword.Text + "," + cmbxtyp.SelectedItem) '"Username: " + txtUname.Text + ", Password: " + txtPword.Text
-                                connection.Close()
-                                connection.Open()
+                                conn.Close()
+                                conn.Open()
                                 cmmd.ExecuteNonQuery().Equals(1)
-                                connection.Close()
+                                conn.Close()
                             Catch ex As Exception
                                 MsgBox("Audit Trail Error! ", ex.Message, MessageBoxIcon.Warning)
                             End Try
@@ -162,13 +164,13 @@ Public Class UserManagement
 
 
                             If Application.OpenForms().OfType(Of StudentManager).Any Then
-                                connection.Open()
-                                Dim comd As New SqlCommand("UPDATE [dbo].[users] SET [usertyp] = 'Student' WHERE [username] = '" & txtUMusername.Text & "'", connection)
+                                conn.Open()
+                                Dim comd As New SqlCommand("UPDATE [dbo].[users] SET [usertyp] = 'Student' WHERE [username] = '" & txtUMusername.Text & "'",  conn)
                                 comd.CommandType = CommandType.Text
 
                                 If (comd.ExecuteNonQuery().Equals(1)) Then
                                     MsgBox("Student Added Successfully")
-                                    connection.Close()
+                                    conn.Close()
                                     txtUMusername.Enabled = True
                                     txtUMConfPword.Enabled = True
                                     txtUMPword.Enabled = True
@@ -350,9 +352,9 @@ Public Class UserManagement
                                     End If
 
 
-                                    connection.Close()
-                                        connection.Open()
-                                    Dim comd As New SqlCommand("INSERT INTO [dbo].[AuthorisingAccess]([username], [StudentProfile], [Courses], [AddAssignment], [GradeBook], [Library], [MajorCourses], [CheckAssignment], [Classes], [TuitionSettings],[Uploadgrades], [PostAnnouncements], [Attendance], [AddStudents], [ExamNum], [SystemBackup], [AccStatement], [GeneralLedger], [RecievePayment], [DataView], [UserAccess], [SetTimetable], [AddLecturer])VALUES('" & txtUMusername.Text & "','" & access1 & "','" & access2 & "','" & access3 & "','" & access4 & "','" & access5 & "','" & access6 & "','" & access7 & "','" & access8 & "','" & access9 & "','" & access10 & "','" & access11 & "','" & access12 & "','" & access13 & "','" & access14 & "','" & access15 & "','" & access16 & "','" & access17 & "','" & access18 & "','" & access19 & "','" & access20 & "','" & access21 & "','" & access22 & "')", connection)
+                                    conn.Close()
+                                        conn.Open()
+                                    Dim comd As New SqlCommand("INSERT INTO [dbo].[AuthorisingAccess]([username], [StudentProfile], [Courses], [AddAssignment], [GradeBook], [Library], [MajorCourses], [CheckAssignment], [Classes], [TuitionSettings],[Uploadgrades], [PostAnnouncements], [Attendance], [AddStudents], [ExamNum], [SystemBackup], [AccStatement], [GeneralLedger], [RecievePayment], [DataView], [UserAccess], [SetTimetable], [AddLecturer])VALUES('" & txtUMusername.Text & "','" & access1 & "','" & access2 & "','" & access3 & "','" & access4 & "','" & access5 & "','" & access6 & "','" & access7 & "','" & access8 & "','" & access9 & "','" & access10 & "','" & access11 & "','" & access12 & "','" & access13 & "','" & access14 & "','" & access15 & "','" & access16 & "','" & access17 & "','" & access18 & "','" & access19 & "','" & access20 & "','" & access21 & "','" & access22 & "')",  conn)
                                     comd.CommandType = CommandType.Text
 
                                         comd.ExecuteNonQuery().Equals(1)
@@ -375,11 +377,11 @@ Public Class UserManagement
                     End If
                 Catch ex As Exception
                     MsgBox("Error in Reading From the Database. Error is :" & ex.Message)
-                    connection.Close()
+                    conn.Close()
                 End Try
             Catch ex As Exception
                 MsgBox("Error in population the Database. Error is :" & ex.Message)
-                connection.Close()
+                conn.Close()
             End Try
         End If
 
@@ -390,7 +392,7 @@ Public Class UserManagement
             MsgBox("There are No User in the System. Please Add First!", MsgBoxStyle.Critical)
             txtUMusername.Focus()
         Else
-            connection.Close()
+            conn.Close()
             msgResult = MessageBox.Show("The User " + Me.dgvusers.SelectedRows(0).Cells(0).Value.ToString + " Will be removed from the System !Comfirm ?  ", "Students Information Management System", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
 
             If msgResult = Windows.Forms.DialogResult.Yes Then
@@ -398,39 +400,39 @@ Public Class UserManagement
                 Dim username As String = Me.dgvusers.SelectedRows(0).Cells(0).Value.ToString
                 Dim Utyp As String = Me.dgvusers.SelectedRows(0).Cells(1).Value.ToString
                 Dim dte As String = Me.dgvusers.SelectedRows(0).Cells(2).Value.ToString
-                connection.Close()
-                connection.Open()
-                Dim command As New SqlCommand("DELETE FROM dbo.users WHERE username ='" & username & "' And usertyp='" & Utyp & "' And DateEntered ='" & dte & "'", connection)
+                conn.Close()
+                conn.Open()
+                Dim command As New SqlCommand("DELETE FROM dbo.users WHERE username ='" & username & "' And usertyp='" & Utyp & "' And DateEntered ='" & dte & "'",  conn)
 
                 command.CommandType = CommandType.Text
                 If Utyp = "Custom" Then
-                    Dim command1 As New SqlCommand("DELETE FROM [dbo].[AuthorisingAccess] WHERE [username] ='" & username & "'", connection)
+                    Dim command1 As New SqlCommand("DELETE FROM [dbo].[AuthorisingAccess] WHERE [username] ='" & username & "'",  conn)
                     command1.CommandType = CommandType.Text
                     command1.ExecuteNonQuery()
                 End If
                 If (command.ExecuteNonQuery().Equals(1)) Then
                         MsgBox("User Deleted", MessageBoxIcon.Information)
-                        connection.Close()
+                        conn.Close()
                         ' Audit Trail
                         Try
                             ipadd()
                             Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                            Dim cmmd As SqlCommand = New SqlCommand(theQuery, connection)
+                            Dim cmmd As SqlCommand = New SqlCommand(theQuery,  conn)
                             cmmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                             cmmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                             cmmd.Parameters.AddWithValue("@Utyp", frmHome.lbusertype.Text)
                             cmmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                             cmmd.Parameters.AddWithValue("@TransTyp", "Delete User")
                             cmmd.Parameters.AddWithValue("@TransVal", dte + "," + username + ", " + Utyp)
-                            connection.Close()
-                            connection.Open()
+                            conn.Close()
+                            conn.Open()
                             cmmd.ExecuteNonQuery().Equals(1)
-                            connection.Close()
+                            conn.Close()
                         Catch ex As Exception
                             MsgBox("Audit Trail Error! ", ex.Message, MessageBoxIcon.Warning)
                         End Try
                         Call dgvuserLoad()
-                        connection.Close()
+                        conn.Close()
 
                     End If
                 Else
@@ -443,15 +445,15 @@ Public Class UserManagement
     End Sub
     Private Sub txtSearchUser_TextChanged(sender As Object, e As EventArgs) Handles txtSearchUser.TextChanged
         Try
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "SELECT username AS USERNAME, usertyp AS [ACCESS LEVEL], [DateEntered] AS [DATE OF ENTRY] FROM dbo.users WHERE username like '" & txtSearchUser.Text & "%' AND username <> 'Admin' ORDER BY [DateEntered] ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim ds As New DataSet
             da.Fill(ds, "Users")
             dgvusers.DataSource = ds.Tables(0)
-            connection.Close()
+            conn.Close()
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception
@@ -461,15 +463,15 @@ Public Class UserManagement
 
     Private Sub dgvuserLoad()
         Try
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "SELECT [username] AS [USERNAME], [usertyp] AS [ACCESS LEVEL],[DateEntered] AS [DATE OF ENTRY] FROM dbo.users WHERE [username] <> 'Admin' ORDER BY [DateEntered] ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim ds As New DataSet
             da.Fill(ds, "Users")
             dgvusers.DataSource = ds.Tables(0)
-            connection.Close()
+            conn.Close()
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception
@@ -523,43 +525,43 @@ Public Class UserManagement
             txtUMPword.Clear()
             txtUMPword.Focus()
         Else
-            connection.Close()
+            conn.Close()
 
 
             Try
                 txtUMPword.Text = GenerateHash(txtUMPword.Text)
                 txtUMConfPword.Text = GenerateHash(txtUMConfPword.Text)
-                connection.Open()
-                Dim cmd As New SqlCommand("UPDATE dbo.users SET username = '" & txtUMusername.Text & "', password= '" & txtUMPword.Text & "',usertyp = '" & cmbxtyp.SelectedItem & "' WHERE username = '" & Me.dgvusers.SelectedRows(0).Cells(0).Value.ToString & "'And  usertyp = '" & Me.dgvusers.SelectedRows(0).Cells(1).Value.ToString & "'", connection)
+                conn.Open()
+                Dim cmd As New SqlCommand("UPDATE dbo.users SET username = '" & txtUMusername.Text & "', password= '" & txtUMPword.Text & "',usertyp = '" & cmbxtyp.SelectedItem & "' WHERE username = '" & Me.dgvusers.SelectedRows(0).Cells(0).Value.ToString & "'And  usertyp = '" & Me.dgvusers.SelectedRows(0).Cells(1).Value.ToString & "'",  conn)
                 cmd.CommandType = CommandType.Text
 
                 If (cmd.ExecuteNonQuery().Equals(1)) Then
                     MsgBox("Edit successful")
-                    connection.Close()
+                    conn.Close()
 
                     If cmbxtyp.SelectedItem = "Custom" Then
-                        connection.Open()
-                        Dim comd As New SqlCommand("UPDATE [dbo].[AuthorisingAccess] SET [username] = '" & txtUMusername.Text & "',[StudentProfile] = '" & access1 & "',[Courses] ='" & access2 & "',[AddAssignment] = '" & access3 & "' ,[GradeBook] ='" & access4 & "',[Library] = '" & access5 & "' ,[MajorCourses] = '" & access6 & "' ,[CheckAssignment] = '" & access7 & "' ,[Classes] = '" & access8 & "' ,[TuitionSettings] = '" & access9 & "' ,[UploadGrades] = '" & access10 & "',[PostAnnouncements] = '" & access11 & "',[Attendance] = '" & access12 & "',[AddStudents] = '" & access13 & "',[ExamNum] = '" & access14 & "' ,[SystemBackup] = '" & access15 & "',[AccStatement] = '" & access16 & "',[GeneralLedger] = '" & access17 & "' ,[RecievePayment] = '" & access18 & "' ,[DataView] = '" & access19 & "' ,[UserAccess] = '" & access20 & "',[AddLecturer] = '" & access22 & "' WHERE [username] = '" & Me.dgvusers.SelectedRows(0).Cells(0).Value.ToString & "'", connection)
+                        conn.Open()
+                        Dim comd As New SqlCommand("UPDATE [dbo].[AuthorisingAccess] SET [username] = '" & txtUMusername.Text & "',[StudentProfile] = '" & access1 & "',[Courses] ='" & access2 & "',[AddAssignment] = '" & access3 & "' ,[GradeBook] ='" & access4 & "',[Library] = '" & access5 & "' ,[MajorCourses] = '" & access6 & "' ,[CheckAssignment] = '" & access7 & "' ,[Classes] = '" & access8 & "' ,[TuitionSettings] = '" & access9 & "' ,[UploadGrades] = '" & access10 & "',[PostAnnouncements] = '" & access11 & "',[Attendance] = '" & access12 & "',[AddStudents] = '" & access13 & "',[ExamNum] = '" & access14 & "' ,[SystemBackup] = '" & access15 & "',[AccStatement] = '" & access16 & "',[GeneralLedger] = '" & access17 & "' ,[RecievePayment] = '" & access18 & "' ,[DataView] = '" & access19 & "' ,[UserAccess] = '" & access20 & "',[AddLecturer] = '" & access22 & "' WHERE [username] = '" & Me.dgvusers.SelectedRows(0).Cells(0).Value.ToString & "'",  conn)
                         comd.CommandType = CommandType.Text
 
                         comd.ExecuteNonQuery().Equals(1)
-                        connection.Close()
+                        conn.Close()
                     End If
                     ' Audit Trail
                     Try
                             ipadd()
                             Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                            Dim cmmd As SqlCommand = New SqlCommand(theQuery, connection)
+                            Dim cmmd As SqlCommand = New SqlCommand(theQuery,  conn)
                             cmmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                             cmmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                             cmmd.Parameters.AddWithValue("@Utyp", frmHome.lbusertype.Text)
                             cmmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                             cmmd.Parameters.AddWithValue("@TransTyp", "Edit User")
                             cmmd.Parameters.AddWithValue("@TransVal", txtUMusername.Text + ", " + txtUMPword.Text + "," + cmbxtyp.SelectedItem) '"Username: " + txtUname.Text + ", Password: " + txtPword.Text
-                            connection.Close()
-                            connection.Open()
+                            conn.Close()
+                            conn.Open()
                             cmmd.ExecuteNonQuery().Equals(1)
-                            connection.Close()
+                            conn.Close()
                         Catch ex As Exception
                             MsgBox("Audit Trail Error! ", ex.Message, MessageBoxIcon.Warning)
                         End Try
@@ -573,7 +575,7 @@ Public Class UserManagement
                 End If
             Catch ex As Exception
                 MsgBox("Error in Editing User. Error is :" & ex.Message)
-                connection.Close()
+                conn.Close()
             End Try
         End If
     End Sub

@@ -1,6 +1,6 @@
 ﻿Imports System.Security.Cryptography
 Imports System.Data.SqlClient
-Imports SIMS.The_MileLtd.globalVariables
+Imports SIMS_Core.globalVariables
 Imports System.Configuration
 Imports System.Text
 Public Class Login
@@ -12,6 +12,8 @@ Public Class Login
     Dim usertyp As String = Nothing
     Public Shared Property addCourseAcces As String = Nothing
     Public accstate As String = Nothing
+    Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+    Dim conn As New SqlConnection(connStr)
 
 
     Private Sub OK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK.Click
@@ -26,8 +28,9 @@ Public Class Login
             Try
                 Me.UseWaitCursor = True
                 txtPword.Text = GenerateHash(txtPword.Text)
-                connection.Open()
-                Dim command As New SqlCommand("SELECT username, password FROM dbSIMS.dbo.users WHERE username='" & txtUname.Text & "' and password='" & txtPword.Text & "'", connection)
+
+                conn.Open()
+                Dim command As New SqlCommand("SELECT username, password FROM dbSIMS.dbo.users WHERE username='" & txtUname.Text & "' and password='" & txtPword.Text & "'", conn)
                 reader = command.ExecuteReader()
                 reader.Read()
                 If reader.HasRows Then
@@ -58,7 +61,7 @@ Public Class Login
 
         End If
 
-        connection.Close()
+        conn.Close()
         Exit Sub
     End Sub
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -170,9 +173,9 @@ Public Class Login
         Lecturers.pbClasses.Visible = True
         Lecturers.pbClassesLink.Visible = True
         Lecturers.AttendanceToolStripMenuItem.Visible = True
-        connection.Close()
-        connection.Open()
-        Dim command As New SqlCommand("SELECT [usertyp] FROM dbo.users WHERE [username] = '" & txtUname.Text & "'", connection)
+        conn.Close()
+        conn.Open()
+        Dim command As New SqlCommand("SELECT [usertyp] FROM dbo.users WHERE [username] = '" & txtUname.Text & "'", conn)
         Try
             Dim dr As SqlDataReader = command.ExecuteReader()
             dr.Read()
@@ -307,9 +310,9 @@ Public Class Login
             ElseIf dr("usertyp") = "Custom" Then
                 frmHome.lbusertype.Text = "Custom"
                 frmHome.lb_loggedas.Text = txtUname.Text
-                connection.Close()
-                connection.Open()
-                Dim command1 As New SqlCommand("SELECT * FROM [dbo].[AuthorisingAccess] WHERE [username] = '" & txtUname.Text & "'", connection)
+                conn.Close()
+                conn.Open()
+                Dim command1 As New SqlCommand("SELECT * FROM [dbo].[AuthorisingAccess] WHERE [username] = '" & txtUname.Text & "'", conn)
                 Try
                     Dim dr1 As SqlDataReader = command1.ExecuteReader()
                     dr1.Read()
@@ -554,7 +557,7 @@ Public Class Login
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
 
     End Sub
 
@@ -563,23 +566,23 @@ Public Class Login
         Try
             ipadd()
             Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-            Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+            Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
             cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
             cmd.Parameters.AddWithValue("@Uname", txtUname.Text)
             cmd.Parameters.AddWithValue("@Utyp", frmHome.lbusertype.Text)
             cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
             cmd.Parameters.AddWithValue("@TransTyp", Me.Text)
             cmd.Parameters.AddWithValue("@TransVal", txtUname.Text + ", " + txtPword.Text)
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             cmd.ExecuteNonQuery().Equals(1)
-            connection.Close()
+            conn.Close()
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
     End Sub
 
 

@@ -578,8 +578,8 @@ Partial Class StudentManager
         Me.ResumeLayout(False)
 
     End Sub
-    'Friend WithEvents DbSIMSDataSet1 As SIMS.The_MileLtd.dbSIMSDataSet1
-    'Friend WithEvents StudentTableAdapter As SIMS.The_MileLtd.dbSIMSDataSet1TableAdapters.StudentTableAdapter
+    'Friend WithEvents DbSIMSDataSet1 As SIMS_Core.dbSIMSDataSet1
+    'Friend WithEvents StudentTableAdapter As SIMS_Core.dbSIMSDataSet1TableAdapters.StudentTableAdapter
     Friend WithEvents StudentIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ProgramOfStudyDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents FnameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

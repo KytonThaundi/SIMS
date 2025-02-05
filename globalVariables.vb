@@ -52,12 +52,7 @@ Public Class globalVariables
         Dim ByteHash() As Byte = Md5.ComputeHash(ByteSourceText)
         Return Convert.ToBase64String(ByteHash)
     End Function
-    'Public Shared Property connectionstring As String = "Data Source=192.168.1.23,1433;AttachDbFilename=C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\dbSIMS.Core.mdf; Database=dbSIMSm;User ID = sa;Password=123;multipleactiveresultsets=True"
 
-    'Public Shared Property connectionstring As String = "Data Source=192.168.1.23,1433; Network Library = DBMSSOCN; Initial Catalog=dbSIMS;User ID = sa;Password=123;multipleactiveresultsets=True"
-    'Public Shared Property connection As New SqlConnection(connectionstring)
     Public Shared Property msgResult As Integer
-    'Public Shared Property PathName As String = "C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\dbSIMS.Core.mdf"
-
 End Class
 
