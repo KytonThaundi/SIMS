@@ -3,6 +3,8 @@ Imports SIMS_Core.globalVariables
 Imports System.Configuration
 Public Class Report
 
+    Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+    Dim conn As New SqlConnection(connStr)
     Dim status As String = Nothing
     Private Sub Report_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         loadcmbcmbxReportProgOS()
@@ -25,41 +27,41 @@ Public Class Report
     End Sub
     Public Sub filtercmbxRClass()
         cmbxRClass.Text = Nothing
-        connection.Close()
+        conn.Close()
         If Not cmbxReportProgOS.Text.ToString = vbNullString Then
-            connection.Open()
-            Dim da3 As New SqlDataAdapter("Select [Class_Id] FROM [dbo].[Class] WHERE [Class_Id] Like '" & cmbxReportProgOS.SelectedValue.ToString & "%'", connection)
+            conn.Open()
+            Dim da3 As New SqlDataAdapter("Select [Class_Id] FROM [dbo].[Class] WHERE [Class_Id] Like '" & cmbxReportProgOS.SelectedValue.ToString & "%'",  conn)
             Dim ds3 As New DataSet
             da3.Fill(ds3, "class")
             Me.cmbxRClass.DataSource = ds3.Tables(0)
             Me.cmbxRClass.ValueMember = "Class_Id"
             Me.cmbxRClass.DisplayMember = "Class_Id"
-            connection.Close()
+            conn.Close()
         End If
     End Sub
 
     Public Sub loadcmbxRClass()
-        connection.Close()
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT [Class_Id] FROM [dbo].[Class]", connection)
+        conn.Close()
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT [Class_Id] FROM [dbo].[Class]",  conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "class")
         Me.cmbxRClass.DataSource = ds3.Tables(0)
         Me.cmbxRClass.ValueMember = "Class_Id"
         Me.cmbxRClass.DisplayMember = "Class_Id"
-        connection.Close()
+        conn.Close()
 
     End Sub
     Public Sub loadcmbcmbxReportProgOS()
-        connection.Close()
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT Prog_id, ProgName FROM dbo.Programme", connection)
+        conn.Close()
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT Prog_id, ProgName FROM dbo.Programme",  conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "prog")
         Me.cmbxReportProgOS.DataSource = ds3.Tables(0)
         Me.cmbxReportProgOS.ValueMember = "Prog_id"
         Me.cmbxReportProgOS.DisplayMember = "ProgName"
-        connection.Close()
+        conn.Close()
 
     End Sub
     Private Sub cmbxReportProgOS_TextChanged(sender As Object, e As EventArgs) Handles cmbxReportProgOS.TextChanged
@@ -70,14 +72,14 @@ Public Class Report
     Private Sub gradesviewReport()
         dgv = dgvReports
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [ExamNum] AS [Examination Number], [Course_id] As [Course Code],(SELECT [CourseName] FROM [dbo].[Course] WHERE [Course_id] = [dbo].[Grade].[Course_id]) AS [Course Name], [Grade] AS [Grade (%)] FROM [dbo].[Grade] WHERE [ExamNum] like '" & cmbxRClass.SelectedValue.ToString & "%'"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim ds As New DataSet
             da.Fill(ds, "Grades")
             dgv.DataSource = ds.Tables(0)
             dgv.ClearSelection()
-            connection.Close()
+            conn.Close()
             If dgv.RowCount <= 0 Then
                 MsgBox("No Grades For " + cmbxRClass.SelectedValue + " Are Currently not Available!", MsgBoxStyle.Critical)
             End If
@@ -91,18 +93,18 @@ Public Class Report
     Private Sub loadgradesperModule()
         dgv = dgvReports
         Try
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "SELECT [ExamNum] AS [Examination Number], [Course_id] As [Course Code],(SELECT [CourseName] FROM [dbo].[Course] WHERE [Course_id] = [dbo].[Grade].[Course_id]) AS [Course Name], [Grade] AS [Grade (%)] FROM [dbo].[Grade] WHERE [ExamNum] like '" & cmbxRClass.SelectedValue.ToString & "%' AND [dbo].[Grade].[Course_id] = '" & cmbxRModule.SelectedValue & "'"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim ds As New DataSet
             da.Fill(ds, "Grades")
             dgv.DataSource = ds.Tables(0)
             dgv.ClearSelection()
-            connection.Close()
+            conn.Close()
             If dgv.RowCount <= 0 Then
                 MsgBox(cmbxRClass.SelectedValue + " Grades For " + cmbxRModule.Text + " Are Currently not Available!", MsgBoxStyle.Critical)
-                connection.Close()
+                conn.Close()
             End If
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
@@ -116,10 +118,10 @@ Public Class Report
     Private Sub loadMajors()
         dgv = dgvReports
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Course_id] AS [Course Code],(select [CourseName] from dbo.Course where Course_id = dbo.Major.Course_id) AS [Course Name] ,[Prog_id] AS [Programme Code],(select ProgName From dbo.Programme where Prog_id = dbo.Major.Prog_id)AS [Programme Name], [YrOStudy]AS [Year Of Study] FROM [dbo].[Major] WHERE [dbo].[Major].[Prog_id] ='" & cmbxReportProgOS.SelectedValue & "' AND [dbo].[Major].[Prog_id]+[dbo].[Major].[YrOStudy] = '" & cmbxRClass.SelectedValue & "' ORDER BY [Course_id] ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim ds As New DataSet
             da.Fill(ds, "Courses")
             dgv.DataSource = ds.Tables(0)
@@ -136,16 +138,16 @@ Public Class Report
         dgv = dgvReports
 
         Try
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             ' "(Select [Class_Id] FROM [dbo].[Student_Class] WHERE [Student_Id] = [dbo].[Student].[Student_Id]) As [Class]," &
             Dim strSQL As String = " Select [Student_Id] As [Registration Number],([Fname] +' '+[Surname]) AS [Student Name]," &
                 "(select [ProgName] from [dbo].[Programme] where [Prog_id] = [dbo].[Student].[ProgramOfStudy]) As [Programme Of Study]," &
             "[Gender],[YOA] As [Year of Admission] FROM [dbo].[Student] Where [ProgramOfStudy] ='" & cmbxReportProgOS.SelectedValue & "'" &
             "And [RegStatus] ='" & status & "'"
 
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim ds As New DataSet
             da.Fill(ds, "registered")
             dgv.DataSource = ds.Tables(0)
@@ -159,16 +161,16 @@ Public Class Report
     Private Sub loadcmbxRModule()
 
         Try
-            connection.Close()
-            connection.Open()
+            conn.Close()
+            conn.Open()
             Dim strSQL As String = "SELECT  [Course_id] , [CourseName] FROM [dbo].[Course] ORDER BY [Course_id] ASC "
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL,  conn)
             Dim ds As New DataSet
             da.Fill(ds, "course")
             cmbxRModule.DataSource = ds.Tables(0)
             cmbxRModule.DisplayMember = "CourseName"
             cmbxRModule.ValueMember = "Course_id"
-            connection.Close()
+            conn.Close()
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception

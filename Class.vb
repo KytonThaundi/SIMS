@@ -6,6 +6,9 @@ Imports SIMS_Core.globalVariables
 Imports System.Configuration
 
 Public Class Lecturers
+
+    Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+    Dim conn As New SqlConnection(connStr)
     Private myBindingSource As New BindingSource
     Dim SerialPort As New System.IO.Ports.SerialPort()
     Dim CR As String
@@ -14,14 +17,14 @@ Public Class Lecturers
 
     Private Sub loadSID()
 
-        connection.Open()
-        Dim da As New SqlDataAdapter("SELECT * FROM dbo.Student ORDER BY Student_id ASC", connection)
+        conn.Open()
+        Dim da As New SqlDataAdapter("SELECT * FROM dbo.Student ORDER BY Student_id ASC", conn)
         Dim ds As New DataSet
         da.Fill(ds, "SID")
         cmbxGBSID.DataSource = ds.Tables(0)
         cmbxGBSID.DisplayMember = "Student_id"
         cmbxGBSID.ValueMember = "Student_id"
-        connection.Close()
+        conn.Close()
 
     End Sub
     Private Sub Lecturers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -97,27 +100,27 @@ Public Class Lecturers
 
     Private Sub loadCourse()
 
-        connection.Open()
-        Dim da1 As New SqlDataAdapter("SELECT Course_id, CourseName FROM dbo.Course", connection)
+        conn.Open()
+        Dim da1 As New SqlDataAdapter("SELECT Course_id, CourseName FROM dbo.Course", conn)
         Dim ds1 As New DataSet
         da1.Fill(ds1, "Course")
         cmbxCourse.DataSource = ds1.Tables(0)
         cmbxCourse.ValueMember = "Course_id"
         cmbxCourse.DisplayMember = "CourseName"
-        connection.Close()
+        conn.Close()
 
     End Sub
 
     Private Sub loadClasses()
 
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("SELECT Class_id, ClassName FROM dbo.Class", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("SELECT Class_id, ClassName FROM dbo.Class", conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "class")
         cmbxClass.DataSource = ds2.Tables(0)
         cmbxClass.ValueMember = "Class_id"
         cmbxClass.DisplayMember = "Class_id"
-        connection.Close()
+        conn.Close()
 
     End Sub
 
@@ -223,7 +226,7 @@ Public Class Lecturers
         btnBack.Visible = True
         cmbx = cmbxCourseAttend
         loadcmbx()
-        connection.Close()
+        conn.Close()
         loadcmbxClassAttend()
 
 
@@ -264,8 +267,8 @@ Public Class Lecturers
     Private Sub btnViewGrade_Click(sender As Object, e As EventArgs) Handles btnViewGrade.Click
         lbYr.Text = "FINAL RESULTS: " + (dtpYr.Value.Year).ToString + " ACADEMIC YEAR,  " + cmbSem.SelectedItem
 
-        connection.Open()
-        Dim command As New SqlCommand("SELECT Student_Id, Fname, Surname FROM dbo.Student WHERE  Student_Id = '" & Convert.ToString(cmbxGBSID.SelectedValue) & "'", connection)
+        conn.Open()
+        Dim command As New SqlCommand("SELECT Student_Id, Fname, Surname FROM dbo.Student WHERE  Student_Id = '" & Convert.ToString(cmbxGBSID.SelectedValue) & "'", conn)
         Try
             Dim reader As SqlDataReader = command.ExecuteReader()
             While reader.Read
@@ -273,7 +276,7 @@ Public Class Lecturers
                 cmbxVariable.Text = "" & reader("Fname") & " " & reader("Surname") & " "
             End While
             lbStudent.Text = cmbxVariable.Text + " (" + cmbxGBSID.SelectedValue.ToString + ")"
-            connection.Close()
+            conn.Close()
             Lbcomment.Text = "[College Principal's Comment on Students Perfomance]"
             Call gradesview()
 
@@ -282,16 +285,16 @@ Public Class Lecturers
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         End Try
-        connection.Close()
+        conn.Close()
         'Lbcomment.Text = "[College Principal's Comment on Students Perfomance]"
 
     End Sub
 
     Private Sub gradesview()
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Course_id] As [Course Code], (SELECT [CourseName] FROM [dbo].[Course] WHERE [Course_id] = [dbo].[Grade].[Course_id]) AS [Course Name], [Grade] AS [Grade (%)] FROM [dbo].[Grade] WHERE [ExamNum] = (SELECT [ExamNum] FROM [dbo].[Exam] WHERE [Student_id] = '" & cmbxGBSID.Text & "')"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim dt As New DataTable
             da.Fill(dt)
             If dt.Rows.Count > 0 Then
@@ -338,10 +341,10 @@ Public Class Lecturers
 
     Private Sub loadClass()
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT ExamNum AS [Exam Number] FROM dbo.Exam WHERE Class like'%" & cmbxClass.Text & "%' ORDER BY ExamNum ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             ds.Tables.Clear()
             da.Fill(ds, "ExamNum")
@@ -369,10 +372,10 @@ Public Class Lecturers
             Dim exit2ndFor As Boolean = False
             For i1 As Integer = 0 To Me.dgvClass.Columns.Count - 1
                 For i2 As Integer = 0 To Me.dgvClass.Rows.Count - 1
-                    Dim comd As SqlCommand = connection.CreateCommand()
+                    Dim comd As SqlCommand = conn.CreateCommand()
                     Try
-                        connection.Open()
-                        comd.Connection = connection
+                        conn.Open()
+                        comd.Connection = conn
                         comd.CommandText = "INSERT INTO dbo.Grade(ExamNum, Course_id, Grade) VALUES(@ExamNum, @Course_id, @Grade)"
 
                         'Adding Parameters
@@ -389,29 +392,29 @@ Public Class Lecturers
                             comd.ExecuteNonQuery()
                         Next
 
-                        connection.Close()
+                        conn.Close()
                         ' Audit Trail
                         Try
                             ipadd()
                             Dim theQuery As String = "INSERT INTO [dbo].[AuditTrail] ([DtTim],[username],[usertyp],[ipAdd],[TransactionTyp],[TransactionVal]) VALUES (@DtTim, @Uname, @Utyp, @ipAdd, @TransTyp, @TransVal)"
-                            Dim cmd As SqlCommand = New SqlCommand(theQuery, connection)
+                            Dim cmd As SqlCommand = New SqlCommand(theQuery, conn)
                             cmd.Parameters.AddWithValue("@DtTim", Date.Now.ToString)
                             cmd.Parameters.AddWithValue("@Uname", Login.txtUname.Text)
                             cmd.Parameters.AddWithValue("@Utyp", frmHome.lbusertype.Text)
                             cmd.Parameters.AddWithValue("@ipAdd", Ipaddress)
                             cmd.Parameters.AddWithValue("@TransTyp", "Post Grades")
                             cmd.Parameters.AddWithValue("@TransVal", cmbxClass.SelectedValue + ", " + cmbxCourse.SelectedValue.ToString + ", " + dtpGYr.Value.ToString + ", " + cmbxSem.Text)
-                            connection.Close()
-                            connection.Open()
+                            conn.Close()
+                            conn.Open()
                             cmd.ExecuteNonQuery().Equals(1)
-                            connection.Close()
+                            conn.Close()
 
                         Catch ex As SqlException
                             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
                         Catch ex As Exception
                             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
                         End Try
-                        connection.Close()
+                        conn.Close()
                         cmbxSem.Text = Nothing
                         cmbxClass.Text = Nothing
                         cmbxCourse.Text = Nothing
@@ -425,7 +428,7 @@ Public Class Lecturers
                     Catch ex As Exception
                         MessageBox.Show("Error :" & ex.ToString())
                     Finally
-                        connection.Close()
+                        conn.Close()
                     End Try
                     exit2ndFor = True
                     Exit For
@@ -484,10 +487,10 @@ Public Class Lecturers
     Private Sub loadClassStudents()
         dgv = dgvClassStudents
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Student_Id],([Fname]+' '+[Surname]) As [Student],[Gender],[ProgramOfStudy] AS [Programme Of Study],[YOA] AS [Year of Admission] FROM [dbo].[Student] ORDER BY [Student_Id] ASC"
-            connection.Close()
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            conn.Close()
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "students")
             dgv.DataSource = ds.Tables(0)
@@ -501,26 +504,26 @@ Public Class Lecturers
 
     Private Sub loadcmbxClassDept()
 
-        connection.Open()
-        Dim da2 As New SqlDataAdapter("SELECT Dept_id, DeptName FROM dbo.Department", connection)
+        conn.Open()
+        Dim da2 As New SqlDataAdapter("SELECT Dept_id, DeptName FROM dbo.Department", conn)
         Dim ds2 As New DataSet
         da2.Fill(ds2, "dept")
         cmbxClassDept.DataSource = ds2.Tables(0)
         cmbxClassDept.ValueMember = "Dept_id"
         cmbxClassDept.DisplayMember = "DeptName"
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub loadcmbxStClases()
 
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT [Class_id],[ClassName] FROM [dbSIMS].[dbo].[Class]", connection)
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT [Class_id],[ClassName] FROM [dbSIMS].[dbo].[Class]", conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "class")
         Me.cmbxStudentsClasses.DataSource = ds3.Tables(0)
         Me.cmbxStudentsClasses.ValueMember = "Class_id"
         Me.cmbxStudentsClasses.DisplayMember = "ClassName"
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub btnAddToClass_Click(sender As Object, e As EventArgs) Handles btnAddToClass.Click
@@ -535,10 +538,10 @@ Public Class Lecturers
 
             For j As Integer = 0 To Me.dgvClassStudents.Columns.Count - 1
                 For k As Integer = 0 To Me.dgvClassStudents.Rows.Count - 1
-                    Dim comd As SqlCommand = connection.CreateCommand()
+                    Dim comd As SqlCommand = conn.CreateCommand()
                     Try
-                        connection.Open()
-                        comd.Connection = connection
+                        conn.Open()
+                        comd.Connection = conn
                         comd.CommandText = "INSERT INTO [dbo].[Student_Class] ([Student_Id], [Class_Id], [ClassYear]) VALUES (@SID, @CID, @ClassYr)"
 
                         'Adding Parameters
@@ -555,14 +558,14 @@ Public Class Lecturers
                             comd.ExecuteNonQuery()
                         Next
 
-                        connection.Close()
+                        conn.Close()
                         cmbxStudentsClasses.Text = Nothing
                         loadClassStudents()
                         MessageBox.Show("Class Popolated Successiflully!", "Classes", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Catch ex As Exception
                         MessageBox.Show("Error :" & ex.ToString())
                     Finally
-                        connection.Close()
+                        conn.Close()
                     End Try
                     exit_2nd_For = True
                     Exit For
@@ -576,14 +579,14 @@ Public Class Lecturers
 
     Private Sub txtclassStudentSearch_TextChanged(sender As Object, e As EventArgs) Handles txtclassStudentSearch.TextChanged
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Student_Id],([Fname]+' '+[Surname]) As [Student],[Gender],[ProgramOfStudy] AS [Programme Of Study],[YOA] AS [Year of Admission] FROM [dbo].[Student]WHERE  Student_Id like '" & txtclassStudentSearch.Text & "%'  ORDER BY [Student_Id] ASC"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "Student")
             dgvClassStudents.DataSource = ds.Tables(0)
             dgvClassStudents.ClearSelection()
-            connection.Close()
+            conn.Close()
         Catch ex As SqlException
             MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch ex As Exception
@@ -592,26 +595,26 @@ Public Class Lecturers
     End Sub
 
     Private Sub loadcmbxClassAttend()
-        connection.Close()
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT [Class_id],[ClassName] FROM [dbSIMS].[dbo].[Class]", connection)
+        conn.Close()
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT [Class_id],[ClassName] FROM [dbSIMS].[dbo].[Class]", conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "class")
         Me.cmbxClassAttend.DataSource = ds3.Tables(0)
         Me.cmbxClassAttend.ValueMember = "Class_id"
         Me.cmbxClassAttend.DisplayMember = "Class_id"
-        connection.Close()
+        conn.Close()
     End Sub
 
     Private Sub loaddgvClassAttend()
         Try
-            connection.Open()
+            conn.Open()
             Dim strSQL As String = "SELECT [Student_Id] AS [Registration Number],(SELECT ([Fname]+' '+[Surname]) FROM [dbo].[Student] WHERE  Student_Id= [dbo].[Student_Class].[Student_Id]) As [Student],(SELECT [ProgramOfStudy] FROM [dbo].[Student] WHERE  Student_Id= [dbo].[Student_Class].[Student_Id]) AS [Programme],(SELECT [Gender] FROM [dbo].[Student]WHERE  Student_Id= [dbo].[Student_Class].[Student_Id]) AS [Gender] FROM [dbo].[Student_Class] WHERE [Class_id] like '" & cmbxClassAttend.Text & "%'  ORDER BY [Student_Id] ASC"
-            Dim da As New SqlDataAdapter(strSQL, connection)
+            Dim da As New SqlDataAdapter(strSQL, conn)
             Dim ds As New DataSet
             da.Fill(ds, "Student")
             dgvClassAttend.DataSource = ds.Tables(0)
-            connection.Close()
+            conn.Close()
             dgvClassAttend.ClearSelection()
 
         Catch ex As SqlException
@@ -619,7 +622,7 @@ Public Class Lecturers
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
         Finally
-            connection.Close()
+            conn.Close()
         End Try
         colu.DataPropertyName = Nothing
         colu.HeaderText = "" + Date.Now.ToShortDateString + ""
@@ -636,7 +639,7 @@ Public Class Lecturers
         End If
     End Sub
     Private Sub cmbxClassAttend_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbxClassAttend.SelectedValueChanged
-        connection.Close()
+        conn.Close()
         ResetDataGridView()
         loaddgvClassAttend()
         'colu.DataPropertyName = Nothing
@@ -646,10 +649,10 @@ Public Class Lecturers
     End Sub
 
     Private Sub checkboxmark()
-        Dim comm As SqlCommand = connection.CreateCommand()
+        Dim comm As SqlCommand = conn.CreateCommand()
         Try
-            connection.Open()
-            comm.Connection = connection
+            conn.Open()
+            comm.Connection = conn
             comm.CommandText = "INSERT INTO [dbo].[Attendance] ([Student_Id], [Course_id], [Attendance]) VALUES (@SID, @CID, @Attend)"
 
             'Adding Parameters
@@ -664,12 +667,12 @@ Public Class Lecturers
             comm.Parameters("@CID").Value = cmbxCourseAttend.SelectedValue.ToString
             comm.Parameters("@Attend").Value = attend
             comm.ExecuteNonQuery()
-            connection.Close()
+            conn.Close()
 
         Catch ex As Exception
             MessageBox.Show("Error :" & ex.ToString())
         Finally
-            connection.Close()
+            conn.Close()
         End Try
     End Sub
     Dim attend As String = Nothing
@@ -692,15 +695,17 @@ Public Class Lecturers
     End Sub
 
     Public Shared Sub loadcmbx()
-        connection.Close()
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT [Course_id],[CourseName] FROM [dbSIMS].[dbo].[Course]", connection)
+        Dim connStr As String = ConfigurationManager.ConnectionStrings("MyDBConnection").ConnectionString
+        Dim conn As New SqlConnection(connStr)
+        conn.Close()
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT [Course_id],[CourseName] FROM [dbSIMS].[dbo].[Course]", conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "class")
         cmbx.DataSource = ds3.Tables(0)
         cmbx.ValueMember = "Course_id"
         cmbx.DisplayMember = "CourseName"
-        connection.Close()
+        conn.Close()
     End Sub
 
     'use the save button for updating
@@ -711,10 +716,10 @@ Public Class Lecturers
     '        For A As Integer = 0 To Me.dgvClassAttend.Columns.Count - 1
     '            For B As Integer = 0 To Me.dgvClassAttend.Rows.Count - 1
 
-    '                Dim comm As SqlCommand = connection.CreateCommand()
+    '                Dim comm As SqlCommand = conn.CreateCommand()
     '                Try
-    '                    connection.Open()
-    '                    comm.Connection = connection
+    '                    conn.Open()
+    '                    comm.Connection = conn
     '                    comm.CommandText = "INSERT INTO [dbo].[Attendance] ([Student_Id], [Course_id], [Attendance]) VALUES (@SID, @CID, @Attend)"
 
     '                    'Adding Parameters
@@ -731,12 +736,12 @@ Public Class Lecturers
     '                        comm.ExecuteNonQuery()
     '                    Next
 
-    '                    connection.Close()
+    '                    conn.Close()
     '                    MessageBox.Show("Attendace Sheet Completed Successfuly", "Attendance ", MessageBoxButtons.OK, MessageBoxIcon.Information)
     '                Catch ex As Exception
     '                    MessageBox.Show("Error :" & ex.ToString())
     '                Finally
-    '                    connection.Close()
+    '                    conn.Close()
     '                End Try
     '                exit2nd4 = True
     '                Exit For
@@ -777,25 +782,25 @@ Public Class Lecturers
 
     End Sub
     Private Sub loadcmbxCourseAssign()
-        connection.Close()
-        connection.Open()
-        Dim da3 As New SqlDataAdapter("SELECT [Course_id],[CourseName] FROM [dbSIMS].[dbo].[Course]", connection)
+        conn.Close()
+        conn.Open()
+        Dim da3 As New SqlDataAdapter("SELECT [Course_id],[CourseName] FROM [dbSIMS].[dbo].[Course]", conn)
         Dim ds3 As New DataSet
         da3.Fill(ds3, "class")
         Me.cmbxCourseAssign.DataSource = ds3.Tables(0)
         Me.cmbxCourseAssign.ValueMember = "Course_id"
         Me.cmbxCourseAssign.DisplayMember = "CourseName"
-        connection.Close()
+        conn.Close()
     End Sub
     Private Sub loadcmbxClassAssign()
-        connection.Open()
-        Dim da As New SqlDataAdapter("SELECT Class_id, ClassName FROM dbo.Class", connection)
+        conn.Open()
+        Dim da As New SqlDataAdapter("SELECT Class_id, ClassName FROM dbo.Class", conn)
         Dim ds As New DataSet
         da.Fill(ds, "class")
         cmbxClassAssign.DataSource = ds.Tables(0)
         cmbxClassAssign.ValueMember = "Class_id"
         cmbxClassAssign.DisplayMember = "Class_id"
-        connection.Close()
+        conn.Close()
     End Sub
     Dim dir As String = Nothing
     Private Sub btnPostAssign_Click(sender As Object, e As EventArgs) Handles btnPostAssign.Click
@@ -1117,14 +1122,14 @@ Public Class Lecturers
             If gpbPostAnnounce.Visible = True Then
                 directorystr = "\\SDE-KYTON\Users\Public\SIMS_Core\Announcements"
                 If Directory.Exists(directorystr) Then
-                        ' This path is a directory.
+                    ' This path is a directory.
                     Call loadarchivedgv(directorystr)
                     dgv.Columns(3).Visible = False
                 Else
                     MsgBox("NO Announcements have been Posted! ", MessageBoxIcon.Warning)
                 End If
             End If
-            End If
+        End If
     End Sub
 
     Private Sub dgvcompAnnounce_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvcompAnnounce.CellContentDoubleClick

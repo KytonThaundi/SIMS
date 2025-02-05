@@ -14629,83 +14629,83 @@ Namespace dbSIMSDataSetTableAdapters
          Global.System.ComponentModel.Browsable(false)>  _
         Public Property Connection() As Global.System.Data.IDbConnection
             Get
-                If (Not (Me._connection) Is Nothing) Then
+                If (Not (Me._ conn) Is Nothing) Then
                     Return Me._connection
                 End If
-                If ((Not (Me._accountsTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._accountsTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._accountsTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._accountsTableAdapter.conn) Is Nothing)) Then
                     Return Me._accountsTableAdapter.Connection
                 End If
-                If ((Not (Me._attendanceTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._attendanceTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._attendanceTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._attendanceTableAdapter.conn) Is Nothing)) Then
                     Return Me._attendanceTableAdapter.Connection
                 End If
-                If ((Not (Me._classTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._classTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._classTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._classTableAdapter.conn) Is Nothing)) Then
                     Return Me._classTableAdapter.Connection
                 End If
-                If ((Not (Me._courseTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._courseTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._courseTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._courseTableAdapter.conn) Is Nothing)) Then
                     Return Me._courseTableAdapter.Connection
                 End If
-                If ((Not (Me._course_StudentTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._course_StudentTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._course_StudentTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._course_StudentTableAdapter.conn) Is Nothing)) Then
                     Return Me._course_StudentTableAdapter.Connection
                 End If
-                If ((Not (Me._departmentTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._departmentTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._departmentTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._departmentTableAdapter.conn) Is Nothing)) Then
                     Return Me._departmentTableAdapter.Connection
                 End If
-                If ((Not (Me._examTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._examTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._examTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._examTableAdapter.conn) Is Nothing)) Then
                     Return Me._examTableAdapter.Connection
                 End If
-                If ((Not (Me._facultyTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._facultyTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._facultyTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._facultyTableAdapter.conn) Is Nothing)) Then
                     Return Me._facultyTableAdapter.Connection
                 End If
-                If ((Not (Me._gradeTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._gradeTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._gradeTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._gradeTableAdapter.conn) Is Nothing)) Then
                     Return Me._gradeTableAdapter.Connection
                 End If
-                If ((Not (Me._majorTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._majorTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._majorTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._majorTableAdapter.conn) Is Nothing)) Then
                     Return Me._majorTableAdapter.Connection
                 End If
-                If ((Not (Me._nOKTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._nOKTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._nOKTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._nOKTableAdapter.conn) Is Nothing)) Then
                     Return Me._nOKTableAdapter.Connection
                 End If
-                If ((Not (Me._programmeTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._programmeTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._programmeTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._programmeTableAdapter.conn) Is Nothing)) Then
                     Return Me._programmeTableAdapter.Connection
                 End If
-                If ((Not (Me._studentTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._studentTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._studentTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._studentTableAdapter.conn) Is Nothing)) Then
                     Return Me._studentTableAdapter.Connection
                 End If
-                If ((Not (Me._student_ClassTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._student_ClassTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._student_ClassTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._student_ClassTableAdapter.conn) Is Nothing)) Then
                     Return Me._student_ClassTableAdapter.Connection
                 End If
-                If ((Not (Me._transactionsTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._transactionsTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._transactionsTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._transactionsTableAdapter.conn) Is Nothing)) Then
                     Return Me._transactionsTableAdapter.Connection
                 End If
-                If ((Not (Me._usersTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._usersTableAdapter.Connection) Is Nothing)) Then
+                If ((Not (Me._usersTableAdapter) Is Nothing) _
+                            AndAlso (Not (Me._usersTableAdapter.conn) Is Nothing)) Then
                     Return Me._usersTableAdapter.Connection
                 End If
                 Return Nothing
             End Get
             Set
-                Me._connection = value
+                Me._connection = Value
             End Set
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Browsable(False)>
         Public ReadOnly Property TableAdapterInstanceCount() As Integer
             Get
                 Dim count As Integer = 0
@@ -14760,18 +14760,18 @@ Namespace dbSIMSDataSetTableAdapters
                 Return count
             End Get
         End Property
-        
+
         '''<summary>
         '''Update rows in top-down order.
         '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Private Function UpdateUpdatedRows(ByVal dataSet As dbSIMSDataSet, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow), ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
             If (Not (Me._accountsTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Accounts.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._accountsTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14780,7 +14780,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._attendanceTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Attendance.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._attendanceTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14789,7 +14789,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._classTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet._Class.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._classTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14798,7 +14798,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._courseTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Course.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._courseTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14807,7 +14807,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._course_StudentTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Course_Student.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._course_StudentTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14816,7 +14816,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._departmentTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Department.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._departmentTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14825,7 +14825,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._examTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Exam.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._examTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14834,7 +14834,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._facultyTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Faculty.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._facultyTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14843,7 +14843,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._gradeTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Grade.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._gradeTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14852,7 +14852,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._majorTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Major.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._majorTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14861,7 +14861,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._nOKTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.NOK.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._nOKTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14870,7 +14870,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._programmeTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Programme.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._programmeTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14879,7 +14879,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._studentTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Student.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._studentTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14888,7 +14888,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._student_ClassTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Student_Class.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._student_ClassTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14897,7 +14897,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._transactionsTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Transactions.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._transactionsTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14906,7 +14906,7 @@ Namespace dbSIMSDataSetTableAdapters
             If (Not (Me._usersTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.users.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
+                If ((Not (updatedRows) Is Nothing) _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._usersTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
@@ -14914,17 +14914,17 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             Return result
         End Function
-        
+
         '''<summary>
         '''Insert rows in top-down order.
         '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Private Function UpdateInsertedRows(ByVal dataSet As dbSIMSDataSet, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
             If (Not (Me._accountsTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Accounts.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._accountsTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14932,7 +14932,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._attendanceTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Attendance.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._attendanceTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14940,7 +14940,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._classTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet._Class.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._classTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14948,7 +14948,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._courseTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Course.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._courseTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14956,7 +14956,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._course_StudentTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Course_Student.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._course_StudentTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14964,7 +14964,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._departmentTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Department.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._departmentTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14972,7 +14972,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._examTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Exam.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._examTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14980,7 +14980,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._facultyTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Faculty.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._facultyTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14988,7 +14988,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._gradeTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Grade.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._gradeTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -14996,7 +14996,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._majorTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Major.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._majorTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -15004,7 +15004,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._nOKTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.NOK.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._nOKTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -15012,7 +15012,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._programmeTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Programme.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._programmeTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -15020,7 +15020,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._studentTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Student.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._studentTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -15028,7 +15028,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._student_ClassTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Student_Class.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._student_ClassTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -15036,7 +15036,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._transactionsTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Transactions.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._transactionsTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -15044,7 +15044,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._usersTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.users.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
+                If ((Not (addedRows) Is Nothing) _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._usersTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
@@ -15052,17 +15052,17 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             Return result
         End Function
-        
+
         '''<summary>
         '''Delete rows in bottom-up order.
         '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Private Function UpdateDeletedRows(ByVal dataSet As dbSIMSDataSet, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
             If (Not (Me._usersTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.users.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._usersTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15070,7 +15070,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._transactionsTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Transactions.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._transactionsTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15078,7 +15078,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._student_ClassTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Student_Class.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._student_ClassTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15086,7 +15086,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._studentTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Student.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._studentTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15094,7 +15094,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._programmeTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Programme.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._programmeTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15102,7 +15102,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._nOKTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.NOK.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._nOKTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15110,7 +15110,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._majorTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Major.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._majorTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15118,7 +15118,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._gradeTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Grade.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._gradeTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15126,7 +15126,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._facultyTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Faculty.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._facultyTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15134,7 +15134,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._examTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Exam.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._examTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15142,7 +15142,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._departmentTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Department.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._departmentTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15150,7 +15150,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._course_StudentTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Course_Student.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._course_StudentTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15158,7 +15158,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._courseTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Course.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._courseTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15166,7 +15166,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._classTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet._Class.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._classTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15174,7 +15174,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._attendanceTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Attendance.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._attendanceTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15182,7 +15182,7 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             If (Not (Me._accountsTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Accounts.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
+                If ((Not (deletedRows) Is Nothing) _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._accountsTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
@@ -15190,18 +15190,18 @@ Namespace dbSIMSDataSetTableAdapters
             End If
             Return result
         End Function
-        
+
         '''<summary>
         '''Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
         '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Private Function GetRealUpdatedRows(ByVal updatedRows() As Global.System.Data.DataRow, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Global.System.Data.DataRow()
-            If ((updatedRows Is Nothing)  _
+            If ((updatedRows Is Nothing) _
                         OrElse (updatedRows.Length < 1)) Then
                 Return updatedRows
             End If
-            If ((allAddedRows Is Nothing)  _
+            If ((allAddedRows Is Nothing) _
                         OrElse (allAddedRows.Count < 1)) Then
                 Return updatedRows
             End If
@@ -15209,279 +15209,279 @@ Namespace dbSIMSDataSetTableAdapters
             Dim i As Integer = 0
             Do While (i < updatedRows.Length)
                 Dim row As Global.System.Data.DataRow = updatedRows(i)
-                If (allAddedRows.Contains(row) = false) Then
+                If (allAddedRows.Contains(row) = False) Then
                     realUpdatedRows.Add(row)
                 End If
                 i = (i + 1)
             Loop
             Return realUpdatedRows.ToArray
         End Function
-        
+
         '''<summary>
         '''Update all changes to the dataset.
         '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Public Overridable Function UpdateAll(ByVal dataSet As dbSIMSDataSet) As Integer
             If (dataSet Is Nothing) Then
                 Throw New Global.System.ArgumentNullException("dataSet")
             End If
-            If (dataSet.HasChanges = false) Then
+            If (dataSet.HasChanges = False) Then
                 Return 0
             End If
-            If ((Not (Me._accountsTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._accountsTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._accountsTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._accountsTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._attendanceTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._attendanceTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._attendanceTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._attendanceTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._classTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._classTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._classTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._classTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._courseTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._courseTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._courseTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._courseTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._course_StudentTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._course_StudentTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._course_StudentTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._course_StudentTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._departmentTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._departmentTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._departmentTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._departmentTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._examTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._examTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._examTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._examTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._facultyTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._facultyTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._facultyTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._facultyTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._gradeTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._gradeTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._gradeTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._gradeTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._majorTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._majorTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._majorTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._majorTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._nOKTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._nOKTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._nOKTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._nOKTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._programmeTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._programmeTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._programmeTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._programmeTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._studentTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._studentTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._studentTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._studentTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._student_ClassTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._student_ClassTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._student_ClassTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._student_ClassTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._transactionsTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._transactionsTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._transactionsTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._transactionsTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
-            If ((Not (Me._usersTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._usersTableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+            If ((Not (Me._usersTableAdapter) Is Nothing) _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._usersTableAdapter.conn) = False)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" &
                         "tring.")
             End If
             Dim workConnection As Global.System.Data.IDbConnection = Me.Connection
             If (workConnection Is Nothing) Then
-                Throw New Global.System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana"& _ 
+                Throw New Global.System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana" &
                         "ger TableAdapter property to a valid TableAdapter instance.")
             End If
-            Dim workConnOpened As Boolean = false
-            If ((workConnection.State And Global.System.Data.ConnectionState.Broken)  _
+            Dim workConnOpened As Boolean = False
+            If ((workConnection.State And Global.System.Data.ConnectionState.Broken) _
                         = Global.System.Data.ConnectionState.Broken) Then
                 workConnection.Close
             End If
             If (workConnection.State = Global.System.Data.ConnectionState.Closed) Then
                 workConnection.Open
-                workConnOpened = true
+                workConnOpened = True
             End If
             Dim workTransaction As Global.System.Data.IDbTransaction = workConnection.BeginTransaction
             If (workTransaction Is Nothing) Then
-                Throw New Global.System.ApplicationException("The transaction cannot begin. The current data connection does not support transa"& _ 
+                Throw New Global.System.ApplicationException("The transaction cannot begin. The current data connection does not support transa" &
                         "ctions or the current state is not allowing the transaction to begin.")
             End If
             Dim allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow) = New Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)()
             Dim allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow) = New Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)()
             Dim adaptersWithAcceptChangesDuringUpdate As Global.System.Collections.Generic.List(Of Global.System.Data.Common.DataAdapter) = New Global.System.Collections.Generic.List(Of Global.System.Data.Common.DataAdapter)()
-            Dim revertConnections As Global.System.Collections.Generic.Dictionary(Of Object, Global.System.Data.IDbConnection) = New Global.System.Collections.Generic.Dictionary(Of Object, Global.System.Data.IDbConnection)()
+            Dim revertConnections As Global.System.Collections.Generic.Dictionary(Of Object, Global.System.Data.IDb conn) = New Global.System.Collections.Generic.Dictionary(Of Object, Global.System.Data.IDb conn)()
             Dim result As Integer = 0
             Dim backupDataSet As Global.System.Data.DataSet = Nothing
             If Me.BackupDataSetBeforeUpdate Then
                 backupDataSet = New Global.System.Data.DataSet()
                 backupDataSet.Merge(dataSet)
             End If
-            Try 
+            Try
                 '---- Prepare for update -----------
                 '
                 If (Not (Me._accountsTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._accountsTableAdapter, Me._accountsTableAdapter.Connection)
-                    Me._accountsTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._accountsTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._accountsTableAdapter, Me._accountsTableAdapter.conn)
+                    Me._accountsTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._accountsTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._accountsTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._accountsTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._accountsTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._accountsTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._attendanceTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._attendanceTableAdapter, Me._attendanceTableAdapter.Connection)
-                    Me._attendanceTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._attendanceTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._attendanceTableAdapter, Me._attendanceTableAdapter.conn)
+                    Me._attendanceTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._attendanceTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._attendanceTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._attendanceTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._attendanceTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._attendanceTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._classTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._classTableAdapter, Me._classTableAdapter.Connection)
-                    Me._classTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._classTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._classTableAdapter, Me._classTableAdapter.conn)
+                    Me._classTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._classTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._classTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._classTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._classTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._classTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._courseTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._courseTableAdapter, Me._courseTableAdapter.Connection)
-                    Me._courseTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._courseTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._courseTableAdapter, Me._courseTableAdapter.conn)
+                    Me._courseTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._courseTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._courseTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._courseTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._courseTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._courseTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._course_StudentTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._course_StudentTableAdapter, Me._course_StudentTableAdapter.Connection)
-                    Me._course_StudentTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._course_StudentTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._course_StudentTableAdapter, Me._course_StudentTableAdapter.conn)
+                    Me._course_StudentTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._course_StudentTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._course_StudentTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._course_StudentTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._course_StudentTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._course_StudentTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._departmentTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._departmentTableAdapter, Me._departmentTableAdapter.Connection)
-                    Me._departmentTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._departmentTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._departmentTableAdapter, Me._departmentTableAdapter.conn)
+                    Me._departmentTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._departmentTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._departmentTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._departmentTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._departmentTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._departmentTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._examTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._examTableAdapter, Me._examTableAdapter.Connection)
-                    Me._examTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._examTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._examTableAdapter, Me._examTableAdapter.conn)
+                    Me._examTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._examTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._examTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._examTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._examTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._examTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._facultyTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._facultyTableAdapter, Me._facultyTableAdapter.Connection)
-                    Me._facultyTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._facultyTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._facultyTableAdapter, Me._facultyTableAdapter.conn)
+                    Me._facultyTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._facultyTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._facultyTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._facultyTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._facultyTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._facultyTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._gradeTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._gradeTableAdapter, Me._gradeTableAdapter.Connection)
-                    Me._gradeTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._gradeTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._gradeTableAdapter, Me._gradeTableAdapter.conn)
+                    Me._gradeTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._gradeTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._gradeTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._gradeTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._gradeTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._gradeTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._majorTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._majorTableAdapter, Me._majorTableAdapter.Connection)
-                    Me._majorTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._majorTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._majorTableAdapter, Me._majorTableAdapter.conn)
+                    Me._majorTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._majorTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._majorTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._majorTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._majorTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._majorTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._nOKTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._nOKTableAdapter, Me._nOKTableAdapter.Connection)
-                    Me._nOKTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._nOKTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._nOKTableAdapter, Me._nOKTableAdapter.conn)
+                    Me._nOKTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._nOKTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._nOKTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._nOKTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._nOKTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._nOKTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._programmeTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._programmeTableAdapter, Me._programmeTableAdapter.Connection)
-                    Me._programmeTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._programmeTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._programmeTableAdapter, Me._programmeTableAdapter.conn)
+                    Me._programmeTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._programmeTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._programmeTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._programmeTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._programmeTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._programmeTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._studentTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._studentTableAdapter, Me._studentTableAdapter.Connection)
-                    Me._studentTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._studentTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._studentTableAdapter, Me._studentTableAdapter.conn)
+                    Me._studentTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._studentTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._studentTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._studentTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._studentTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._studentTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._student_ClassTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._student_ClassTableAdapter, Me._student_ClassTableAdapter.Connection)
-                    Me._student_ClassTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._student_ClassTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._student_ClassTableAdapter, Me._student_ClassTableAdapter.conn)
+                    Me._student_ClassTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._student_ClassTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._student_ClassTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._student_ClassTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._student_ClassTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._student_ClassTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._transactionsTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._transactionsTableAdapter, Me._transactionsTableAdapter.Connection)
-                    Me._transactionsTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._transactionsTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._transactionsTableAdapter, Me._transactionsTableAdapter.conn)
+                    Me._transactionsTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._transactionsTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._transactionsTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._transactionsTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._transactionsTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._transactionsTableAdapter.Adapter)
                     End If
                 End If
                 If (Not (Me._usersTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._usersTableAdapter, Me._usersTableAdapter.Connection)
-                    Me._usersTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._usersTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    revertConnections.Add(Me._usersTableAdapter, Me._usersTableAdapter.conn)
+                    Me._usersTableAdapter.Connection = CType(workConnection, Global.System.Data.SqlClient.Sql conn)
+                    Me._usersTableAdapter.Transaction = CType(workTransaction, Global.System.Data.SqlClient.SqlTransaction)
                     If Me._usersTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._usersTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        Me._usersTableAdapter.Adapter.AcceptChangesDuringUpdate = False
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._usersTableAdapter.Adapter)
                     End If
                 End If
@@ -15546,67 +15546,67 @@ Namespace dbSIMSDataSetTableAdapters
                     workConnection.Close
                 End If
                 If (Not (Me._accountsTableAdapter) Is Nothing) Then
-                    Me._accountsTableAdapter.Connection = CType(revertConnections(Me._accountsTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._accountsTableAdapter.Connection = CType(revertConnections(Me._accountsTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._accountsTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._attendanceTableAdapter) Is Nothing) Then
-                    Me._attendanceTableAdapter.Connection = CType(revertConnections(Me._attendanceTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._attendanceTableAdapter.Connection = CType(revertConnections(Me._attendanceTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._attendanceTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._classTableAdapter) Is Nothing) Then
-                    Me._classTableAdapter.Connection = CType(revertConnections(Me._classTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._classTableAdapter.Connection = CType(revertConnections(Me._classTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._classTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._courseTableAdapter) Is Nothing) Then
-                    Me._courseTableAdapter.Connection = CType(revertConnections(Me._courseTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._courseTableAdapter.Connection = CType(revertConnections(Me._courseTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._courseTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._course_StudentTableAdapter) Is Nothing) Then
-                    Me._course_StudentTableAdapter.Connection = CType(revertConnections(Me._course_StudentTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._course_StudentTableAdapter.Connection = CType(revertConnections(Me._course_StudentTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._course_StudentTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._departmentTableAdapter) Is Nothing) Then
-                    Me._departmentTableAdapter.Connection = CType(revertConnections(Me._departmentTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._departmentTableAdapter.Connection = CType(revertConnections(Me._departmentTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._departmentTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._examTableAdapter) Is Nothing) Then
-                    Me._examTableAdapter.Connection = CType(revertConnections(Me._examTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._examTableAdapter.Connection = CType(revertConnections(Me._examTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._examTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._facultyTableAdapter) Is Nothing) Then
-                    Me._facultyTableAdapter.Connection = CType(revertConnections(Me._facultyTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._facultyTableAdapter.Connection = CType(revertConnections(Me._facultyTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._facultyTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._gradeTableAdapter) Is Nothing) Then
-                    Me._gradeTableAdapter.Connection = CType(revertConnections(Me._gradeTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._gradeTableAdapter.Connection = CType(revertConnections(Me._gradeTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._gradeTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._majorTableAdapter) Is Nothing) Then
-                    Me._majorTableAdapter.Connection = CType(revertConnections(Me._majorTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._majorTableAdapter.Connection = CType(revertConnections(Me._majorTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._majorTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._nOKTableAdapter) Is Nothing) Then
-                    Me._nOKTableAdapter.Connection = CType(revertConnections(Me._nOKTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._nOKTableAdapter.Connection = CType(revertConnections(Me._nOKTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._nOKTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._programmeTableAdapter) Is Nothing) Then
-                    Me._programmeTableAdapter.Connection = CType(revertConnections(Me._programmeTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._programmeTableAdapter.Connection = CType(revertConnections(Me._programmeTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._programmeTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._studentTableAdapter) Is Nothing) Then
-                    Me._studentTableAdapter.Connection = CType(revertConnections(Me._studentTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._studentTableAdapter.Connection = CType(revertConnections(Me._studentTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._studentTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._student_ClassTableAdapter) Is Nothing) Then
-                    Me._student_ClassTableAdapter.Connection = CType(revertConnections(Me._student_ClassTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._student_ClassTableAdapter.Connection = CType(revertConnections(Me._student_ClassTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._student_ClassTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._transactionsTableAdapter) Is Nothing) Then
-                    Me._transactionsTableAdapter.Connection = CType(revertConnections(Me._transactionsTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._transactionsTableAdapter.Connection = CType(revertConnections(Me._transactionsTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._transactionsTableAdapter.Transaction = Nothing
                 End If
                 If (Not (Me._usersTableAdapter) Is Nothing) Then
-                    Me._usersTableAdapter.Connection = CType(revertConnections(Me._usersTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._usersTableAdapter.Connection = CType(revertConnections(Me._usersTableAdapter), Global.System.Data.SqlClient.Sql conn)
                     Me._usersTableAdapter.Transaction = Nothing
                 End If
                 If (0 < adaptersWithAcceptChangesDuringUpdate.Count) Then
@@ -15615,25 +15615,25 @@ Namespace dbSIMSDataSetTableAdapters
                     Dim i As Integer = 0
                     Do While (i < adapters.Length)
                         Dim adapter As Global.System.Data.Common.DataAdapter = adapters(i)
-                        adapter.AcceptChangesDuringUpdate = true
+                        adapter.AcceptChangesDuringUpdate = True
                         i = (i + 1)
                     Loop
                 End If
             End Try
             Return result
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Protected Overridable Sub SortSelfReferenceRows(ByVal rows() As Global.System.Data.DataRow, ByVal relation As Global.System.Data.DataRelation, ByVal childFirst As Boolean)
             Global.System.Array.Sort(Of Global.System.Data.DataRow)(rows, New SelfReferenceComparer(relation, childFirst))
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overridable Function MatchTableAdapterConnection(ByVal inputConnection As Global.System.Data.IDbConnection) As Boolean
-            If (Not (Me._connection) Is Nothing) Then
-                Return true
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
+        Protected Overridable Function MatchTableAdapterConnection(ByVal inputConnection As Global.System.Data.IDb conn) As Boolean
+            If (Not (Me._ conn) Is Nothing) Then
+                Return True
             End If
             If ((Me.Connection Is Nothing)  _
                         OrElse (inputConnection Is Nothing)) Then
