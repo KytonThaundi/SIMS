@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using SIMS_Web.Data;
 using SIMS_Web.Models;
 using System;
@@ -12,38 +13,43 @@ namespace SIMS_Web.Services
         private readonly ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuditService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public AuditService(
+            ApplicationDbContext context,
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task LogActionAsync(string transactionType, string transactionValue)
+        public async Task LogActionAsync(string actionType, string actionDetails)
         {
             var httpContext = _httpContextAccessor.HttpContext;
-            var username = httpContext?.User.Identity?.IsAuthenticated == true 
-                ? httpContext.User.FindFirstValue(ClaimTypes.Name) 
-                : "Anonymous";
+            var username = httpContext?.User?.Identity?.Name ?? "System";
+            var userType = "Unknown";
             
-            var userType = httpContext?.User.IsInRole("Admin") == true 
-                ? "Admin" 
-                : httpContext?.User.IsInRole("Staff") == true 
-                    ? "Staff" 
-                    : "Student";
-
-            var ipAddress = httpContext?.Connection.RemoteIpAddress?.ToString();
-
-            var auditTrail = new AuditTrail
+            if (httpContext?.User?.Identity?.IsAuthenticated == true)
             {
-                DtTim = DateTime.UtcNow,
-                Username = username ?? "System",
+                if (httpContext.User.IsInRole("Admin"))
+                    userType = "Admin";
+                else if (httpContext.User.IsInRole("Staff"))
+                    userType = "Staff";
+                else if (httpContext.User.IsInRole("Student"))
+                    userType = "Student";
+            }
+            
+            var ipAddress = httpContext?.Connection?.RemoteIpAddress?.ToString() ?? "0.0.0.0";
+            
+            var auditEntry = new AuditTrail
+            {
+                DtTim = DateTime.Now,
+                Username = username,
                 Usertyp = userType,
-                IpAdd = ipAddress ?? "Unknown",
-                TransactionTyp = transactionType,
-                TransactionVal = transactionValue
+                IpAdd = ipAddress,
+                TransactionTyp = actionType,
+                TransactionVal = actionDetails
             };
-
-            _context.AuditTrails.Add(auditTrail);
+            
+            _context.AuditTrails.Add(auditEntry);
             await _context.SaveChangesAsync();
         }
     }

@@ -1,0 +1,73 @@
+@model SIMS_Web.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<h1>Student Details</h1>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>@Model.Fname @Model.Surname</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-5">Student ID:</dt>
+                                <dd class="col-sm-7">@Model.Student_Id</dd>
+                                
+                                <dt class="col-sm-5">Name:</dt>
+                                <dd class="col-sm-7">@Model.Fname @Model.Surname</dd>
+                                
+                                <dt class="col-sm-5">Gender:</dt>
+                                <dd class="col-sm-7">@(Model.Gender == "M" ? "Male" : "Female")</dd>
+                                
+                                <dt class="col-sm-5">Program:</dt>
+                                <dd class="col-sm-7">@Model.Programme?.ProgName</dd>
+                                
+                                <dt class="col-sm-5">Year of Admission:</dt>
+                                <dd class="col-sm-7">@Model.YOA</dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-5">Type of Admission:</dt>
+                                <dd class="col-sm-7">@Model.TOA</dd>
+                                
+                                <dt class="col-sm-5">Accommodation:</dt>
+                                <dd class="col-sm-7">@Model.Accommodation</dd>
+                                
+                                <dt class="col-sm-5">Registration Status:</dt>
+                                <dd class="col-sm-7">
+                                    <span class="badge @(Model.RegStatus == "1" ? "bg-success" : "bg-danger")">
+                                        @(Model.RegStatus == "1" ? "Registered" : "Not Registered")
+                                    </span>
+                                </dd>
+                                
+                                <dt class="col-sm-5">Mobile:</dt>
+                                <dd class="col-sm-7">@Model.Mobile</dd>
+                                
+                                <dt class="col-sm-5">Email:</dt>
+                                <dd class="col-sm-7">@Model.Email</dd>
+                                
+                                <dt class="col-sm-5">Account Number:</dt>
+                                <dd class="col-sm-7">@Model.AccNum</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-route-id="@Model.Student_Id" class="btn btn-warning">Edit</a>
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

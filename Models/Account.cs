@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SIMS_Web.Models
 {
@@ -9,14 +10,15 @@ namespace SIMS_Web.Models
         public string AccNo { get; set; }
         
         [Required]
-        [Display(Name = "Student ID")]
+        [Display(Name = "Student")]
         public string Student_Id { get; set; }
         
+        [Required]
         [Display(Name = "Account Balance")]
-        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal AccBal { get; set; }
         
-        // Navigation property
+        [ForeignKey("Student_Id")]
         public virtual Student Student { get; set; }
     }
 }

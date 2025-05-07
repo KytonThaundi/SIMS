@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SIMS_Web.Models
 {
@@ -13,20 +13,14 @@ namespace SIMS_Web.Models
         [Display(Name = "Course Name")]
         public string CourseName { get; set; }
         
+        [Required]
         [Display(Name = "Credit Hours")]
-        [Range(1, 10)]
-        public int CreditHours { get; set; }
+        public int CreditHrs { get; set; }
         
-        [Display(Name = "Assessment Type")]
-        public string AssessmentType { get; set; }
+        [Display(Name = "Programme")]
+        public string Prog_id { get; set; }
         
-        [Display(Name = "Grading System")]
-        public string GradingSystem { get; set; }
-        
-        [Display(Name = "Department")]
-        public string Dept_id { get; set; }
-        
-        // Navigation property
-        public virtual Department Department { get; set; }
+        [ForeignKey("Prog_id")]
+        public virtual Programme Programme { get; set; }
     }
 }

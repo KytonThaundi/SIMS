@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SIMS_Web.Data;
 using SIMS_Web.Models;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SIMS_Web.Controllers
 {
@@ -23,9 +24,9 @@ namespace SIMS_Web.Controllers
             {
                 StudentCount = await _context.Students.CountAsync(),
                 ProgrammeCount = await _context.Programmes.CountAsync(),
+                CourseCount = await _context.Courses.CountAsync(),
                 FacultyCount = await _context.Faculties.CountAsync(),
-                DepartmentCount = await _context.Departments.CountAsync(),
-                CourseCount = await _context.Courses.CountAsync()
+                DepartmentCount = await _context.Departments.CountAsync()
             };
             
             return View(viewModel);
@@ -47,11 +48,8 @@ namespace SIMS_Web.Controllers
     {
         public int StudentCount { get; set; }
         public int ProgrammeCount { get; set; }
+        public int CourseCount { get; set; }
         public int FacultyCount { get; set; }
         public int DepartmentCount { get; set; }
-        public int CourseCount { get; set; }
     }
-    
-    public class ErrorViewModel
-    {
-        public string? RequestId { get; set; }
+}

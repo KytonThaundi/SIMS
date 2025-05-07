@@ -1,0 +1,65 @@
+@model SIMS_Web.Controllers.DashboardViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to SIMS Web</h1>
+    <p>Student Information Management System</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Students</div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.StudentCount</h5>
+                <p class="card-text">Total registered students</p>
+                <a asp-controller="Students" asp-action="Index" class="btn btn-light">View Students</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Programmes</div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.ProgrammeCount</h5>
+                <p class="card-text">Academic programmes</p>
+                <a asp-controller="Programmes" asp-action="Index" class="btn btn-light">View Programmes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">Courses</div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.CourseCount</h5>
+                <p class="card-text">Available courses</p>
+                <a asp-controller="Courses" asp-action="Index" class="btn btn-light">View Courses</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-6">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-header">Faculties</div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.FacultyCount</h5>
+                <p class="card-text">Academic faculties</p>
+                <a asp-controller="Faculties" asp-action="Index" class="btn btn-light">View Faculties</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-header">Departments</div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.DepartmentCount</h5>
+                <p class="card-text">Academic departments</p>
+                <a asp-controller="Departments" asp-action="Index" class="btn btn-light">View Departments</a>
+            </div>
+        </div>
+    </div>
+</div>

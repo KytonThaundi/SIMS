@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SIMS_Web.Models
 {
@@ -13,18 +13,24 @@ namespace SIMS_Web.Models
         [Display(Name = "Programme Name")]
         public string ProgName { get; set; }
         
+        [Required]
         [Display(Name = "Faculty")]
         public string Faculty_id { get; set; }
         
+        [Required]
         [Display(Name = "Department")]
         public string Dept_id { get; set; }
         
-        [Display(Name = "Duration (Years)")]
+        [Required]
         public string Duration { get; set; }
         
-        // Navigation properties
+        [ForeignKey("Faculty_id")]
         public virtual Faculty Faculty { get; set; }
+        
+        [ForeignKey("Dept_id")]
         public virtual Department Department { get; set; }
+        
         public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

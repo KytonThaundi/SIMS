@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 
 namespace SIMS_Web.Models
 {
@@ -13,7 +12,6 @@ namespace SIMS_Web.Models
         [Display(Name = "Faculty Name")]
         public string FacultyName { get; set; }
         
-        // Navigation properties
         public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Programme> Programmes { get; set; }
     }

@@ -13,10 +13,12 @@ namespace SIMS_Web.Models
         [DataType(DataType.Date)]
         public DateTime YrBegin { get; set; }
         
+        [Required]
         [Display(Name = "Year Break")]
         [DataType(DataType.Date)]
         public DateTime YrBreak { get; set; }
         
+        [Required]
         [Display(Name = "Year Resume")]
         [DataType(DataType.Date)]
         public DateTime YrResume { get; set; }
@@ -25,8 +27,5 @@ namespace SIMS_Web.Models
         [Display(Name = "Year End")]
         [DataType(DataType.Date)]
         public DateTime YrEnd { get; set; }
-        
-        [Display(Name = "Academic Year")]
-        public string DisplayName => $"{YrBegin.Year}-{YrEnd.Year}";
     }
 }

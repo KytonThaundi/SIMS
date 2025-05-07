@@ -13,12 +13,14 @@ namespace SIMS_Web.Models
         public DateTime DtTim { get; set; }
         
         [Required]
+        [Display(Name = "Username")]
         public string Username { get; set; }
         
         [Required]
         [Display(Name = "User Type")]
         public string Usertyp { get; set; }
         
+        [Required]
         [Display(Name = "IP Address")]
         public string IpAdd { get; set; }
         
@@ -26,6 +28,7 @@ namespace SIMS_Web.Models
         [Display(Name = "Transaction Type")]
         public string TransactionTyp { get; set; }
         
+        [Required]
         [Display(Name = "Transaction Value")]
         public string TransactionVal { get; set; }
     }
