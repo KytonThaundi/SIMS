@@ -4,9 +4,11 @@ using SIMS_Web.Data;
 using SIMS_Web.Models;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SIMS_Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,7 +30,7 @@ namespace SIMS_Web.Controllers
                 FacultyCount = await _context.Faculties.CountAsync(),
                 DepartmentCount = await _context.Departments.CountAsync()
             };
-            
+
             return View(viewModel);
         }
 
@@ -43,7 +45,7 @@ namespace SIMS_Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-    
+
     public class DashboardViewModel
     {
         public int StudentCount { get; set; }

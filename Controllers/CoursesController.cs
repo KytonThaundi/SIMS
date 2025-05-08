@@ -40,7 +40,7 @@ namespace SIMS_Web.Controllers
             var course = await _context.Courses
                 .Include(c => c.Department)
                 .FirstOrDefaultAsync(m => m.Course_id == id);
-                
+
             if (course == null)
             {
                 return NotFound();
@@ -67,12 +67,12 @@ namespace SIMS_Web.Controllers
             {
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                
+
                 var department = await _context.Departments.FindAsync(course.Dept_id);
                 await _auditService.LogActionAsync(
-                    "Create Course", 
+                    "Create Course",
                     $"Course ID: {course.Course_id}, Name: {course.CourseName}, Credits: {course.CreditHours}, Department: {department?.DeptName}");
-                
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Dept_id"] = new SelectList(_context.Departments, "Dept_id", "DeptName", course.Dept_id);
@@ -90,3 +90,99 @@ namespace SIMS_Web.Controllers
 
             var course = await _context.Courses.FindAsync(id);
             if (course == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Dept_id"] = new SelectList(_context.Departments, "Dept_id", "DeptName", course.Dept_id);
+            return View(course);
+        }
+
+        // POST: Courses/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(string id, [Bind("Course_id,CourseName,CreditHours,AssessmentType,GradingSystem,Dept_id")] Course course)
+        {
+            if (id != course.Course_id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(course);
+                    await _context.SaveChangesAsync();
+
+                    var department = await _context.Departments.FindAsync(course.Dept_id);
+                    await _auditService.LogActionAsync(
+                        "Edit Course",
+                        $"Course ID: {course.Course_id}, Name: {course.CourseName}, Credits: {course.CreditHours}, Department: {department?.DeptName}");
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CourseExists(course.Course_id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Dept_id"] = new SelectList(_context.Departments, "Dept_id", "DeptName", course.Dept_id);
+            return View(course);
+        }
+
+        // GET: Courses/Delete/5
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses
+                .Include(c => c.Department)
+                .FirstOrDefaultAsync(m => m.Course_id == id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
+
+        // POST: Courses/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course != null)
+            {
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+
+                var department = await _context.Departments.FindAsync(course.Dept_id);
+                await _auditService.LogActionAsync(
+                    "Delete Course",
+                    $"Course ID: {course.Course_id}, Name: {course.CourseName}, Credits: {course.CreditHours}, Department: {department?.DeptName}");
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CourseExists(string id)
+        {
+            return _context.Courses.Any(e => e.Course_id == id);
+        }
+    }
+}

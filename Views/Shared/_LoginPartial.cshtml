@@ -2,9 +2,33 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<div class="flex space-x-2">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
+    <div class="relative dropdown">
+        <button onclick="this.parentElement.querySelector('.dropdown-menu').classList.toggle('hidden')" class="flex items-center text-white hover:text-gray-200">
+            <span class="mr-1">@User.Identity?.Name</span>
+            <i class="fas fa-user-circle"></i>
+        </button>
+        <div class="absolute right-0 mt-1 w-48 menu hidden dropdown-menu z-10">
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="menu-item">
+                <i class="fas fa-cog mr-2"></i> Account Settings
+            </a>
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="block w-full text-left menu-item">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <a asp-area="Identity" asp-page="/Account/Register" class="text-white hover:text-gray-200">
+        <i class="fas fa-user-plus mr-1"></i> Register
+    </a>
+    <a asp-area="Identity" asp-page="/Account/Login" class="text-white hover:text-gray-200">
+        <i class="fas fa-sign-in-alt mr-1"></i> Login
+    </a>
+}
+</div>

@@ -4,81 +4,112 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SIMS Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SIMS_Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/tailwind.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SIMS Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="academicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Academic
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="academicDropdown">
-                                    <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Students</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Courses" asp-action="Index">Courses</a></li>
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <li><a class="dropdown-item" asp-controller="Programmes" asp-action="Index">Programmes</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Departments" asp-action="Index">Departments</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Faculties" asp-action="Index">Faculties</a></li>
-                                    }
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="financeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Finance
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="financeDropdown">
-                                    <li><a class="dropdown-item" asp-controller="Accounts" asp-action="Index">Accounts</a></li>
-                                </ul>
-                            </li>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Administration
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                        <li><a class="dropdown-item" asp-controller="AuditTrails" asp-action="Index">Audit Trail</a></li>
-                                        <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register User</a></li>
-                                    </ul>
-                                </li>
-                            }
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
+<body class="flex flex-col min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm border-b border-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <span class="text-2xl font-bold text-[#20B2AA]">UNI</span>
+                        <span class="text-2xl font-light text-gray-600">CAF</span>
+                        <span class="text-xs font-light text-gray-400 ml-1 mt-2">UNIVERSITY</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-[#20B2AA] transition-colors duration-200">
+                        <i class="fas fa-bell text-xl"></i>
+                    </button>
+                    <div class="relative dropdown">
+                        <button onclick="this.parentElement.querySelector('.dropdown-menu').classList.toggle('hidden')" class="flex items-center space-x-2 group">
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-r from-[#20B2AA] to-[#4ECDC4] flex items-center justify-center text-white shadow-md">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="text-gray-600 group-hover:text-[#20B2AA] transition-colors duration-200">Kyton Marko Thaundi</span>
+                            <i class="fas fa-chevron-down text-gray-400 group-hover:text-[#20B2AA] transition-colors duration-200"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 hidden dropdown-menu z-10 border border-gray-100">
+                            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#20B2AA] transition-colors duration-200">
+                                <i class="fas fa-cog mr-2"></i> Account Settings
+                            </a>
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#20B2AA] transition-colors duration-200">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="flex flex-grow">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-white">
+            <div class="p-6">
+                <div class="flex flex-col items-center mb-6">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-[#20B2AA] to-[#4ECDC4] mb-3 overflow-hidden flex items-center justify-center shadow-lg">
+                        <i class="fas fa-user text-4xl text-white"></i>
+                    </div>
+                    <h2 class="text-lg font-medium text-white">Kyton Marko Thaundi</h2>
+                    <p class="text-xs text-gray-300 mt-1">ID: 13116296</p>
+                    <div class="mt-4 w-full bg-gray-700 bg-opacity-30 rounded-lg p-3 shadow-inner">
+                        <div class="text-xs text-gray-300 mb-1">Username: <span class="text-gray-100">user13116296</span></div>
+                        <div class="text-xs text-gray-300 mb-1">Current Balance: <span class="text-white">-13.27</span> USD</div>
+                        <div class="text-xs text-gray-300 mb-1">Available Balance: <span class="text-white">-13.27</span> USD</div>
+                        <div class="text-xs text-gray-300">Status: <span class="text-[#4ECDC4] font-medium">REGISTERED</span></div>
+                    </div>
+                </div>
+
+                <nav class="mt-6">
+                    <div class="space-y-1.5">
+                        <a asp-controller="Home" asp-action="Index" class="flex items-center px-4 py-2.5 text-white bg-gradient-to-r from-[#20B2AA] to-[#4ECDC4] rounded-lg shadow-md">
+                            <i class="fas fa-home mr-3"></i>
+                            <span>My Home</span>
+                        </a>
+                        <a asp-controller="Students" asp-action="Index" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-user-graduate mr-3 text-[#4ECDC4]"></i>
+                            <span>Student</span>
+                        </a>
+                        <a asp-controller="Accounts" asp-action="Index" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-money-bill-alt mr-3 text-[#4ECDC4]"></i>
+                            <span>Finance</span>
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-book mr-3 text-[#4ECDC4]"></i>
+                            <span>Modules</span>
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-comment mr-3 text-[#4ECDC4]"></i>
+                            <span>Feedback</span>
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-question-circle mr-3 text-[#4ECDC4]"></i>
+                            <span>Help</span>
+                        </a>
+                        <a asp-area="Identity" asp-page="/Account/Logout" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-sign-out-alt mr-3 text-[#4ECDC4]"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-1 overflow-auto bg-gray-50">
+            <main class="container mx-auto px-8 py-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-8">
+                    @RenderBody()
+                </div>
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - SIMS Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

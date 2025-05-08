@@ -53,7 +53,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 app.MapRazorPages();
 
 // Initialize roles and admin user
@@ -65,17 +65,17 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<ApplicationDbContext>();
         var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        
+
         // Ensure database is created
         context.Database.EnsureCreated();
-        
+
         // Initialize roles
         if (!roleManager.RoleExistsAsync("Admin").Result)
         {
             roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
             roleManager.CreateAsync(new IdentityRole("Staff")).Wait();
             roleManager.CreateAsync(new IdentityRole("Student")).Wait();
-            
+
             // Create admin user
             var adminUser = new IdentityUser
             {
@@ -83,7 +83,7 @@ using (var scope = app.Services.CreateScope())
                 Email = "admin@sims.edu",
                 EmailConfirmed = true
             };
-            
+
             var result = userManager.CreateAsync(adminUser, "Admin123!").Result;
             if (result.Succeeded)
             {
