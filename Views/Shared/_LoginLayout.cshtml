@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Mombera University</title>
+    <link rel="stylesheet" href="~/css/tailwind.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="~/images/sims_pro_logo.ico">
+    <style>
+        body {
+            background-color: #f9fafb;
+        }
+        .unicaf-red {
+            background-color: #e41e26;
+        }
+        .unicaf-blue {
+            background-color: #0078d4;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Splash Screen -->
+    <partial name="_SplashScreen" />
+
+    <!-- Top Bar -->
+    <div class="bg-gray-800 text-white py-1.5 px-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <span class="text-sm">Call us +265 111 755 333</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="text-sm text-white hover:text-gray-300">Website</a>
+                <a href="#" class="text-sm text-white hover:text-gray-300">VLE</a>
+                <a href="#" class="text-sm text-white hover:text-gray-300">Apply Now</a>
+                <a asp-controller="Account" asp-action="Login" class="text-sm text-white hover:text-gray-300">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header with Logo -->
+    <header class="bg-white py-3 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="~/images/sims-logo.png" alt="Mombera University Logo" class="h-10">
+                    </a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-red-600 text-sm">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-red-600 text-sm">About us</a>
+                    <a href="#" class="text-gray-600 hover:text-red-600 text-sm">Programmes</a>
+                    <a href="#" class="text-gray-600 hover:text-red-600 text-sm">Find out more</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main" class="flex-grow">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <h3 class="text-base font-semibold mb-3">Welcome to the Mombera University (MW)</h3>
+                    <p class="text-gray-400 text-sm">You are not logged in</p>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold mb-3">Important Links</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Programmes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Online Learning Experience</a></li>
+                        <li><a asp-controller="Account" asp-action="Login" class="text-gray-400 hover:text-white text-sm">Login</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Apply Now</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Help</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold mb-3">How To Find Us</h3>
+                    <ul class="space-y-1 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-globe mt-1 mr-2 text-xs"></i>
+                            <span class="text-sm">www.momberauniversity.ac.mw</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2 text-xs"></i>
+                            <span class="text-sm">info@momberauniversity.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-2 text-xs"></i>
+                            <span class="text-sm">+265 111 755 333</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-xs"></i>
+                            <span class="text-sm">Mombera University in Malawi, Lilongwe</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex space-x-4 mb-4 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f text-sm"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-sm"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-sm"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in text-sm"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube text-sm"></i></a>
+                </div>
+                <div class="text-gray-400 text-xs">
+                    <span>Server Date/Time: @DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss")</span>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-gray-500 text-xs">
+                <div class="flex justify-center space-x-4 mb-2">
+                    <a href="#" class="hover:text-white">Cookie Policy</a>
+                    <a href="#" class="hover:text-white">Terms and Conditions</a>
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of use</a>
+                </div>
+                <p>Mombera University © 2016 - @DateTime.Now.Year | All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
