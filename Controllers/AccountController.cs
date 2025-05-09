@@ -161,79 +161,7 @@ namespace SIMS_Web.Controllers
             return View(model);
         }
 
-<<<<<<< HEAD
-        // GET: /Account/LoginWith2fa
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
-        {
-            // Ensure the user has gone through the username & password screen first
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
-            if (user == null)
-            {
-                throw new InvalidOperationException("Unable to load two-factor authentication user.");
-            }
-
-            var model = new LoginWith2faViewModel
-            {
-                RememberMe = rememberMe
-            };
-
-            return View(model);
-        }
-
-        // POST: /Account/LoginWith2fa
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            returnUrl ??= Url.Content("~/");
-
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new InvalidOperationException("Unable to load two-factor authentication user.");
-            }
-
-            var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
-
-            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
-
-            if (result.Succeeded)
-            {
-                _logger.LogInformation("User {Email} logged in with 2fa", user.Email);
-                return RedirectToAction("Index", "Home");
-            }
-            else if (result.IsLockedOut)
-            {
-                _logger.LogWarning("User {Email} account locked out", user.Email);
-                return RedirectToAction(nameof(Lockout));
-            }
-            else
-            {
-                _logger.LogWarning("Invalid authenticator code entered for user {Email}", user.Email);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
-                return View(model);
-            }
-        }
-
-        // GET: /Account/Lockout
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Lockout()
-        {
-            return View();
-        }
-
-=======
->>>>>>> refactors-ui
         // POST: /Account/Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
