@@ -56,4 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.stopPropagation();
         });
     });
+
+    // We're not adding any event handlers to logout forms
+    // Let them submit normally to the server
 });
