@@ -9,8 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Configure Npgsql with custom options
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.ConfigureNpgsqlOptions(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -81,7 +83,7 @@ app.UseAuthorization();
 // Add middleware to redirect users to login page for root URL and unauthenticated requests
 app.Use(async (context, next) =>
 {
-    // If the request is for the root URL, always redirect to login page
+    // If the request is for the root URL, redirect to login page
     if (context.Request.Path == "/" || context.Request.Path == "")
     {
         context.Response.Redirect("/Account/Login");
@@ -90,6 +92,7 @@ app.Use(async (context, next) =>
 
     // If the request is for the login page or static files, proceed
     if (context.Request.Path.StartsWithSegments("/Account/Login") ||
+        context.Request.Path.StartsWithSegments("/Account/Register") ||
         context.Request.Path.StartsWithSegments("/css") ||
         context.Request.Path.StartsWithSegments("/js") ||
         context.Request.Path.StartsWithSegments("/lib") ||

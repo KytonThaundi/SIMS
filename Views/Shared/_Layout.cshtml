@@ -33,9 +33,12 @@
                             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#20B2AA] transition-colors duration-200">
                                 <i class="fas fa-cog mr-2"></i> Account Settings
                             </a>
-                            <a asp-controller="Account" asp-action="Logout" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#20B2AA] transition-colors duration-200">
-                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                            </a>
+                            <form asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account/Login" method="post" class="m-0">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#20B2AA] transition-colors duration-200">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -87,10 +90,13 @@
                             <i class="fas fa-question-circle mr-3 text-[#4ECDC4]"></i>
                             <span>Help</span>
                         </a>
-                        <a asp-controller="Account" asp-action="Logout" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
-                            <i class="fas fa-sign-out-alt mr-3 text-[#4ECDC4]"></i>
-                            <span>Logout</span>
-                        </a>
+                        <form id="logoutForm" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account/Login" method="post" class="m-0">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="w-full flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200 text-left">
+                                <i class="fas fa-sign-out-alt mr-3 text-[#4ECDC4]"></i>
+                                <span>Logout</span>
+                            </button>
+                        </form>
                     </div>
                 </nav>
             </div>
