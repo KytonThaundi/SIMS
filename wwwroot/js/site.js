@@ -57,31 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Handle logout forms
-    const logoutForms = document.querySelectorAll('form[action="/Account/Logout"]');
-    logoutForms.forEach(form => {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // Submit the form using fetch API
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => {
-                if (response.ok || response.redirected) {
-                    // Redirect to login page
-                    window.location.href = '/Account/Login';
-                }
-            })
-            .catch(error => {
-                console.error('Logout error:', error);
-                // Fallback redirect
-                window.location.href = '/Account/Login';
-            });
-        });
-    });
+    // We're not adding any event handlers to logout forms
+    // Let them submit normally to the server
 });

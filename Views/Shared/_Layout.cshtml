@@ -33,8 +33,9 @@
                             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#20B2AA] transition-colors duration-200">
                                 <i class="fas fa-cog mr-2"></i> Account Settings
                             </a>
-                            <form asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account/Login" method="post" class="m-0">
+                            <form id="logoutFormDropdown" action="/Account/Logout" method="post" class="m-0">
                                 @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnUrl" value="/Account/Login" />
                                 <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#20B2AA] transition-colors duration-200">
                                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
                                 </button>
@@ -90,8 +91,9 @@
                             <i class="fas fa-question-circle mr-3 text-[#4ECDC4]"></i>
                             <span>Help</span>
                         </a>
-                        <form id="logoutForm" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account/Login" method="post" class="m-0">
+                        <form id="logoutForm" action="/Account/Logout" method="post" class="m-0">
                             @Html.AntiForgeryToken()
+                            <input type="hidden" name="returnUrl" value="/Account/Login" />
                             <button type="submit" class="w-full flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200 text-left">
                                 <i class="fas fa-sign-out-alt mr-3 text-[#4ECDC4]"></i>
                                 <span>Logout</span>
@@ -114,6 +116,36 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Logout script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get both logout buttons
+            const logoutForm = document.getElementById('logoutForm');
+            const logoutFormDropdown = document.getElementById('logoutFormDropdown');
+
+            // Add click event to the sidebar logout button
+            if (logoutForm) {
+                logoutForm.querySelector('button').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Sidebar logout clicked');
+                    // Use direct navigation to the GET endpoint
+                    window.location.href = '/Account/LogoutGet?returnUrl=/Account/Login';
+                });
+            }
+
+            // Add click event to the dropdown logout button
+            if (logoutFormDropdown) {
+                logoutFormDropdown.querySelector('button').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Dropdown logout clicked');
+                    // Use direct navigation to the GET endpoint
+                    window.location.href = '/Account/LogoutGet?returnUrl=/Account/Login';
+                });
+            }
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

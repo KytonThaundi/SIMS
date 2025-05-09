@@ -51,12 +51,13 @@
     </div>
 
     <!-- Header with Logo -->
-    <header class="bg-white py-3 shadow-sm">
+    <header class="bg-gray-100 shadow-sm border-b border-gray-200">
         <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <a href="/" class="flex items-center">
-                        <img src="~/images/sims-logo.png" alt="Mombera University Logo" class="h-8">
+                        <span class="text-2xl font-bold text-[#20B2AA]">MOMBERA</span>
+                        <span class="text-xs font-light text-gray-400 ml-1 mt-2">UNIVERSITY</span>
                     </a>
                 </div>
                 <nav class="hidden md:flex space-x-8">
@@ -70,7 +71,7 @@
     </header>
 
     <!-- Main Content -->
-    <main role="main" class="flex-grow">
+    <main role="main" class="flex-grow flex flex-col">
         @RenderBody()
     </main>
 

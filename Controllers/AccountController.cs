@@ -163,20 +163,51 @@ namespace SIMS_Web.Controllers
         // POST: /Account/Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl = null)
         {
+            // Sign the user out
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out");
-            return RedirectToAction("Login");
+            _logger.LogInformation("User logged out via POST");
+
+            // Clear all cookies
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+
+            // If returnUrl is specified and it's a local URL, redirect to it
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            // Otherwise redirect to login page
+            return RedirectToAction("Login", "Account");
         }
 
         // GET: /Account/Logout (for convenience)
         [HttpGet]
-        public async Task<IActionResult> Logout(string returnUrl = null)
+        [AllowAnonymous]
+        public async Task<IActionResult> LogoutGet(string returnUrl = null)
         {
+            // Sign the user out
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out");
-            return RedirectToAction("Login");
+            _logger.LogInformation("User logged out via GET");
+
+            // Clear all cookies
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+
+            // If returnUrl is specified and it's a local URL, redirect to it
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            // Otherwise redirect to login page
+            return RedirectToAction("Login", "Account");
         }
 
         // GET: /Account/AccessDenied
