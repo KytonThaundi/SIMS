@@ -88,6 +88,13 @@ app.Use(async (context, next) =>
         return;
     }
 
+    // Fix for common mistake: redirect /Accounts/Login to /Account/Login
+    if (context.Request.Path.StartsWithSegments("/Accounts/Login"))
+    {
+        context.Response.Redirect("/Account/Login");
+        return;
+    }
+
     // If the request is for the login page or static files, proceed
     if (context.Request.Path.StartsWithSegments("/Account/Login") ||
         context.Request.Path.StartsWithSegments("/css") ||

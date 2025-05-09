@@ -1,0 +1,49 @@
+@model SIMS_Web.Models.LoginWith2faViewModel
+@{
+    ViewData["Title"] = "Two-factor authentication";
+    Layout = "_LoginLayout";
+}
+
+<div class="flex min-h-screen items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8">
+        <div>
+            <img class="mx-auto h-12 w-auto" src="~/images/sims-logo1.png" alt="Mombera University Logo">
+            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Two-factor authentication</h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                Your login is protected with an authenticator app. Enter your authenticator code below.
+            </p>
+        </div>
+        <form asp-action="LoginWith2fa" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="mt-8 space-y-6">
+            <input type="hidden" asp-for="RememberMe" />
+            <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm"></div>
+            <div>
+                <label asp-for="TwoFactorCode" class="block text-sm font-medium text-gray-700">Authenticator code</label>
+                <div class="mt-1">
+                    <input asp-for="TwoFactorCode" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" autocomplete="off" />
+                    <span asp-validation-for="TwoFactorCode" class="text-red-500 text-sm"></span>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <input asp-for="RememberMachine" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                <label asp-for="RememberMachine" class="ml-2 block text-sm text-gray-700">Remember this device</label>
+            </div>
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Log in
+                </button>
+            </div>
+            <div class="text-sm text-center">
+                <p>
+                    Don't have access to your authenticator device? You can 
+                    <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="font-medium text-blue-600 hover:text-blue-500">
+                        log in with a recovery code
+                    </a>.
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
