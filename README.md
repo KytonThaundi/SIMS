@@ -35,6 +35,12 @@ The Student Information Management System (SIMS) is a comprehensive web applicat
   - Customizable reports
   - Data visualization
 
+- **Administration Panel**
+  - User management (create, edit, delete users)
+  - Role assignment and permissions
+  - System-wide configuration
+  - Centralized management interface
+
 - **Audit Trail**
   - Track all system changes
   - User activity logging
@@ -66,11 +72,23 @@ The Student Information Management System (SIMS) is a comprehensive web applicat
 
 1. Install PostgreSQL if not already installed
 2. Create a new database named `sims`
-3. Update the connection string in `appsettings.json` if needed:
+3. Create a dedicated PostgreSQL user for the application:
+
+```sql
+CREATE USER simsuser WITH PASSWORD 'simspassword';
+GRANT ALL PRIVILEGES ON DATABASE sims TO simsuser;
+\c sims
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO simsuser;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO simsuser;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO simsuser;
+GRANT CREATE ON SCHEMA public TO simsuser;
+```
+
+4. Update the connection string in `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Host=localhost;Database=sims;Username=your_username;Password=your_password;Trust Server Certificate=true;"
+  "DefaultConnection": "Host=localhost;Database=sims;Username=simsuser;Password=simspassword;Trust Server Certificate=true;"
 }
 ```
 
@@ -78,10 +96,20 @@ For security reasons, it's recommended to use user secrets for storing sensitive
 
 ```bash
 dotnet user-secrets init
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Database=sims;Username=your_username;Password=your_password;Trust Server Certificate=true;"
-dotnet user-secrets set "AdminUser:Email" "admin@yourdomain.com"
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Database=sims;Username=simsuser;Password=simspassword;Trust Server Certificate=true;"
+dotnet user-secrets set "AdminUser:Email" "admin@system.com"
 dotnet user-secrets set "AdminReset:SecurityCode" "your-secure-reset-code"
 ```
+
+### Troubleshooting Database Connection
+
+If you encounter the error `28P01: password authentication failed for user "postgres"`, try the following:
+
+1. Verify your PostgreSQL credentials are correct
+2. Create a dedicated database user as shown above
+3. Check PostgreSQL's `pg_hba.conf` file for authentication method settings
+4. Ensure the database exists and the user has appropriate permissions
+5. Test the connection using a simple console application before running the full application
 
 ### Application Setup
 
@@ -138,6 +166,23 @@ New users can register through the registration form. When a new user registers:
 2. They are assigned the "Student" role by default
 3. They can immediately log in with their credentials
 
+### Administration Panel
+
+The system includes a comprehensive administration panel accessible to users with the "Administrator" role. To access the administration panel:
+
+1. Log in with an administrator account
+2. Click on the "Administration" link in the sidebar navigation
+
+The administration panel provides the following features:
+
+- **Dashboard**: Overview of system statistics (users, students, programs, etc.)
+- **User Management**: Create, edit, and delete users; assign roles
+- **Student Management**: Centralized student record management
+- **Program Management**: Manage academic programs
+- **Department Management**: Manage university departments
+
+Administrators can create new users with specific roles (Administrator, Staff, Student) and manage all aspects of the system from this centralized interface.
+
 ## Project Structure
 
 - **Controllers/** - Contains all the application controllers
@@ -147,6 +192,144 @@ New users can register through the registration form. When a new user registers:
 - **Services/** - Business logic and services
 - **wwwroot/** - Static files (CSS, JS, images)
 - **Scripts/** - Database scripts and utilities
+- **ViewModels/** - View-specific models
+- **docs/** - Documentation files
+
+## Project Map
+
+### Core Components
+
+```
+SIMS/
+├── Program.cs                 # Application entry point and configuration
+├── appsettings.json           # Application settings
+├── appsettings.Development.json # Development-specific settings
+└── SIMS.Web.csproj            # Project file
+```
+
+### Controllers
+
+```
+Controllers/
+├── AccountController.cs       # Authentication and user account management
+├── AccountsController.cs      # Student financial accounts management
+├── AdministrationController.cs # Admin dashboard and user management
+├── CoursesController.cs       # Course management
+├── DepartmentsController.cs   # Department management
+├── FacultiesController.cs     # Faculty management
+├── HomeController.cs          # Main dashboard and home page
+├── ProgrammesController.cs    # Academic programs management
+└── StudentsController.cs      # Student records management
+```
+
+### Models
+
+```
+Models/
+├── Account.cs                 # Student financial account
+├── AcademicYear.cs            # Academic year configuration
+├── AuditTrail.cs              # System audit logging
+├── Course.cs                  # Academic course
+├── Department.cs              # University department
+├── ErrorViewModel.cs          # Error handling
+├── Faculty.cs                 # University faculty
+├── LoginViewModel.cs          # Login form model
+├── Programme.cs               # Academic program
+├── RegisterViewModel.cs       # Registration form model
+└── Student.cs                 # Student information
+```
+
+### ViewModels
+
+```
+ViewModels/
+├── AdministrationViewModels.cs # Admin dashboard and user management models
+├── CreateUserViewModel.cs      # User creation form model
+├── DashboardViewModel.cs       # Home dashboard data model
+├── EditUserViewModel.cs        # User editing form model
+├── ResetAdminPasswordViewModel.cs # Admin password reset model
+└── UserViewModel.cs            # User display model
+```
+
+### Views
+
+```
+Views/
+├── Account/                   # Authentication views
+│   ├── Login.cshtml           # Login page
+│   ├── Register.cshtml        # Registration page
+│   ├── CreateAdminUser.cshtml # Admin user creation
+│   └── ResetAdminPassword.cshtml # Admin password reset
+├── Accounts/                  # Financial accounts views
+├── Administration/            # Admin panel views
+│   ├── Index.cshtml           # Admin dashboard
+│   ├── Users.cshtml           # User management
+│   ├── Students.cshtml        # Student management
+│   ├── Programs.cshtml        # Program management
+│   └── Departments.cshtml     # Department management
+├── Courses/                   # Course management views
+├── Departments/               # Department management views
+├── Faculties/                 # Faculty management views
+├── Home/                      # Main application views
+│   └── Index.cshtml           # Dashboard
+├── Programmes/                # Program management views
+├── Shared/                    # Shared layout components
+│   ├── _Layout.cshtml         # Main application layout
+│   ├── _LoginLayout.cshtml    # Authentication pages layout
+│   └── _ValidationScriptsPartial.cshtml # Form validation scripts
+└── Students/                  # Student management views
+```
+
+### Data
+
+```
+Data/
+├── ApplicationDbContext.cs    # Entity Framework database context
+├── IdentityUserConfiguration.cs # User identity configuration
+└── PostgreSqlDbContextOptionsExtensions.cs # PostgreSQL configuration
+```
+
+### Services
+
+```
+Services/
+├── AuditService.cs            # System audit logging service
+└── DataMigrationService.cs    # Database migration utilities
+```
+
+### Static Files
+
+```
+wwwroot/
+├── css/                       # Stylesheets
+│   ├── tailwind.css           # Compiled Tailwind CSS
+│   └── site.css               # Custom styles
+├── js/                        # JavaScript files
+│   └── site.js                # Custom scripts
+├── lib/                       # Third-party libraries
+│   ├── jquery/                # jQuery
+│   └── bootstrap/             # Bootstrap components
+└── images/                    # Image assets
+    └── sims-logo.png          # Application logo
+```
+
+### Database Scripts
+
+```
+Scripts/
+├── create_database.sql        # Database creation script
+├── create_tables.sql          # Table creation script
+├── seed_data.sql              # Initial data seeding
+├── initialize_database.sh     # Database initialization script
+└── create_db_instructions.md  # Database setup instructions
+```
+
+### Documentation
+
+```
+docs/
+└── security-setup.md          # Security configuration guide
+```
 
 ## Development
 
