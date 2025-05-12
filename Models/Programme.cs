@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SIMS_Web.Models
+namespace SIMS.Web.Models
 {
     public class Programme
     {

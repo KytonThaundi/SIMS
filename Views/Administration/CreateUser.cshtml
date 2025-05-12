@@ -1,0 +1,53 @@
+@model SIMS.Web.ViewModels.CreateUserViewModel
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<div class="mb-8 border-b border-gray-200 pb-4">
+    <h1 class="text-3xl font-light text-gray-700">Create <span class="font-medium text-[#20B2AA]">User</span></h1>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6 border border-gray-100 mb-8">
+    <form asp-action="CreateUser" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm mb-4"></div>
+
+        <div class="mb-4">
+            <label asp-for="Email" class="block text-sm font-medium text-gray-700 mb-1"></label>
+            <input asp-for="Email" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#20B2AA]" />
+            <span asp-validation-for="Email" class="text-red-500 text-xs"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Password" class="block text-sm font-medium text-gray-700 mb-1"></label>
+            <input asp-for="Password" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#20B2AA]" />
+            <span asp-validation-for="Password" class="text-red-500 text-xs"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="ConfirmPassword" class="block text-sm font-medium text-gray-700 mb-1"></label>
+            <input asp-for="ConfirmPassword" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#20B2AA]" />
+            <span asp-validation-for="ConfirmPassword" class="text-red-500 text-xs"></span>
+        </div>
+
+        <div class="mb-6">
+            <label asp-for="Role" class="block text-sm font-medium text-gray-700 mb-1"></label>
+            <select asp-for="Role" asp-items="ViewBag.Roles" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#20B2AA]">
+                <option value="">-- Select Role --</option>
+            </select>
+            <span asp-validation-for="Role" class="text-red-500 text-xs"></span>
+        </div>
+
+        <div class="flex justify-between">
+            <a asp-action="Users" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm hover:bg-gray-300 transition-colors duration-200">
+                Cancel
+            </a>
+            <button type="submit" class="px-4 py-2 bg-[#20B2AA] text-white rounded-lg text-sm hover:bg-[#1C9E9E] transition-colors duration-200 shadow-sm">
+                Create User
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

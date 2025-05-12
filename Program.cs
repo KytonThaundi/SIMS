@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SIMS_Web.Data;
-using SIMS_Web.Services;
+using SIMS.Web.Data;
+using SIMS.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
 
@@ -97,9 +97,12 @@ app.Use(async (context, next) =>
         return;
     }
 
-    // If the request is for the login page or static files, proceed
+    // If the request is for the login page, admin actions, or static files, proceed
     if (context.Request.Path.StartsWithSegments("/Account/Login") ||
         context.Request.Path.StartsWithSegments("/Account/Register") ||
+        context.Request.Path.StartsWithSegments("/Account/ResetAdminPassword") ||
+        context.Request.Path.StartsWithSegments("/Account/CreateAdminUser") ||
+        context.Request.Path.StartsWithSegments("/Account/TestDbConnection") ||
         context.Request.Path.StartsWithSegments("/css") ||
         context.Request.Path.StartsWithSegments("/js") ||
         context.Request.Path.StartsWithSegments("/lib") ||
@@ -140,25 +143,11 @@ using (var scope = app.Services.CreateScope())
         context.Database.EnsureCreated();
 
         // Initialize roles
-        if (!roleManager.RoleExistsAsync("Admin").Result)
+        if (!roleManager.RoleExistsAsync("Administrator").Result)
         {
-            roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
+            roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
             roleManager.CreateAsync(new IdentityRole("Staff")).Wait();
             roleManager.CreateAsync(new IdentityRole("Student")).Wait();
-
-            // Create admin user
-            var adminUser = new IdentityUser
-            {
-                UserName = "admin@sims.edu",
-                Email = "admin@sims.edu",
-                EmailConfirmed = true
-            };
-
-            var result = userManager.CreateAsync(adminUser, "Admin123!").Result;
-            if (result.Succeeded)
-            {
-                userManager.AddToRoleAsync(adminUser, "Admin").Wait();
-            }
         }
     }
     catch (Exception ex)

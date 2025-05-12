@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SIMS_Web.Data;
+using SIMS.Web.Data;
 using System;
 using System.Threading.Tasks;
 
-namespace SIMS_Web.Services
+namespace SIMS.Web.Services
 {
     public class DataMigrationService
     {

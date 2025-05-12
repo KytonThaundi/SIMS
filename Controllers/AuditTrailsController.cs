@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SIMS_Web.Data;
+using SIMS.Web.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIMS_Web.Controllers
+namespace SIMS.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AuditTrailsController : Controller
@@ -73,7 +73,7 @@ namespace SIMS_Web.Controllers
             }
 
             int pageSize = 20;
-            return View(await PaginatedList<SIMS_Web.Models.AuditTrail>.CreateAsync(auditTrails.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<SIMS.Web.Models.AuditTrail>.CreateAsync(auditTrails.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: AuditTrails/Details/5

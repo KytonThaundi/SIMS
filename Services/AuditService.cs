@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using SIMS_Web.Data;
-using SIMS_Web.Models;
+using SIMS.Web.Data;
+using SIMS.Web.Models;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace SIMS_Web.Services
+namespace SIMS.Web.Services
 {
     public class AuditService
     {
@@ -26,7 +26,7 @@ namespace SIMS_Web.Services
             var httpContext = _httpContextAccessor.HttpContext;
             var username = httpContext?.User?.Identity?.Name ?? "System";
             var userType = "Unknown";
-            
+
             if (httpContext?.User?.Identity?.IsAuthenticated == true)
             {
                 if (httpContext.User.IsInRole("Admin"))
@@ -36,9 +36,9 @@ namespace SIMS_Web.Services
                 else if (httpContext.User.IsInRole("Student"))
                     userType = "Student";
             }
-            
+
             var ipAddress = httpContext?.Connection?.RemoteIpAddress?.ToString() ?? "0.0.0.0";
-            
+
             var auditEntry = new AuditTrail
             {
                 DtTim = DateTime.Now,
@@ -48,7 +48,7 @@ namespace SIMS_Web.Services
                 TransactionTyp = actionType,
                 TransactionVal = actionDetails
             };
-            
+
             _context.AuditTrails.Add(auditEntry);
             await _context.SaveChangesAsync();
         }

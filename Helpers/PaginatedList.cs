@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIMS_Web
+namespace SIMS.Web
 {
     public class PaginatedList<T> : List<T>
     {

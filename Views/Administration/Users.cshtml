@@ -1,0 +1,59 @@
+@model IEnumerable<SIMS.Web.ViewModels.UserViewModel>
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="mb-8 border-b border-gray-200 pb-4 flex justify-between items-center">
+    <h1 class="text-3xl font-light text-gray-700">User <span class="font-medium text-[#20B2AA]">Management</span></h1>
+    <a asp-action="CreateUser" class="px-4 py-2 bg-[#20B2AA] text-white rounded-lg text-sm hover:bg-[#1C9E9E] transition-colors duration-200 shadow-sm flex items-center">
+        <i class="fas fa-plus mr-2"></i> Create New User
+    </a>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 mb-8">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gradient-to-r from-[#20B2AA] to-[#4ECDC4] text-white">
+            <tr>
+                <th scope="col" class="px-6 py-3.5 text-left text-xs font-medium uppercase tracking-wider">Email</th>
+                <th scope="col" class="px-6 py-3.5 text-left text-xs font-medium uppercase tracking-wider">Username</th>
+                <th scope="col" class="px-6 py-3.5 text-left text-xs font-medium uppercase tracking-wider">Roles</th>
+                <th scope="col" class="px-6 py-3.5 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-100">
+            @foreach (var user in Model)
+            {
+                <tr class="hover:bg-gray-50 transition-colors duration-150">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="font-medium text-gray-700">@user.Email</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">@user.UserName</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        @foreach (var role in user.Roles)
+                        {
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#E6F8F8] text-[#20B2AA] mr-1">
+                                @role
+                            </span>
+                        }
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <a asp-action="EditUser" asp-route-id="@user.Id" class="text-[#20B2AA] hover:text-[#1C9E9E]">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-action="DeleteUser" asp-route-id="@user.Id" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="flex justify-between items-center mb-4">
+    <a asp-action="Index" class="text-[#20B2AA] hover:text-[#1C9E9E] flex items-center">
+        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+    </a>
+</div>

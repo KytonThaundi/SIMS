@@ -1,26 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using SIMS_Web.Models;
+using SIMS.Web.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace SIMS_Web.Controllers
+namespace SIMS.Web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AccountController> _logger;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _configuration = configuration;
         }
 
         // GET: /Account/Login
@@ -48,42 +52,7 @@ namespace SIMS_Web.Controllers
                 return View(model);
             }
 
-            // Special case for demo user
-            if (model.Email == "kythaundi@gmail.com" && model.Password == "Pa$$w0rd")
-            {
-                // Check if user exists
-                var user = await _userManager.FindByEmailAsync(model.Email);
-
-                // Create user if it doesn't exist
-                if (user == null)
-                {
-                    user = new IdentityUser
-                    {
-                        UserName = model.Email,
-                        Email = model.Email,
-                        EmailConfirmed = true
-                    };
-
-                    var createResult = await _userManager.CreateAsync(user, model.Password);
-                    if (createResult.Succeeded)
-                    {
-                        await _userManager.AddToRoleAsync(user, "Student");
-                        _logger.LogInformation("Created demo user {Email}", model.Email);
-                    }
-                    else
-                    {
-                        _logger.LogWarning("Failed to create demo user: {Errors}",
-                            string.Join(", ", createResult.Errors.Select(e => e.Description)));
-                        ModelState.AddModelError(string.Empty, "Failed to create user account.");
-                        return View(model);
-                    }
-                }
-
-                // Sign in the user
-                await _signInManager.SignInAsync(user, model.RememberMe);
-                _logger.LogInformation("Demo user {Email} logged in", model.Email);
-                return RedirectToAction("Index", "Home");
-            }
+            // No special cases - authenticate directly against the database
 
             // Standard login process
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -218,6 +187,304 @@ namespace SIMS_Web.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        // GET: /Account/ResetAdminPassword
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetAdminPassword()
+        {
+            _logger.LogInformation("ResetAdminPassword GET action called");
+            return View();
+        }
+
+        // GET: /Account/TestDbConnection
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> TestDbConnection()
+        {
+            _logger.LogInformation("TestDbConnection action called");
+
+            try
+            {
+                // Test if we can access the database
+                var adminEmail = _configuration["AdminUser:Email"] ?? "admin@example.com";
+                var adminUser = await _userManager.FindByEmailAsync(adminEmail);
+
+                var message = adminUser != null
+                    ? $"Admin user found: {adminUser.Email}"
+                    : "Admin user not found";
+
+                // Get all roles
+                var roles = await _userManager.GetRolesAsync(adminUser ?? new IdentityUser());
+
+                return Content($"Database connection test: {message}. Roles: {string.Join(", ", roles)}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error testing database connection");
+                return Content($"Database connection error: {ex.Message}");
+            }
+        }
+
+        // GET: /Account/CreateAdminUser
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult CreateAdminUser()
+        {
+            _logger.LogInformation("CreateAdminUser GET action called");
+            return View();
+        }
+
+        // POST: /Account/CreateAdminUser
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAdminUser(string password, string confirmPassword)
+        {
+            _logger.LogInformation("CreateAdminUser POST action called");
+
+            if (string.IsNullOrEmpty(password))
+            {
+                TempData["ErrorMessage"] = "Password is required.";
+                return View();
+            }
+
+            if (password != confirmPassword)
+            {
+                TempData["ErrorMessage"] = "Passwords do not match.";
+                return View();
+            }
+
+            if (password.Length < 6)
+            {
+                TempData["ErrorMessage"] = "Password must be at least 6 characters long.";
+                return View();
+            }
+
+            try
+            {
+                // Only allow creating the admin user
+                var adminEmail = _configuration["AdminUser:Email"];
+                if (string.IsNullOrEmpty(adminEmail))
+                {
+                    _logger.LogError("Admin email not configured in settings");
+                    TempData["ErrorMessage"] = "Admin email not configured. Please contact your system administrator.";
+                    return View();
+                }
+
+                // Check if the admin user exists
+                var adminUser = await _userManager.FindByEmailAsync(adminEmail);
+
+                if (adminUser != null)
+                {
+                    // Reset the password for the existing admin user
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(adminUser);
+                    var resetResult = await _userManager.ResetPasswordAsync(adminUser, token, password);
+
+                    if (resetResult.Succeeded)
+                    {
+                        _logger.LogInformation("Admin password reset successful for {Email}", adminEmail);
+
+                        TempData["SuccessMessage"] = "Admin password reset successful. You can now log in with the new password.";
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        foreach (var error in resetResult.Errors)
+                        {
+                            TempData["ErrorMessage"] = error.Description;
+                        }
+                        return View();
+                    }
+                }
+                else
+                {
+                    // Create the admin user if it doesn't exist
+                    adminUser = new IdentityUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+
+                    var createResult = await _userManager.CreateAsync(adminUser, password);
+
+                    if (createResult.Succeeded)
+                    {
+                        // Check if Administrator role exists, create it if it doesn't
+                        var roleManager = HttpContext.RequestServices.GetRequiredService<RoleManager<IdentityRole>>();
+                        if (!await roleManager.RoleExistsAsync("Administrator"))
+                        {
+                            _logger.LogInformation("Creating Administrator role");
+                            await roleManager.CreateAsync(new IdentityRole("Administrator"));
+                        }
+
+                        await _userManager.AddToRoleAsync(adminUser, "Administrator");
+                        _logger.LogInformation("Created admin user {Email} with new password", adminEmail);
+
+                        TempData["SuccessMessage"] = "Admin user created successfully with the new password.";
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        foreach (var error in createResult.Errors)
+                        {
+                            TempData["ErrorMessage"] = error.Description;
+                        }
+                        return View();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating admin user");
+                TempData["ErrorMessage"] = $"Error: {ex.Message}";
+                return View();
+            }
+        }
+
+        // POST: /Account/ResetAdminPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetAdminPassword(ResetAdminPasswordViewModel model)
+        {
+            _logger.LogInformation("ResetAdminPassword POST action called with model: {@Model}", new {
+                PasswordLength = model.NewPassword?.Length,
+                ConfirmPasswordLength = model.ConfirmNewPassword?.Length,
+                SecurityCode = model.SecurityCode
+            });
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("ModelState is invalid: {@ModelStateErrors}", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+                return View(model);
+            }
+
+            // Verify the security code
+            var expectedSecurityCode = _configuration["AdminReset:SecurityCode"];
+            if (string.IsNullOrEmpty(expectedSecurityCode) || model.SecurityCode != expectedSecurityCode)
+            {
+                _logger.LogWarning("Invalid security code provided or security code not configured");
+                ModelState.AddModelError(string.Empty, "Invalid security code. Please contact your system administrator.");
+                return View(model);
+            }
+
+            // Only allow resetting the admin password
+            var adminEmail = _configuration["AdminUser:Email"];
+            if (string.IsNullOrEmpty(adminEmail))
+            {
+                _logger.LogError("Admin email not configured in settings");
+                ModelState.AddModelError(string.Empty, "Admin email not configured. Please contact your system administrator.");
+                return View(model);
+            }
+
+            // Check if the admin user exists
+            _logger.LogInformation("Checking if admin user exists: {Email}", adminEmail);
+            var adminUser = await _userManager.FindByEmailAsync(adminEmail);
+            _logger.LogInformation("Admin user exists: {Exists}", adminUser != null);
+
+            if (adminUser == null)
+            {
+                _logger.LogInformation("Creating new admin user: {Email}", adminEmail);
+                // Create the admin user if it doesn't exist
+                adminUser = new IdentityUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    EmailConfirmed = true
+                };
+
+                _logger.LogInformation("Calling UserManager.CreateAsync for {Email}", adminEmail);
+
+                // Make sure the password is not null
+                if (string.IsNullOrEmpty(model.NewPassword))
+                {
+                    _logger.LogWarning("NewPassword is null or empty");
+                    ModelState.AddModelError(string.Empty, "Password cannot be empty.");
+                    return View(model);
+                }
+
+                var createResult = await _userManager.CreateAsync(adminUser, model.NewPassword);
+                _logger.LogInformation("UserManager.CreateAsync result: {Succeeded}", createResult.Succeeded);
+
+                if (createResult.Succeeded)
+                {
+                    // Check if Administrator role exists, create it if it doesn't
+                    var roleManager = HttpContext.RequestServices.GetRequiredService<RoleManager<IdentityRole>>();
+                    if (!await roleManager.RoleExistsAsync("Administrator"))
+                    {
+                        _logger.LogInformation("Creating Administrator role");
+                        await roleManager.CreateAsync(new IdentityRole("Administrator"));
+                    }
+
+                    _logger.LogInformation("Adding Administrator role to user {Email}", adminEmail);
+                    await _userManager.AddToRoleAsync(adminUser, "Administrator");
+                    _logger.LogInformation("Created admin user {Email} with new password", adminEmail);
+
+                    TempData["SuccessMessage"] = "Admin user created successfully with the new password.";
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to create admin user {Email}. Errors: {@Errors}",
+                        adminEmail, createResult.Errors.Select(e => e.Description));
+                    foreach (var error in createResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+            }
+            else
+            {
+                _logger.LogInformation("Resetting password for existing admin user: {Email}", adminEmail);
+                // Reset the password for the existing admin user
+                _logger.LogInformation("Generating password reset token for {Email}", adminEmail);
+                var token = await _userManager.GeneratePasswordResetTokenAsync(adminUser);
+                _logger.LogInformation("Token generated for {Email}, token length: {TokenLength}", adminEmail, token?.Length);
+
+                _logger.LogInformation("Calling ResetPasswordAsync for {Email}", adminEmail);
+
+                // Make sure the password and token are not null
+                if (string.IsNullOrEmpty(model.NewPassword))
+                {
+                    _logger.LogWarning("NewPassword is null or empty");
+                    ModelState.AddModelError(string.Empty, "Password cannot be empty.");
+                    return View(model);
+                }
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    _logger.LogWarning("Token is null or empty");
+                    ModelState.AddModelError(string.Empty, "Failed to generate password reset token. Please try again.");
+                    return View(model);
+                }
+
+                var resetResult = await _userManager.ResetPasswordAsync(adminUser, token, model.NewPassword);
+                _logger.LogInformation("ResetPasswordAsync result: {Succeeded}", resetResult.Succeeded);
+
+                if (resetResult.Succeeded)
+                {
+                    _logger.LogInformation("Admin password reset successful for {Email}", adminEmail);
+
+                    TempData["SuccessMessage"] = "Admin password reset successful. You can now log in with the new password.";
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to reset password for admin user {Email}. Errors: {@Errors}",
+                        adminEmail, resetResult.Errors.Select(e => e.Description));
+                    foreach (var error in resetResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+            }
         }
     }
 }

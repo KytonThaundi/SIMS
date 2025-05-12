@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SIMS_Web.Data;
-using SIMS_Web.Models;
-using SIMS_Web.Services;
+using SIMS.Web.Data;
+using SIMS.Web.Models;
+using SIMS.Web.Services;
 using System.Threading.Tasks;
 
-namespace SIMS_Web.Controllers
+namespace SIMS.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class FacultiesController : Controller

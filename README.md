@@ -1,8 +1,8 @@
-# Mombera University Student Information Management System (SIMS)
+# University Student Information Management System (SIMS)
 
 A modern web-based Student Information Management System built with ASP.NET Core and Tailwind CSS for Mombera University.
 
-![Mombera University SIMS](wwwroot/images/sims-logo.png)
+![University SIMS](wwwroot/images/sims-logo.png)
 
 ## Overview
 
@@ -70,8 +70,17 @@ The Student Information Management System (SIMS) is a comprehensive web applicat
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Host=localhost;Database=sims;Username=simsuser;Password=simspassword;Trust Server Certificate=true;"
+  "DefaultConnection": "Host=localhost;Database=sims;Username=your_username;Password=your_password;Trust Server Certificate=true;"
 }
+```
+
+For security reasons, it's recommended to use user secrets for storing sensitive information:
+
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Database=sims;Username=your_username;Password=your_password;Trust Server Certificate=true;"
+dotnet user-secrets set "AdminUser:Email" "admin@yourdomain.com"
+dotnet user-secrets set "AdminReset:SecurityCode" "your-secure-reset-code"
 ```
 
 ### Application Setup
@@ -109,16 +118,25 @@ dotnet run
 
 7. Access the application at `https://localhost:5001` or `http://localhost:5000`
 
-### Default Credentials
+### Authentication
 
-The system is seeded with the following default users:
+The system uses database authentication for user login. Users must be registered in the database before they can log in.
 
-- **Admin User**
-  - Email: admin@sims.edu
-  - Password: Admin123!
+#### Default Admin User
 
+The database backup contains an admin user with the following credentials:
+- Email: admin@system.com
 
-Note: If you're having trouble logging in, make sure your database has been properly initialized with the seed data. The demo user is created automatically on first login attempt with the credentials above.
+To log in as this user, you'll need to:
+1. Restore the database backup from 'C:\www\dbSIMS_backup_28.09.2017_SIMS.BAK'
+2. Use the password associated with this account in the database
+
+#### User Registration
+
+New users can register through the registration form. When a new user registers:
+1. Their information is stored in the database
+2. They are assigned the "Student" role by default
+3. They can immediately log in with their credentials
 
 ## Project Structure
 

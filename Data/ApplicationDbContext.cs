@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SIMS_Web.Models;
+using SIMS.Web.Models;
 
-namespace SIMS_Web.Data
+namespace SIMS.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

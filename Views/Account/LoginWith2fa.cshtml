@@ -1,4 +1,4 @@
-@model SIMS_Web.Models.LoginWith2faViewModel
+@model SIMS.Web.Models.LoginWith2faViewModel
 @{
     ViewData["Title"] = "Two-factor authentication";
     Layout = "_LoginLayout";
@@ -34,7 +34,7 @@
             </div>
             <div class="text-sm text-center">
                 <p>
-                    Don't have access to your authenticator device? You can 
+                    Don't have access to your authenticator device? You can
                     <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="font-medium text-blue-600 hover:text-blue-500">
                         log in with a recovery code
                     </a>.

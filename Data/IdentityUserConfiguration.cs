@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace SIMS_Web.Data
+namespace SIMS.Web.Data
 {
     public class IdentityUserConfiguration : IEntityTypeConfiguration<IdentityUser>
     {

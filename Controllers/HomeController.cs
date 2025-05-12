@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SIMS_Web.Data;
-using SIMS_Web.Models;
+using SIMS.Web.Data;
+using SIMS.Web.Models;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace SIMS_Web.Controllers
+namespace SIMS.Web.Controllers
 {
     [Authorize]
     public class HomeController : Controller

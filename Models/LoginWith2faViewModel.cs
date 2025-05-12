@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SIMS_Web.Models
+namespace SIMS.Web.Models
 {
     public class LoginWith2faViewModel
     {

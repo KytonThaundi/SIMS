@@ -91,6 +91,13 @@
                             <i class="fas fa-question-circle mr-3 text-[#4ECDC4]"></i>
                             <span>Help</span>
                         </a>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a asp-controller="Administration" asp-action="Index" class="flex items-center px-4 py-2.5 text-gray-200 hover:bg-gray-700 hover:bg-opacity-50 rounded-lg transition-colors duration-200">
+                                <i class="fas fa-cogs mr-3 text-[#4ECDC4]"></i>
+                                <span>Administration</span>
+                            </a>
+                        }
                         <form id="logoutForm" action="/Account/Logout" method="post" class="m-0">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="returnUrl" value="/Account/Login" />

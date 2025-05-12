@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 using System;
 
-namespace SIMS_Web.Data
+namespace SIMS.Web.Data
 {
     public static class PostgreSqlDbContextOptionsExtensions
     {

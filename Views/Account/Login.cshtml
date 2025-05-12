@@ -1,4 +1,4 @@
-@model SIMS_Web.Models.LoginViewModel
+@model SIMS.Web.Models.LoginViewModel
 @{
     ViewData["Title"] = "Login";
     Layout = "_LoginLayout";
@@ -72,6 +72,13 @@
                     <div class="bg-gradient-to-r from-[#E6F8F8] to-[#F0FFFF] border border-[#B2E6E6] p-5 rounded-lg shadow-sm h-full">
                         <h2 class="text-base font-medium mb-4">Welcome to the <span class="font-bold text-[#20B2AA]">Mombera University (MW)</span></h2>
 
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="mb-4 p-2 bg-green-100 border border-green-300 text-green-700 rounded">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+
                         <p class="mb-4 text-sm">Use your account credentials to login:</p>
 
                         <!-- Login Form -->
@@ -102,7 +109,7 @@
                                         <label for="remember-me" class="ml-1 block text-xs text-gray-700">Remember me</label>
                                     </div>
 
-                                    <a href="#" class="text-xs text-[#20B2AA] hover:text-[#1C9E9E]">Forgot password?</a>
+                                    <a href="@Url.Action("ResetAdminPassword", "Account")" class="text-xs text-[#20B2AA] hover:text-[#1C9E9E]">Reset Admin Password</a>
                                 </div>
 
                                 <div class="flex flex-col items-center">

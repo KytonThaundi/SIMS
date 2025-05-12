@@ -35,11 +35,18 @@ After creating the database, update the connection string in `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Host=localhost;Database=sims_web;Username=postgres;Password=your_password"
+  "DefaultConnection": "Host=localhost;Database=sims_web;Username=your_username;Password=your_password;Trust Server Certificate=true;"
 }
 ```
 
-Replace `your_password` with your actual PostgreSQL password.
+Replace `your_username` and `your_password` with your actual PostgreSQL credentials.
+
+For security reasons, it's recommended to use user secrets for storing sensitive information:
+
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Database=sims_web;Username=your_username;Password=your_password;Trust Server Certificate=true;"
+```
 
 ## Database Migration
 

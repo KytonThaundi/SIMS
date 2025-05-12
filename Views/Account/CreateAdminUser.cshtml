@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Create Admin User";
+    Layout = "_LoginLayout";
+}
+
+<div class="flex min-h-screen items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8">
+        <div>
+            <img class="mx-auto h-12 w-auto" src="~/images/sims-logo.png" alt="Mombera University Logo">
+            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Create Admin User</h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                This page allows you to create the admin@system.com user.
+            </p>
+            <p class="mt-2 text-center text-sm text-red-600 font-semibold">
+                Security Notice: This page should be removed after initial setup.
+            </p>
+        </div>
+
+        <form action="/Account/CreateAdminUser" method="post" class="mt-8 space-y-6">
+            @Html.AntiForgeryToken()
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="mb-4 p-2 bg-red-100 border border-red-300 text-red-700 rounded">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="mt-1">
+                    <input type="password" name="password" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                <div class="mt-1">
+                    <input type="password" name="confirmPassword" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Create Admin User
+                </button>
+            </div>
+
+            <div class="text-center">
+                <a href="@Url.Action("Login", "Account")" class="text-sm text-blue-600 hover:text-blue-500">Back to Login</a>
+            </div>
+        </form>
+    </div>
+</div>
